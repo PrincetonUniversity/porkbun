@@ -1,0 +1,27 @@
+{
+  "name": "porkbun",
+  "version": "1.0.0",
+  "description": "Source code for PorkBun",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PrincetonUniversity/porkbun.git"
+  },
+  "author": "Khatanbuuvei Bold and Justin Chang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PrincetonUniversity/porkbun/issues"
+  },
+  "homepage": "https://github.com/PrincetonUniversity/porkbun#readme",
+  "dependencies": {
+    "axios": "0.18.0",
+    "express": "4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "1.18.10"
+  }
+}
