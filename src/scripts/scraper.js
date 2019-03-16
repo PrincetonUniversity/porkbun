@@ -1,32 +1,58 @@
+// Load node modules
 const cheerio = require('cheerio');
 const axios = require('axios');
 const fs = require('fs');
-const url = 'http://menus.princeton.edu/dining/_Foodpro/online-menu/menuDetails.asp?sName=Princeton+University+Campus+Dining&locationNum=02&locationName=Butler+%26+Wilson+Colleges&naFlag=1';
 
-var scrape = function scrape() {
-  axios.get(url)
-    .then(response => {
-      let meals = [];
-      let $ = cheerio.load(response.data);
-      $('.recipe').each((i, recipe) => {
-        meals.push($(recipe).text()+'\n');
+// Constants
+const baseurl = 'http://menus.princeton.edu/dining/_Foodpro/online-menu/menuDetails.asp';
+const locations = {
+  roma: '01',
+  wucox: '02',
+  forbes: '03',
+  grad: '04',
+  cjl: '05',
+  whitman: '08'
+};
+
+// Get the URL to fetch data from, based on date and dining hall
+function getURL(date, locationId) {
+  return `${baseurl}?dtdate=${date.getMonth()+1}%2F${date.getDate()}%2F${date.getFullYear()}&locationNum=${locationId}`;
+}
+
+// Scrape individual dining hall menu, based on date and dining hall
+function getItems(date, loc) {
+  return new Promise((resolve, reject) => {
+    axios.get(getURL(date, locations[loc]))
+      .then(response => {
+        let items = [];
+        let $ = cheerio.load(response.data);
+        $('.recipe').each((i, recipe) => {
+          items.push($(recipe).text()+'\n');
+        });
+
+        return resolve(items);
+      })
+      .catch(error => {
+        return reject(error.message);
       });
+  });
+}
 
-      // have to clear the file, since i used appendFile (there's probably a better way)
-      fs.writeFile('./temp', '', err => {
-        if (err)
-          return console.log(err)  
-        }
-      );
+// Scrape all dining hall menus for today's menus
+async function scrape() {
+  const date = new Date();
+  const file = fs.createWriteStream('./temp');
 
-      meals.forEach(meal => {
-        fs.appendFile('./temp', meal, err => {
-          if (err) 
-            return console.log(err);
+  for (const loc in locations) {
+    file.write(loc.toUpperCase() + '\n');
+    await getItems(date, loc)
+      .then(items => {
+        items.forEach(item => {
+          file.write(item);
         });
       });
-      console.log("Success");
-    });
+  }
+  file.end("END OF SCRAPING");
 }
 
 module.exports.scrape = scrape;
