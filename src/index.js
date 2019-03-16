@@ -4,9 +4,19 @@ const scraper = require('./scripts/scraper.js');
 
 const app = express();
 
+// Express configs (have to use views/ directory to use res.render)
+app.set("view engine", "ejs");
+app.engine('html', require('ejs').renderFile);
+app.use(express.static(__dirname + "/dist"));
+
 // GET request handling
 app.get('/', function(req, res) {
-  res.send('Hello World!');
+  res.render("index.html");
+});
+
+// Default
+app.get('/*', function(req, res) {
+  res.send("Page not found");
 });
 
 // Start server
