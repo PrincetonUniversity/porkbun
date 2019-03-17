@@ -1,8 +1,10 @@
 // Load node modules
 const express = require('express');
+const cron = require('cron');
 const scraper = require('./scripts/scraper.js');
 
 const app = express();
+const CronJob = cron.CronJob;
 
 // Express configs (have to use views/ directory to use res.render)
 app.set("view engine", "ejs");
@@ -22,6 +24,10 @@ app.get('/*', function(req, res) {
 // Start server
 const port = process.argv[2] ? process.argv[2] : 3000;
 app.listen(port, function() {
+  // const job = new CronJob('0 0 0 * * *', function() {
+  //   console.log('Code for running every midnight');
+  // }, null, false, 'America/New_York');
+  // job.start();
   scraper.scrape();
   console.log("Listening on %d", port);
 });

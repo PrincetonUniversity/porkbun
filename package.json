@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/PrincetonUniversity/porkbun.git"
   },
-  "author": "Khatanbuuvei Bold and Justin Chang",
+  "author": "Khatanbuuvei Bold <bold@princeton.edu> and Justin Chang <jhhang@princeton.edu>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/PrincetonUniversity/porkbun/issues"
@@ -19,8 +19,9 @@
   "homepage": "https://github.com/PrincetonUniversity/porkbun#readme",
   "dependencies": {
     "axios": "0.18.0",
-    "cheerio": "^1.0.0-rc.2",
-    "ejs": "^2.6.1",
+    "cheerio": "1.0.0-rc.2",
+    "cron": "1.7.0",
+    "ejs": "2.6.1",
     "express": "4.16.4"
   },
   "devDependencies": {
