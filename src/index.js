@@ -10,7 +10,7 @@ const app = express();
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
-app.use(express.static(__dirname + '/static'));
+app.use(express.static(__dirname + '/dist'));
 
 // GET request handling
 app.get('/', function(req, res) {
