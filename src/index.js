@@ -3,6 +3,7 @@ const express = require('express');
 const ejs = require('ejs');
 const cron = require('cron');
 const scraper = require('./scripts/scraper.js');
+const mongodb = require('./scripts/db.js');
 
 const app = express();
 
@@ -30,5 +31,6 @@ app.listen(port, function() {
   // }, null, false, 'America/New_York');
   // job.start();
   scraper.scrape();
+  mongodb.testInsert();
   console.log("Listening on %d", port);
 });
