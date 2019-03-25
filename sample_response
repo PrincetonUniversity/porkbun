@@ -2,62 +2,69 @@
 
 
 <!-- The following is required by Aurora Information Systems, DO NOT MODIFY OR REMOVE -->
-   <!-- FIELDFILT.ASP, Version 2.3.0  -->
+<!-- FIELDFILT.ASP, Version 2.3.0  -->
 <!-- End of Aurora Information Systems Required Text -->
 
 <!-- The following is required by Aurora Information Systems, DO NOT MODIFY OR REMOVE -->
-   <!-- NAUSERDATA.ASP, Version 2.3.0  -->
-<!-- End of Aurora Information Systems Required Text --> <!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- NAUSERDATA.ASP, Version 2.3.0  -->
+<!-- End of Aurora Information Systems Required Text -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-37648061-1"></script>
 <script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'UA-37648061-1');
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+  gtag('config', 'UA-37648061-1');
 </script>
 <html lang="en">
-  
-  
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-   <!-- <link rel="icon" href="../../../../favicon.ico">-->
 
-    <title>Princeton University Campus Dining - Today's Menus</title>
 
-    <!-- Bootstrap core CSS -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="Stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
-    <!-- Custom styles for this template -->
-    <link href="css/jumbotron.css" rel="stylesheet">
-        <!-- Custom styles for this template -->
-    <link href="css/uservicesOverrides.css" rel="stylesheet">
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- <link rel="icon" href="../../../../favicon.ico">-->
 
-  <body>
+  <title>Princeton University Campus Dining - Today's Menus</title>
 
-  
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+    integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="Stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+  <!-- Custom styles for this template -->
+  <link href="css/jumbotron.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="css/uservicesOverrides.css" rel="stylesheet">
+</head>
+
+<body>
+
+
   <!-- Begin content from nav.asp-->
   <nav class="navbar navbar-expand-md bg-white fixed-top navbar-light" id="mainNav">
-  <div class="container">
-    
+    <div class="container">
+
       <a class="navbar-brand" href="https://dining.princeton.edu">
-      	<img alt="Campus Dining logo" class="img-fluid" src="https://dining.princeton.edu/sites/dining/files/dining_logo.png"/>
+        <img alt="Campus Dining logo" class="img-fluid"
+          src="https://dining.princeton.edu/sites/dining/files/dining_logo.png" />
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-   <div class="float-right">
-     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="default.asp">View all locations <span class="sr-only">(current)</span></a>
-          </li>
+      <div class="float-right">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="default.asp">View all locations <span class="sr-only">(current)</span></a>
+            </li>
 
-        
-         <!-- <li class="nav-item dropdown">
+
+            <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="#">Action</a>
@@ -65,498 +72,559 @@ gtag('config', 'UA-37648061-1');
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </li>-->
-          
-          <!-- Modal -->
 
-        </ul>
-    </div>
-     </div>
-  </div>
-   
-    </nav>
-    <!-- End content from nav.asp-->
-    <main role="main">
+            <!-- Modal -->
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <div class="container" id="jumbotronFeature">
-          <h1></h1>
-          <div id="dateHeader">  <a class='menuDates' href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F16%2F2019&locationNum=08&locationName= &naFlag=1'>Saturday, March 16</a>	
-        
-        <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
-         || <a class='menuDates' href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F17%2F2019&locationNum=08&locationName= &naFlag=1'>Sunday, March 17</a>	
-        
-        <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
-         || <a class='menuDates' href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F18%2F2019&locationNum=08&locationName= &naFlag=1'>Monday, March 18</a>	
-        
-        <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
-         || <a class='menuDates' href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F19%2F2019&locationNum=08&locationName= &naFlag=1'>Tuesday, March 19</a>	
-        
-        <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
-         <br /> <a class='menuDates' href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F20%2F2019&locationNum=08&locationName= &naFlag=1'>Wednesday, March 20</a>	
-        
-        <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
-         || <a class='menuDates' href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F21%2F2019&locationNum=08&locationName= &naFlag=1'>Thursday, March 21</a>	
-        
-        <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
-         || <a class='menuDates' href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F22%2F2019&locationNum=08&locationName= &naFlag=1'>Friday, March 22</a>	
-        
-        <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
-         </div>
-             <!-- Button trigger modal -->
-<!-- Button trigger modal -->
-  <button data-toggle="modal" href="#allergenModal" class="btn btn-success">  Set allergen filters  </button>
-
-<!-- Modal -->
-<div class="modal fade" id="allergenModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Set allergen filters</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <script
-  src="https://code.jquery.com/jquery-2.2.4.js"
-  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-  crossorigin="anonymous"></script>
-
-
-
-
-  <center>
-  <table border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td align="left">
-        <div class="allergenfilterheader">Set Allergen Filters</div><br>
-        <div class="allergenfilterdesc">Select the allergens that you wish to show or hide within the menu displays.</div>
-      </td>
-    </tr>
-    <tr align="left" valign="top">
-      <td>
-        <form name="allergens_form" action="/dining/_Foodpro/online-menu/menuDetails.asp?dtdate=3%2F16%2F2019&locationNum=08" method="post">
-        <input type="hidden" name="Action" value="APPLYALLERGENS">
-        <input type="hidden" name="AllergenCount" value="11">
-        <table border="0" bordercolor="blue" cellpadding="1" cellspacing="5">
-<tr>
-  <td colspan='2'>
-    <div class='allergenfilterselect'>
- <fieldset> <legend></legend>   <input type='radio' id='filter1' name='Allergen_Filter' aria-checked='true' value='CONTAINS' checked><label for='filter1' >Contains &nbsp; </label>    <input type='radio' id='filter2' name='Allergen_Filter' aria-checked='false' value='NOCONTAINS'><label for='filter2'>Does Not Contain</label></div> </fieldset>  </td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_1' aria-checked='false' name='Allergen_1' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_1' class='allergenfilteroptions'>Milk</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_2' aria-checked='false' name='Allergen_2' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_2' class='allergenfilteroptions'>Eggs</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_3' aria-checked='false' name='Allergen_3' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_3' class='allergenfilteroptions'>Fish</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_4' aria-checked='false' name='Allergen_4' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_4' class='allergenfilteroptions'>Crustacean Shellfish</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_5' aria-checked='false' name='Allergen_5' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_5' class='allergenfilteroptions'>Tree Nut</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_6' aria-checked='false' name='Allergen_6' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_6' class='allergenfilteroptions'>Peanut</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_7' aria-checked='false' name='Allergen_7' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_7' class='allergenfilteroptions'>Wheat</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_8' aria-checked='false' name='Allergen_8' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_8' class='allergenfilteroptions'>Soybeans</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_9' aria-checked='false' name='Allergen_9' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_9' class='allergenfilteroptions'>Contains Gluten from Barley</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_10' aria-checked='false' name='Allergen_10' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_10' class='allergenfilteroptions'>Contains Gluten from Rye</label></td>
-</tr>
-<tr>
-  <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck' id='Allergen_11' aria-checked='false' name='Allergen_11' value='ON'></td>
-  <td align='left' valign='top'><label for='Allergen_11' class='allergenfilteroptions'>Contains Coconut</label></td>
-</tr>
-
-          <tr>
-            <td colspan="2" align="right"><br><input type="reset" value="Cancel"> &nbsp; <input type="button" value="Reset" onClick="reset_allergens()"> &nbsp; <input type="submit" value="Apply"></td>
-       
-          </tr>
-        </table>
-        </form>
-      </td>
-    </tr>
-  </table>
-  </center>
-  <SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript"><!--
-    function reset_allergens() {
-document.allergens_form.Allergen_1.checked = false;
-document.allergens_form.Allergen_2.checked = false;
-document.allergens_form.Allergen_3.checked = false;
-document.allergens_form.Allergen_4.checked = false;
-document.allergens_form.Allergen_5.checked = false;
-document.allergens_form.Allergen_6.checked = false;
-document.allergens_form.Allergen_7.checked = false;
-document.allergens_form.Allergen_8.checked = false;
-document.allergens_form.Allergen_9.checked = false;
-document.allergens_form.Allergen_10.checked = false;
-document.allergens_form.Allergen_11.checked = false;
-
-}
-    function close_window() {
-      var curMenuhref = window.opener.parent.frames[3].location.href;
-      window.opener.parent.frames[3].location.href = curMenuhref;
-      window.close();
-}
-  --></SCRIPT>
-
-<script>
-
-$( document ).ready(function() {
-
-   $(".allergencheck").change(function() {
-    if(this.checked) {
-       $(this).attr("aria-checked","true")
-    }
-    else {
-     $(this).attr("aria-checked","false")
-   } });
-
-   $("#filter2").change(function() {
-    if(this.checked) {
-       $(this).attr("aria-checked","true")
-        $("#filter1").attr("aria-checked","false")
-    }
-   });
-
-
-     $("#filter1").change(function() {
-    if(this.checked) {
-       $(this).attr("aria-checked","true")
-        $("#filter2").attr("aria-checked","false")
-    }
-    });
-
-
-});
-
-
-</script>
-
-
-
-
-
-
-<!-- The following is required by Aurora Information Systems, DO NOT MODIFY OR REMOVE -->
-   <!-- allergenfilter.asp, Version 2.2.3  -->
-<!-- End of Aurora Information Systems Required Text -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-     
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+  </nav>
+  <!-- End content from nav.asp-->
+  <main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container" id="jumbotronFeature">
+        <h1></h1>
+        <div id="dateHeader"> <a class='menuDates'
+            href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F16%2F2019&locationNum=08&locationName= &naFlag=1'>Saturday,
+            March 16</a>
+
+          <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
+          || <a class='menuDates'
+            href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F17%2F2019&locationNum=08&locationName= &naFlag=1'>Sunday,
+            March 17</a>
+
+          <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
+          || <a class='menuDates'
+            href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F18%2F2019&locationNum=08&locationName= &naFlag=1'>Monday,
+            March 18</a>
+
+          <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
+          || <a class='menuDates'
+            href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F19%2F2019&locationNum=08&locationName= &naFlag=1'>Tuesday,
+            March 19</a>
+
+          <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
+          <br /> <a class='menuDates'
+            href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F20%2F2019&locationNum=08&locationName= &naFlag=1'>Wednesday,
+            March 20</a>
+
+          <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
+          || <a class='menuDates'
+            href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F21%2F2019&locationNum=08&locationName= &naFlag=1'>Thursday,
+            March 21</a>
+
+          <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
+          || <a class='menuDates'
+            href='menuDetails.asp?myaction=read&sName=Princeton+University+Campus+Dining&dtdate=3%2F22%2F2019&locationNum=08&locationName= &naFlag=1'>Friday,
+            March 22</a>
+
+          <!--Display a separator unless its the last date.  Break to the next line on the 4th date -->
         </div>
-      
+        <!-- Button trigger modal -->
+        <!-- Button trigger modal -->
+        <button data-toggle="modal" href="#allergenModal" class="btn btn-success"> Set allergen filters </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="allergenModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Set allergen filters</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <script src="https://code.jquery.com/jquery-2.2.4.js"
+                  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+
+
+
+                <center>
+                  <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td align="left">
+                        <div class="allergenfilterheader">Set Allergen Filters</div><br>
+                        <div class="allergenfilterdesc">Select the allergens that you wish to show or hide within the
+                          menu displays.</div>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td>
+                        <form name="allergens_form"
+                          action="/dining/_Foodpro/online-menu/menuDetails.asp?dtdate=3%2F16%2F2019&locationNum=08"
+                          method="post">
+                          <input type="hidden" name="Action" value="APPLYALLERGENS">
+                          <input type="hidden" name="AllergenCount" value="11">
+                          <table border="0" bordercolor="blue" cellpadding="1" cellspacing="5">
+                            <tr>
+                              <td colspan='2'>
+                                <div class='allergenfilterselect'>
+                                  <fieldset>
+                                    <legend></legend> <input type='radio' id='filter1' name='Allergen_Filter'
+                                      aria-checked='true' value='CONTAINS' checked><label for='filter1'>Contains &nbsp;
+                                    </label> <input type='radio' id='filter2' name='Allergen_Filter'
+                                      aria-checked='false' value='NOCONTAINS'><label for='filter2'>Does Not
+                                      Contain</label>
+                                </div>
+                                </fieldset>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_1' aria-checked='false' name='Allergen_1' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_1'
+                                  class='allergenfilteroptions'>Milk</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_2' aria-checked='false' name='Allergen_2' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_2'
+                                  class='allergenfilteroptions'>Eggs</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_3' aria-checked='false' name='Allergen_3' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_3'
+                                  class='allergenfilteroptions'>Fish</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_4' aria-checked='false' name='Allergen_4' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_4'
+                                  class='allergenfilteroptions'>Crustacean Shellfish</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_5' aria-checked='false' name='Allergen_5' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_5' class='allergenfilteroptions'>Tree
+                                  Nut</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_6' aria-checked='false' name='Allergen_6' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_6'
+                                  class='allergenfilteroptions'>Peanut</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_7' aria-checked='false' name='Allergen_7' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_7'
+                                  class='allergenfilteroptions'>Wheat</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_8' aria-checked='false' name='Allergen_8' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_8'
+                                  class='allergenfilteroptions'>Soybeans</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_9' aria-checked='false' name='Allergen_9' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_9'
+                                  class='allergenfilteroptions'>Contains Gluten from Barley</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_10' aria-checked='false' name='Allergen_10' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_10'
+                                  class='allergenfilteroptions'>Contains Gluten from Rye</label></td>
+                            </tr>
+                            <tr>
+                              <td align='left' valign='top'><input type='checkbox' role='checkbox' class='allergencheck'
+                                  id='Allergen_11' aria-checked='false' name='Allergen_11' value='ON'></td>
+                              <td align='left' valign='top'><label for='Allergen_11'
+                                  class='allergenfilteroptions'>Contains Coconut</label></td>
+                            </tr>
+
+                            <tr>
+                              <td colspan="2" align="right"><br><input type="reset" value="Cancel"> &nbsp; <input
+                                  type="button" value="Reset" onClick="reset_allergens()"> &nbsp; <input type="submit"
+                                  value="Apply"></td>
+
+                            </tr>
+                          </table>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </center>
+                <SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
+                  <!--
+                  function reset_allergens() {
+                    document.allergens_form.Allergen_1.checked = false;
+                    document.allergens_form.Allergen_2.checked = false;
+                    document.allergens_form.Allergen_3.checked = false;
+                    document.allergens_form.Allergen_4.checked = false;
+                    document.allergens_form.Allergen_5.checked = false;
+                    document.allergens_form.Allergen_6.checked = false;
+                    document.allergens_form.Allergen_7.checked = false;
+                    document.allergens_form.Allergen_8.checked = false;
+                    document.allergens_form.Allergen_9.checked = false;
+                    document.allergens_form.Allergen_10.checked = false;
+                    document.allergens_form.Allergen_11.checked = false;
+
+                  }
+
+                  function close_window() {
+                    var curMenuhref = window.opener.parent.frames[3].location.href;
+                    window.opener.parent.frames[3].location.href = curMenuhref;
+                    window.close();
+                  }
+                  -->
+                </SCRIPT>
+
+                <script>
+                  $(document).ready(function () {
+
+                    $(".allergencheck").change(function () {
+                      if (this.checked) {
+                        $(this).attr("aria-checked", "true")
+                      } else {
+                        $(this).attr("aria-checked", "false")
+                      }
+                    });
+
+                    $("#filter2").change(function () {
+                      if (this.checked) {
+                        $(this).attr("aria-checked", "true")
+                        $("#filter1").attr("aria-checked", "false")
+                      }
+                    });
+
+
+                    $("#filter1").change(function () {
+                      if (this.checked) {
+                        $(this).attr("aria-checked", "true")
+                        $("#filter2").attr("aria-checked", "false")
+                      }
+                    });
+
+
+                  });
+                </script>
+
+
+
+
+
+
+                <!-- The following is required by Aurora Information Systems, DO NOT MODIFY OR REMOVE -->
+                <!-- allergenfilter.asp, Version 2.2.3  -->
+                <!-- End of Aurora Information Systems Required Text -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="container">
-        <!-- Example row of columns -->
-      
-         
+    </div>
 
-                      
+    <div class="container">
+      <!-- Example row of columns -->
 
 
 
-<!--This section displays a building specific message from FoodPro.-->
 
-<!--/End building specific message. -->
-  
-  
-  
-<!-- BEGIN DOCUMENTATION OF MENU PAGE -->
-<div class="row">
-  
-<div class="col-md-4">
-   <div class="card mealCard">
-       <div class="card-header">
-            <h5 class="mealName">Lunch</h5>
-            <div class="hoursOpen">   
-		                        <a class="btn btn-success" target="_blank" href="pickMenu.asp?locationNum=08&locationName=&dtdate=3%2F16%2F2019&mealName=Lunch&sName=" name="Lunch">Nutrition</a>
-		                      </div>
+
+
+
+      <!--This section displays a building specific message from FoodPro.-->
+
+      <!--/End building specific message. -->
+
+
+
+      <!-- BEGIN DOCUMENTATION OF MENU PAGE -->
+      <div class="row">
+
+        <div class="col-md-4">
+          <div class="card mealCard">
+            <div class="card-header">
+              <h5 class="mealName">Lunch</h5>
+              <div class="hoursOpen">
+                <a class="btn btn-success" target="_blank"
+                  href="pickMenu.asp?locationNum=08&locationName=&dtdate=3%2F16%2F2019&mealName=Lunch&sName="
+                  name="Lunch">Nutrition</a>
+              </div>
+            </div>
+
+
+            <ul class="list-group list-group-flush">
+
+
+
+              <!--   This part gets and displays the menu category headers-->
+
+              <li class="list-group-item">
+                <h6>
+                  -- Soups --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Baked Potato & Cheddar Soup</li>
+
+
+                  <li class="recipe">Garden Vegetable Soup</li>
+
+                </ul>
+              </li>
+
+              <li class="list-group-item">
+                <h6>
+                  -- Salads --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Freshly Made Grain, Hummus & Composed Salads</li>
+
+                </ul>
+              </li>
+
+              <li class="list-group-item">
+                <h6>
+                  -- Euro Entree --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Chicken Wing Bar</li>
+
+                </ul>
+              </li>
+
+              <li class="list-group-item">
+                <h6>
+                  -- Vegetarian & Vegan Entree --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Black Beans & Rice</li>
+
+                </ul>
+              </li>
+
+              <li class="list-group-item">
+                <h6>
+                  -- On the Side --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Pasta</li>
+
+
+                  <li class="recipe">Vegetable of the Day</li>
+
+                </ul>
+
+          </div>
         </div>
-     
-   
-  <ul class="list-group list-group-flush">
-    
-        
-           
-          <!--   This part gets and displays the menu category headers-->
-            
-               <li class="list-group-item"> 
-               <h6>
-                    -- Soups --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Baked Potato & Cheddar Soup</li> 
-               
-             
-                   <li class="recipe">Garden Vegetable Soup</li> 
-               
-                   </ul>
-                   </li>
-               
-               <li class="list-group-item"> 
-               <h6>
-                    -- Salads --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Freshly Made Grain, Hummus & Composed Salads</li> 
-               
-                   </ul>
-                   </li>
-               
-               <li class="list-group-item"> 
-               <h6>
-                    -- Euro Entree --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Chicken Wing Bar</li> 
-               
-                   </ul>
-                   </li>
-               
-               <li class="list-group-item"> 
-               <h6>
-                    -- Vegetarian & Vegan Entree --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Black Beans & Rice</li> 
-               
-                   </ul>
-                   </li>
-               
-               <li class="list-group-item"> 
-               <h6>
-                    -- On the Side --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Pasta</li> 
-               
-             
-                   <li class="recipe">Vegetable of the Day</li> 
-               
-  </ul>
-
-   </div>
-</div>
 
 
 
- 
-<div class="col-md-4">
-   <div class="card mealCard">
-       <div class="card-header">
-            <h5 class="mealName">Dinner</h5>
-            <div class="hoursOpen">   
-		                        <a class="btn btn-success" target="_blank" href="pickMenu.asp?locationNum=08&locationName=&dtdate=3%2F16%2F2019&mealName=Dinner&sName=" name="Dinner">Nutrition</a>
-		                      </div>
+
+        <div class="col-md-4">
+          <div class="card mealCard">
+            <div class="card-header">
+              <h5 class="mealName">Dinner</h5>
+              <div class="hoursOpen">
+                <a class="btn btn-success" target="_blank"
+                  href="pickMenu.asp?locationNum=08&locationName=&dtdate=3%2F16%2F2019&mealName=Dinner&sName="
+                  name="Dinner">Nutrition</a>
+              </div>
+            </div>
+
+
+            <ul class="list-group list-group-flush">
+
+
+
+              <!--   This part gets and displays the menu category headers-->
+
+              <li class="list-group-item">
+                <h6>
+                  -- Soups --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Baked Potato & Cheddar Soup</li>
+
+
+                  <li class="recipe">Garden Vegetable Soup</li>
+
+                </ul>
+              </li>
+
+              <li class="list-group-item">
+                <h6>
+                  -- Salads --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Freshly Made Grain, Hummus & Composed Salads</li>
+
+                </ul>
+              </li>
+
+              <li class="list-group-item">
+                <h6>
+                  -- Euro Entree --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Yankee Pot Roast</li>
+
+                </ul>
+              </li>
+
+              <li class="list-group-item">
+                <h6>
+                  -- Vegetarian & Vegan Entree --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Quinoa Pilaf</li>
+
+                </ul>
+              </li>
+
+              <li class="list-group-item">
+                <h6>
+                  -- On the Side --
+                </h6>
+                <ul class="menuItems">
+
+
+                  <li class="recipe">Glazed Carrots & Dill</li>
+
+
+                  <li class="recipe">Herb Whipped Potatoes</li>
+
+
+                  <li class="recipe">Pasta</li>
+
+                </ul>
+
+          </div>
         </div>
-     
-   
-  <ul class="list-group list-group-flush">
-    
-        
-           
-          <!--   This part gets and displays the menu category headers-->
-            
-               <li class="list-group-item"> 
-               <h6>
-                    -- Soups --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Baked Potato & Cheddar Soup</li> 
-               
-             
-                   <li class="recipe">Garden Vegetable Soup</li> 
-               
-                   </ul>
-                   </li>
-               
-               <li class="list-group-item"> 
-               <h6>
-                    -- Salads --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Freshly Made Grain, Hummus & Composed Salads</li> 
-               
-                   </ul>
-                   </li>
-               
-               <li class="list-group-item"> 
-               <h6>
-                    -- Euro Entree --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Yankee Pot Roast</li> 
-               
-                   </ul>
-                   </li>
-               
-               <li class="list-group-item"> 
-               <h6>
-                    -- Vegetarian & Vegan Entree --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Quinoa Pilaf</li> 
-               
-                   </ul>
-                   </li>
-               
-               <li class="list-group-item"> 
-               <h6>
-                    -- On the Side --
-               </h6>
-                  <ul class="menuItems">
-               
-             
-                   <li class="recipe">Glazed Carrots & Dill</li> 
-               
-             
-                   <li class="recipe">Herb Whipped Potatoes</li> 
-               
-             
-                   <li class="recipe">Pasta</li> 
-               
-  </ul>
-
-   </div>
-</div>
-
-
-
- 
- </div>
-
-  
-
-
-<!-- The following is required by Aurora Information Systems -- DO NOT MODIFY OR REMOVE -->
- <br>
-  <div id="poweredbyfoodpro">Powered by FoodPro<SUP>&#174;</SUP></div>
-<!-- End of Aurora Information Systems Required Text -->
- 
 
 
 
 
-        
-         </div> 
-         <!-- /container -->
+      </div>
+
+
+
+
+      <!-- The following is required by Aurora Information Systems -- DO NOT MODIFY OR REMOVE -->
+      <br>
+      <div id="poweredbyfoodpro">Powered by FoodPro<SUP>&#174;</SUP></div>
+      <!-- End of Aurora Information Systems Required Text -->
+
+
+
+
+
+
+    </div>
+    <!-- /container -->
     <div class="footer">
-        <div class="container">
+      <div class="container">
 
-          <div class="row">
+        <div class="row">
 
-            <div class="col-md-4">
+          <div class="col-md-4">
 
-              <p>Campus Dining - University Services
-                <br> Phone: 609-258-6097
-                <br>
-                <a href="mailto:dining@princeton.edu">dining@princeton.edu</a>
-              </p>
-              <p>Princeton Catering and Paper Tiger
-                <br> 609-258-3726
-                <br>
-                <a href="mailto:catering@princeton.edu">catering@princeton.edu</a>
-                <br>
-                <a href="mailto:ptiger@princeton.edu">ptiger@princeton.edu</a>
-              </p>
-              <p><a href="http://www.princeton.edu/universityservices/"><img alt="University Services" src="img/us_logo.png"></a></p>
+            <p>Campus Dining - University Services
+              <br> Phone: 609-258-6097
+              <br>
+              <a href="mailto:dining@princeton.edu">dining@princeton.edu</a>
+            </p>
+            <p>Princeton Catering and Paper Tiger
+              <br> 609-258-3726
+              <br>
+              <a href="mailto:catering@princeton.edu">catering@princeton.edu</a>
+              <br>
+              <a href="mailto:ptiger@princeton.edu">ptiger@princeton.edu</a>
+            </p>
+            <p><a href="http://www.princeton.edu/universityservices/"><img alt="University Services"
+                  src="img/us_logo.png"></a></p>
 
-            </div>
+          </div>
 
-            <div class="col-md-4">
+          <div class="col-md-4">
 
-              <ul class="links inline clearfix">
-                <li class="menu-10021 first">
-                  <a href="https://menus.princeton.edu/dining/_Foodpro/online-menu/">Today's Menus
-                   
-                  </a>
-                </li>
-                <li class="menu-11206">
-                  <a href="https://dining.princeton.edu/meal-plans">Meal Plans</a>
-                </li>
-                <li class="menu-9891">
-                  <a href="https://dining.princeton.edu/hours-operation">Hours of Operation</a>
-                </li>
-                <li class="menu-10036">
-                  <a href="https://dining.princeton.edu/catering/reunions">Reunions Planning</a>
-                </li>
-                <li class="menu-9886 last">
-                  <a href="https://dining.princeton.edu/our-story/join-our-team">Careers</a>
-                </li>
-              </ul>
+            <ul class="links inline clearfix">
+              <li class="menu-10021 first">
+                <a href="https://menus.princeton.edu/dining/_Foodpro/online-menu/">Today's Menus
 
-            </div>
+                </a>
+              </li>
+              <li class="menu-11206">
+                <a href="https://dining.princeton.edu/meal-plans">Meal Plans</a>
+              </li>
+              <li class="menu-9891">
+                <a href="https://dining.princeton.edu/hours-operation">Hours of Operation</a>
+              </li>
+              <li class="menu-10036">
+                <a href="https://dining.princeton.edu/catering/reunions">Reunions Planning</a>
+              </li>
+              <li class="menu-9886 last">
+                <a href="https://dining.princeton.edu/our-story/join-our-team">Careers</a>
+              </li>
+            </ul>
 
-            <div class="col-md-4">
+          </div>
 
-                <p><a href="http://www.princeton.edu/" title="Princeton University"><img src="img/pu-logo-white.svg" alt="Princeton University Logo"></a></p>
+          <div class="col-md-4">
+
+            <p><a href="http://www.princeton.edu/" title="Princeton University"><img src="img/pu-logo-white.svg"
+                  alt="Princeton University Logo"></a></p>
 
 
-
-            </div>
 
           </div>
 
         </div>
 
-
       </div>
-    </main>
 
- 
 
-    <!-- Bootstrap core JavaScript
+    </div>
+  </main>
+
+
+
+  <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  </body>
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+    integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+    integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous">
+  </script>
+</body>
+
 </html>
