@@ -4,6 +4,7 @@ const ejs = require('ejs');
 const cron = require('node-cron');
 const scraper = require('./scripts/scraper.js');
 const db = require('./scripts/db.js');
+const config = require('../config.js');
 
 const app = express();
 
@@ -24,8 +25,7 @@ app.get(/\/.+/, function(req, res) {
 });
 
 // Start server
-const port = process.argv[2] ? process.argv[2] : 3000;
-app.listen(port, async function() {
+app.listen(config.port, async function() {
   cron.schedule('0 0 0 * * *', () => {
     console.log('Code for running every midnight');
   }, {
@@ -36,5 +36,5 @@ app.listen(port, async function() {
   scraper.scrapeDishes();
   // db.testUpdate("chicken", "03", "lunch");
   // db.testUpdate("Chicken", "03", "dinner");
-  console.log("Listening on %d", port);
+  console.log("Listening on %d", config.port);
 });
