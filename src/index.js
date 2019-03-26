@@ -4,7 +4,7 @@ const ejs = require('ejs');
 const cron = require('node-cron');
 const scraper = require('./scripts/scraper.js');
 const db = require('./scripts/db.js');
-const config = require('../config.js');
+const config = require('./config.js');
 
 const app = express();
 
