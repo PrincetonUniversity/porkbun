@@ -5,7 +5,12 @@
         <link rel="stylesheet" href="/style/styles.css">
     </head>
     <body>
-        <h1>Hello World</h1>
+        <h1>Hello World!</h1>
         <p>Welcome to Porkbun!</p>
+        <% if (netid) { %>
+            <p>Your netid is <%= netid %></p>
+        <% } else { %>
+            <a href="/auth/login">Login</a>
+        <% } %>
     </body>
 </html>

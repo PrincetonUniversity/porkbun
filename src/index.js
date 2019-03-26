@@ -5,18 +5,35 @@ const cron = require('node-cron');
 const scraper = require('./scripts/scraper.js');
 const db = require('./scripts/db.js');
 const config = require('./config.js');
+const cookieSession = require('cookie-session');
+const auth = require('./controllers/auth.js');
 
 const app = express();
 
-// Express configs (have to use views/ directory to use res.render)
+// Express configs -----------------------------------------------------
+
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/dist/views');
 app.use(express.static(__dirname + '/static'));
 
+// save a cookie 
+app.use(cookieSession({
+  name: 'session',
+  secret: 'secretabcdsecret',
+  maxAge: 24 * 60 * 60 * 1000 // 1 day
+}));
+
+app.use('/auth', auth.router);
+
+
+// Routing -------------------------------------------------------------
+
 // GET request handling
 app.get('/', function(req, res) {
-  res.render("index.html");
+  res.render("index", {
+    netid: req.session.netid
+  });
 });
 
 // Default
