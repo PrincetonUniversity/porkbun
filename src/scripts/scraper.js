@@ -2,9 +2,10 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
 const fs = require('fs');
+const db = require('./db.js');
 
 // Constants
-const baseurl = 'http://menus.princeton.edu/dining/_Foodpro/online-menu/menuDetails.asp';
+const baseurl = 'http://menus.princeton.edu/dining/_Foodpro/online-menu/menuDetails.asp?';
 const locations = {
   roma: '01',
   wucox: '02',
@@ -15,12 +16,12 @@ const locations = {
 };
 
 // Get the URL to fetch data from, based on date and dining hall
-function getURL(date, locationId) {
-  return `${baseurl}?dtdate=${date.getMonth()+1}%2F${date.getDate()}%2F${date.getFullYear()}&locationNum=${locationId}`;
+const getURL = (date, locationId) => {
+  return `${baseurl}dtdate=${date.getMonth()+1}%2F${date.getDate()}%2F${date.getFullYear()}&locationNum=${locationId}`;
 }
 
 // Scrape individual dining hall menu, based on date and dining hall
-function getItems(date, loc) {
+const getItems = (date, loc) => {
   return new Promise((resolve, reject) => {
     axios.get(getURL(date, locations[loc]))
       .then(response => {
@@ -39,7 +40,7 @@ function getItems(date, loc) {
 }
 
 // Scrape all dining hall menus for today's menus
-async function scrape() {
+const scrape = async function() {
   const date = new Date();
   const file = fs.createWriteStream('./temp');
 
@@ -55,4 +56,36 @@ async function scrape() {
   file.end("END OF SCRAPING");
 }
 
+const scrapeDishes = () => {
+  const date = new Date();
+  for (const loc in locations) {
+    axios.get(getURL(date, locations[loc]))
+      .then(response => {
+        let $ = cheerio.load(response.data);
+        $('.card').each((i, elem) => {
+          const mealName = $(elem).find($('.mealName')).text();
+          const dishes = $(elem).find($('.recipe'));
+          let items = [];
+
+          dishes.each((i, elem) => {
+            items.push($(elem).text());
+            db.updateDish($(elem).text(), locations[loc], mealName);
+          });
+          console.log(items);
+          // db.updateDishes(items, locations[loc], mealName);
+          // dishes.each((i, elem) => {
+          //   const dish = $(elem).text();
+          //   db.updateDish(dish, locations[loc], mealName);
+          //   file.write(dish + '\n');
+          // });
+        });
+      })
+      .catch(error => {
+        throw error;
+      });
+  }
+}
+
+// Export modules
 module.exports.scrape = scrape;
+module.exports.scrapeDishes = scrapeDishes;

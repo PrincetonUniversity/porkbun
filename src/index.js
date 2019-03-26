@@ -25,15 +25,16 @@ app.get(/\/.+/, function(req, res) {
 
 // Start server
 const port = process.argv[2] ? process.argv[2] : 3000;
-app.listen(port, function() {
+app.listen(port, async function() {
   cron.schedule('0 0 0 * * *', () => {
     console.log('Code for running every midnight');
-    
   }, {
     timezone: 'America/New_York'
   });
   
-  scraper.scrapeIntoDB();
-  //db.updateDish("turkey", "03", "lunch");
+  await db.init();
+  scraper.scrapeDishes();
+  // db.testUpdate("chicken", "03", "lunch");
+  // db.testUpdate("Chicken", "03", "dinner");
   console.log("Listening on %d", port);
 });

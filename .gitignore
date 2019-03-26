@@ -1,0 +1,5 @@
+# gitignore
+# Authors: Khatanbuuvei Bold and Justin Chang
+
+# Temporary files used for testing outputs
+temp*
