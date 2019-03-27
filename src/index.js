@@ -26,7 +26,6 @@ app.use(cookieSession({
 
 app.use('/auth', auth.router);
 
-
 // Routing -------------------------------------------------------------
 
 // GET request handling
@@ -45,13 +44,18 @@ app.get(/\/.+/, function(req, res) {
 app.listen(config.port, async function() {
   cron.schedule('0 0 0 * * *', () => {
     console.log('Code for running every midnight');
+    // scraper.scrapeDishes();
   }, {
     timezone: 'America/New_York'
   });
   
-  await db.init();
-  scraper.scrapeDishes();
-  // db.testUpdate("chicken", "03", "lunch");
-  // db.testUpdate("Chicken", "03", "dinner");
+  await db.init()
+    .catch(err => {
+      console.log(err.message);
+    });
+
+  // CAUTION: right now I'm running this code once every day to properly update
+  // the database until we have a server deployed on heroku
+  // scraper.scrapeDishes();
   console.log("Listening on %d", config.port);
 });

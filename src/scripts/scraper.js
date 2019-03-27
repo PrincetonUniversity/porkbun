@@ -56,29 +56,34 @@ const scrape = async function() {
   file.end("END OF SCRAPING");
 }
 
-const scrapeDishes = () => {
+// Scrape all of today's dishes into the dishes database
+const scrapeDishes = async () => {
   const date = new Date();
   for (const loc in locations) {
-    axios.get(getURL(date, locations[loc]))
-      .then(response => {
+    await axios.get(getURL(date, locations[loc]))
+      .then(async response => {
         let $ = cheerio.load(response.data);
+        let meals = [];
         $('.card').each((i, elem) => {
-          const mealName = $(elem).find($('.mealName')).text();
-          const dishes = $(elem).find($('.recipe'));
-          let items = [];
+          meals.push(elem);
+        });
 
+        for (meal of meals) {
+          const mealName = $(meal).find($('.mealName')).text();
+          const dishes = $(meal).find($('.recipe'));
+          
+          let items = [];
           dishes.each((i, elem) => {
             items.push($(elem).text());
-            db.updateDish($(elem).text(), locations[loc], mealName);
           });
-          console.log(items);
-          // db.updateDishes(items, locations[loc], mealName);
-          // dishes.each((i, elem) => {
-          //   const dish = $(elem).text();
-          //   db.updateDish(dish, locations[loc], mealName);
-          //   file.write(dish + '\n');
-          // });
-        });
+
+          for (item of items) {
+            await db.updateDish(item, locations[loc], mealName)
+              .catch(err => {
+                throw err;
+              });
+          }
+        }
       })
       .catch(error => {
         throw error;

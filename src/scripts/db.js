@@ -8,121 +8,70 @@ const uri = "mongodb+srv://khatna:porkbun@porkbun-qae7b.mongodb.net/test?retryWr
 const dbName = "porkbun";
 //const client = new MongoClient(uri, { useNewUrlParser: true });
 var db;
+var dishes;
+var users;
+var test;
 
 // Initialize connection to MongoDB database
 const init = () => {
-  return new Promise((resolve, reject) => {
+  const dbPromise = new Promise((resolve, reject) => {
     MongoClient.connect(uri, { useNewUrlParser: true })
       .then(client => {
         db = client.db(dbName);
+        dishes = db.collection('dishes');
+        test = db.collection('test');
+        //users = db.collection('users');
         return resolve("Success");
       })
       .catch(err => {
         return reject(err);
       });
   });
+  return dbPromise;
 }
 
 // Insert one item into the dishes collection with parameters loc and meal
 const insertDish = (item, loc, meal) => {
-  const date = new Date();
-  const locArr = [loc];
-  const mealArr = [meal];
-
-  const dishes = db.collection('dishes');
-  dishes.insertOne({
-    name: item,
-    count: 1,
-    lastModified: date,
-    locations: locArr,
-    meals: mealArr
-  }, (err, res) => {
-    assert((err == null), Error("Failed to insert into database"));
-    assert((res.insertedCount == 1), Error("Error while inserting into database"));
+  return new Promise((resolve, reject) => {
+    dishes.insertOne({
+      name: item,
+      count: 1,
+      lastModified: new Date(),
+      locations: [loc],
+      meals: [meal]
+    }, (err, res) => {
+      if (err) return reject(err);
+      if (res.insertedCount != 1) return reject(Error("Error while inserting into database"));
+      return resolve(res);
+    });
   });
 }
 
-// Increment the count of items and add loc and type to the appropriate arrays
-// If no document is found, set up and insert a document
-const updateDishes = (items, loc, meal) => {
-  const dishes = db.collection('dishes');
-  const date = new Date();
-
-  for (item of items) {
+// Increment the count of item and add loc and type to the appropriate arrays
+const updateDish = (item, loc, meal) => {
+  return new Promise((resolve, reject) => {
     const reDish = new RegExp('^' + item + '$', 'i');
 
-    dishes.updateOne({ 
+    dishes.updateOne({
       name: reDish
-    }, { 
+    }, {
       $inc: { count: 1 }, 
-      $set: { lastModified: date },
+      $set: { lastModified: new Date() },
       $addToSet: { locations: loc, meals: meal }
-    }, (err, res) => {
-      assert((err == null), Error("Failed to update database"));
+    }, async (err, res) => {
+      if (err) return reject(err);
+
+      // If no document is found for the item, set up and insert a document
       if (res.modifiedCount == 0)
-        insertDish(item, loc, meal);
+        await insertDish(item, loc, meal)
+          .catch(err => {
+            return reject(err);
+          });
+      return resolve("Success");
     });
-  }
-}
-
-const updateDish = (item, loc, meal) => {
-  const dishes = db.collection('dishes');
-  const date = new Date();
-  const reDish = new RegExp('^' + item + '$', 'i');
-
-  dishes.updateOne({
-    name: reDish
-  }, {
-    $inc: { count: 1 }, 
-    $set: { lastModified: date },
-    $addToSet: { locations: loc, meals: meal }
-  }, (err, res) => {
-    assert((err == null), Error("Failed to update database"));
-    if (res.modifiedCount == 0)
-      insertDish(item, loc, meal);
-  });
-}
-
-// Test method to test updating one item to the test collection
-const testUpdate = (item, loc, meal) => {
-  const dishes = db.collection('test');
-  const date = new Date();
-  const reDish = new RegExp('^' + item + '$', 'i');
-
-  dishes.updateOne({
-    name: reDish
-  }, {
-    $inc: { count: 1 }, 
-    $set: { lastModified: date },
-    $addToSet: { locations: loc, meals: meal }
-  }, (err, res) => {
-    assert((err == null), Error("Failed to update database"));
-    console.log(res);
-    if (res.modifiedCount == 0)
-      testInsert(item, loc, meal);
-  });
-}
-
-const testInsert = (item, loc, meal) => {
-  const date = new Date();
-  const locArr = [loc];
-  const mealArr = [meal];
-
-  const dishes = db.collection('test');
-  dishes.insertOne({
-    name: item,
-    count: 1,
-    lastModified: date,
-    locations: locArr,
-    meals: mealArr
-  }, (err, res) => {
-    assert((err == null), Error("Failed to insert into database"));
-    assert((res.insertedCount == 1), Error("Error while inserting into database"));
   });
 }
 
 // Export modules
 module.exports.init = init;
-module.exports.updateDishes = updateDishes;
 module.exports.updateDish = updateDish;
-module.exports.testUpdate = testUpdate;
