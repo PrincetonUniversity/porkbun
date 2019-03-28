@@ -3,3 +3,6 @@
 
 # Temporary files used for testing outputs
 temp*
+
+# Local settings
+.vscode
