@@ -16,8 +16,11 @@ const locations = {
 };
 
 // Get the URL to fetch data from, based on date and dining hall
-const getURL = (date, locationId) => {
-  return `${baseurl}dtdate=${date.getMonth()+1}%2F${date.getDate()}%2F${date.getFullYear()}&locationNum=${locationId}`;
+const getURL = (date, loc) => {
+  const month = date.getUTCMonth()+1;
+  const day   = date.getUTCDate();
+  const year  = date.getUTCFullYear();
+  return `${baseurl}dtdate=${month}%2F${day}%2F${year}&locationNum=${loc}`;
 }
 
 // Scrape individual dining hall menu, based on date and dining hall

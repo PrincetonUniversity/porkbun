@@ -42,6 +42,7 @@ app.get(/\/.+/, function(req, res) {
 
 // Start server
 app.listen(config.port, async function() {
+  // Scrape dishes into database once every day
   cron.schedule('0 0 0 * * *', () => {
     console.log('Code for running every midnight');
     // scraper.scrapeDishes();
@@ -56,6 +57,6 @@ app.listen(config.port, async function() {
 
   // CAUTION: right now I'm running this code once every day to properly update
   // the database until we have a server deployed on heroku
-  // scraper.scrapeDishes();
+  //scraper.scrapeDishes();
   console.log("Listening on %d", config.port);
 });
