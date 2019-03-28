@@ -43,7 +43,7 @@ app.get(/\/.+/, function(req, res) {
 // Start server
 app.listen(config.port, async function() {
   // Scrape dishes into database once every day
-  cron.schedule('0 0 0 * * *', () => {
+  cron.schedule('*/10 * * * * *', () => {
     console.log('Code for running every midnight');
     // scraper.scrapeDishes();
   }, {
