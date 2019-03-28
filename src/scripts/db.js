@@ -20,7 +20,7 @@ const init = () => {
         db = client.db(dbName);
         dishes = db.collection('dishes');
         test = db.collection('test');
-        //users = db.collection('users');
+        users = db.collection('users');
         return resolve("Success");
       })
       .catch(err => {
@@ -72,6 +72,45 @@ const updateDish = (item, loc, meal) => {
   });
 }
 
+// Handling 'users' collection ------------------------------------------------
+
+// Insert user 'netid' into the database, if it doesn't exist yet
+const insertUser = netid => {
+  return new Promise((resolve, reject) => {
+    users.insertOne({
+      netid: netid,
+      location_prefs: {},
+      dish_prefs: []
+    }, (err, res) => {
+      if (err) return reject(err);
+      if (res.insertedCount != 1) return reject("Error while inserting user");
+      return resolve(res);
+    });
+  });
+}
+
+// Add 'dish' to the dish preferences of user 'netid'
+const addDishPref = (netid, dish) => {
+  return new Promise((resolve, reject) => {
+    users.updateOne({
+      netid: netid
+    }, {
+      $addToSet: { dish_prefs: dish }
+    }, async (err, res) => {
+      let count = await users.countDocuments({netid: netid});
+      if (count != 0) return resolve("Already in preferences");
+      if (err) return reject(err);
+      if (res.modifiedCount == 0)
+        await insertUser(netid)
+          .catch(err => {
+            return reject(err);
+          });
+      return resolve("Success");
+    });
+  });
+}
+
 // Export modules
 module.exports.init = init;
 module.exports.updateDish = updateDish;
+module.exports.addDishPref = addDishPref;

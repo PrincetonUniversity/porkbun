@@ -8,7 +8,8 @@
         <h1>Hello World!</h1>
         <p>Welcome to Porkbun!</p>
         <% if (netid) { %>
-            <p>Your netid is <%= netid %></p>
+            <p>Your netid is <%= netid %> <a href="/auth/logout">(logout)</a></p>
+            <a href="/testadd">Click here to add "Chicken" to preferences (test)</a>
         <% } else { %>
             <a href="/auth/login">Login</a>
         <% } %>
