@@ -1,7 +1,7 @@
 // configuration data for internal modules
 
 // domain and port
-const port = process.argv[2] || 3000;
+const port = process.env.PORT || 3000;
 const host = `http://localhost:${port}`;
 module.exports.port = port;
 module.exports.host = host;
