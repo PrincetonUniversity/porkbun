@@ -3,6 +3,7 @@ require('newrelic');
 const express = require('express');
 const ejs = require('ejs');
 const cron = require('node-cron');
+const cookieSession = require('cookie-session');
 const scraper = require('./scripts/scraper.js');
 const db = require('./scripts/db.js');
 const config = require('./config.js');
