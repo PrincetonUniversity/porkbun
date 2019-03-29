@@ -2,6 +2,7 @@
 // CAUTION: uncomment this when pushing to heroku
 require('newrelic');
 const express = require('express');
+const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const cron = require('node-cron');
 const cookieSession = require('cookie-session');
@@ -18,6 +19,7 @@ app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/dist/views');
 app.use(express.static(__dirname + '/static'));
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // save a cookie 
 app.use(cookieSession({
@@ -37,15 +39,18 @@ app.get('/', function(req, res) {
   });
 });
 
-// TESTING insertion into preferences
-app.get('/testadd', auth.isLoggedIn, function(req, res) {
-  db.addDishPref(req.session.netid, "Chicken");
-  res.redirect('/');
-});
-
 // Default
 app.get(/\/.+/, function(req, res) {
   res.send("Page not found");
+});
+
+// TESTING insertion into preferences
+app.post('/addprefs', auth.isLoggedIn, function(req, res) {
+  if (req.body.dish) {
+    db.addDishPref(req.session.netid, req.body.dish);
+    res.redirect('/');
+  }
+  return;
 });
 
 // Start server
