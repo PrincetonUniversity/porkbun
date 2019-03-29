@@ -3,6 +3,7 @@
 
 # Temporary files used for testing outputs
 temp*
+sample_response
 
 # Local settings
 .vscode
