@@ -10,9 +10,6 @@ exports.config = {
    * Array of application names.
    */
   app_name: ['PorkBun'],
-  process_host: {
-    display_name: "Heroku"
-  }
   /**
    * Your New Relic license key.
    */
