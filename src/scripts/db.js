@@ -102,9 +102,8 @@ const addDishPref = (netid, dish) => {
       if (err) return reject(err);
       if (res.modifiedCount == 0)
         await insertUser(netid)
-          .catch(err => {
-            return reject(err);
-          });
+          .then(() =>   { addDishPref(netid, dish); })
+          .catch(err => { return reject(err);       });
       return resolve("Success");
     });
   });
