@@ -1,11 +1,11 @@
 // Load node modules
+require('newrelic');
 const express = require('express');
 const ejs = require('ejs');
 const cron = require('node-cron');
 const scraper = require('./scripts/scraper.js');
 const db = require('./scripts/db.js');
 const config = require('./config.js');
-const cookieSession = require('cookie-session');
 const auth = require('./controllers/auth.js');
 
 const app = express();
@@ -44,19 +44,17 @@ app.get(/\/.+/, function(req, res) {
 app.listen(config.port, async function() {
   // Scrape dishes into database once every day
   cron.schedule('0 0 0 * * *', () => {
-    console.log("Scraping today's dishes");
+    console.log("Scraping today's dishes: " + new Date());
     scraper.scrapeDishes();
   }, {
     timezone: 'America/New_York'
   });
   
+  // Initialize database
   await db.init()
     .catch(err => {
       console.log(err.message);
     });
 
-  // CAUTION: right now I'm running this code once every day to properly update
-  // the database until we have a server deployed on heroku
-  //scraper.scrapeDishes();
   console.log("Listening on %d", config.port);
 });

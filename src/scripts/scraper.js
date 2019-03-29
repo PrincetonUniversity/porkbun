@@ -64,7 +64,7 @@ const scrapeDishes = async () => {
   const date = new Date();
   for (const loc in locations) {
     await axios.get(getURL(date, locations[loc]))
-      .then(async response => {
+      .then(async res => {
         let $ = cheerio.load(response.data);
         let meals = [];
         $('.card').each((i, elem) => {
@@ -88,8 +88,8 @@ const scrapeDishes = async () => {
           }
         }
       })
-      .catch(error => {
-        throw error;
+      .catch(err => {
+        throw err;
       });
   }
 }
