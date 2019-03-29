@@ -1,6 +1,6 @@
 // Load node modules
 // CAUTION: uncomment this when pushing to heroku
-// require('newrelic');
+require('newrelic');
 const express = require('express');
 const ejs = require('ejs');
 const cron = require('node-cron');
