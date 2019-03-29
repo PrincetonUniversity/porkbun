@@ -35,6 +35,12 @@ app.get('/', function(req, res) {
   });
 });
 
+// TESTING insertion into preferences
+app.get('/testadd', auth.isLoggedIn, function(req, res) {
+  db.addDishPref(req.session.netid, "Chicken");
+  res.redirect('/');
+});
+
 // Default
 app.get(/\/.+/, function(req, res) {
   res.send("Page not found");
