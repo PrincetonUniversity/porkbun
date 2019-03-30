@@ -27,17 +27,17 @@ const getURL = (date, loc) => {
 const getItems = (date, loc) => {
   return new Promise((resolve, reject) => {
     axios.get(getURL(date, locations[loc]))
-      .then(response => {
+      .then(res => {
         let items = [];
-        let $ = cheerio.load(response.data);
+        let $ = cheerio.load(res.data);
         $('.recipe').each((i, recipe) => {
           items.push($(recipe).text()+'\n');
         });
 
         return resolve(items);
       })
-      .catch(error => {
-        return reject(error.message);
+      .catch(err => {
+        return reject(err.message);
       });
   });
 }
@@ -65,7 +65,7 @@ const scrapeDishes = async () => {
   for (const loc in locations) {
     await axios.get(getURL(date, locations[loc]))
       .then(async res => {
-        let $ = cheerio.load(response.data);
+        let $ = cheerio.load(res.data);
         let meals = [];
         $('.card').each((i, elem) => {
           meals.push(elem);
