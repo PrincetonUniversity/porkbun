@@ -1,6 +1,5 @@
 // Load node modules
 const mongodb = require('mongodb');
-const assert = require('assert');
 
 // Constants
 const MongoClient = mongodb.MongoClient;
@@ -76,14 +75,30 @@ const updateDish = (item, loc, meal) => {
 
 // Insert user 'netid' into the database, if it doesn't exist yet
 const insertUser = netid => {
+  let emptyMealPref = {
+    breakfast: [/* e.g. "roma" */],
+    lunch:     [],
+    dinner:    []
+  }
+  
+  let emptyLocPrefs = {
+    sunday:    emptyMealPref,
+    monday:    emptyMealPref,
+    tuesday:   emptyMealPref,
+    wednesday: emptyMealPref,
+    thursday:  emptyMealPref,
+    friday:    emptyMealPref,
+    saturday:  emptyMealPref,
+  }
+
   return new Promise((resolve, reject) => {
     users.insertOne({
       netid: netid,
-      location_prefs: {},
+      location_prefs: emptyLocPrefs,
       dish_prefs: []
     }, (err, res) => {
       if (err) return reject(err);
-      if (res.insertedCount != 1) return reject("Error while inserting user");
+      if (res.insertedCount != 1) return reject('Error while inserting user');
       return resolve(res);
     });
   });
@@ -98,7 +113,7 @@ const addDishPref = (netid, dish) => {
       $addToSet: { dish_prefs: dish }
     }, async (err, res) => {
       let count = await users.countDocuments({netid: netid});
-      if (count != 0) return resolve("Already in preferences");
+      if (count != 0) return resolve('Already in preferences');
       if (err) return reject(err);
       if (res.modifiedCount == 0)
         await insertUser(netid)

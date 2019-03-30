@@ -46,11 +46,9 @@ app.get(/\/.+/, function(req, res) {
 
 // TESTING insertion into preferences
 app.post('/addprefs', auth.isLoggedIn, function(req, res) {
-  if (req.body.dish) {
+  if (req.body.dish) 
     db.addDishPref(req.session.netid, req.body.dish);
-    res.redirect('/');
-  }
-  return;
+  res.redirect('back');
 });
 
 // Start server
