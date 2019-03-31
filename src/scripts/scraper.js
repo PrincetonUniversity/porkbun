@@ -2,7 +2,7 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
 const fs = require('fs');
-const db = require('./db.js');
+const db = require('./db/db.js');
 
 // Constants
 const baseurl = 'http://menus.princeton.edu/dining/_Foodpro/online-menu/menuDetails.asp?';

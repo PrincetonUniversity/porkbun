@@ -7,7 +7,7 @@ const ejs = require('ejs');
 const cron = require('node-cron');
 const cookieSession = require('cookie-session');
 const scraper = require('./scripts/scraper.js');
-const db = require('./scripts/db.js');
+const db = require('./scripts/db/db.js');
 const config = require('./config.js');
 const auth = require('./controllers/auth.js');
 
@@ -48,6 +48,7 @@ app.get(/\/.+/, function(req, res) {
 app.post('/addprefs', auth.isLoggedIn, function(req, res) {
   if (req.body.dish) 
     db.addDishPref(req.session.netid, req.body.dish);
+    db.updateDish("buuz", "test", "test");
   res.redirect('back');
 });
 
@@ -60,12 +61,6 @@ app.listen(config.port, async function() {
   }, {
     timezone: 'America/New_York'
   });
-  
-  // Initialize database
-  await db.init()
-    .catch(err => {
-      console.log(err.message);
-    });
 
   console.log("Listening on %d", config.port);
 });
