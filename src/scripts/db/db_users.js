@@ -38,24 +38,48 @@ const insertUser = netid => {
     });
   }
   
-  // Add 'dish' to the dish preferences of user 'netid'
-  const addDishPref = (netid, dish) => {
-    return new Promise((resolve, reject) => {
-      users.updateOne({
-        netid: netid
-      }, {
-        $addToSet: { dish_prefs: dish }
-      }, async (err, res) => {
-        let count = await users.countDocuments({netid: netid});
-        if (count != 0) return resolve('Already in preferences');
-        if (err) return reject(err);
-        if (res.modifiedCount == 0)
-          await insertUser(netid)
-            .then(() =>   { addDishPref(netid, dish); })
-            .catch(err => { return reject(err);       });
-        return resolve("Success");
-      });
+// Add 'dish' to the dish preferences of user 'netid'
+const addDishPref = (netid, dish) => {
+  return new Promise((resolve, reject) => {
+    users.updateOne({
+      netid: netid
+    }, {
+      $addToSet: { dish_prefs: dish }
+    }, async (err, res) => {
+      let count = await users.countDocuments({netid: netid});
+      if (count != 0) return resolve('Dish already in preferences');
+      if (err) return reject(err);
+      if (res.modifiedCount == 0)
+        await insertUser(netid)
+          .then(() =>   { addDishPref(netid, dish); })
+          .catch(err => { return reject(err);       });
+      return resolve("Success");
     });
-  }
+  });
+}
+
+// add preferred location "location" at preferred meal time "meal" on preferred day
+const addLocationPref = (netid, location, meal, day) => {
+  if (!meal || !day) return; // for now
+
+  let key = `location_prefs.${day}.${meal}`;
+  return new Promise((resolve, reject) => {
+    users.updateOne({
+      netid: netid
+    }, {
+      $push: { [key]: location }
+    }, async (err, res) => {
+      let count = await users.countDocuments({netid: netid});
+      if (count != 0) return resolve('Location already in preferences');
+      if (err) return reject(err);
+      if (res.modifiedCount == 0)
+        await insertUser(netid)
+          .then(() =>   { addLocationPref(netid, location, meal, day); })
+          .catch(err => { return reject(err);       });
+      return resolve("Success");
+    });
+  });
+}
 
 module.exports.addDishPref = addDishPref;
+module.exports.addLocationPref = addLocationPref;

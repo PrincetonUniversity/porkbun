@@ -48,7 +48,6 @@ app.get(/\/.+/, function(req, res) {
 app.post('/addprefs', auth.isLoggedIn, function(req, res) {
   if (req.body.dish) 
     db.addDishPref(req.session.netid, req.body.dish);
-    db.updateDish("buuz", "test", "test");
   res.redirect('back');
 });
 

@@ -16,5 +16,9 @@ const init = () => {
 
 // Export modules
 module.exports.init = init;
-module.exports.updateDish = require('./db_dishes').updateDish;
-module.exports.addDishPref = require('./db_users').addDishPref;
+
+const users = require('./db_users');
+const dishes = require('./db_dishes');
+module.exports.updateDish = dishes.updateDish;
+module.exports.addDishPref = users.addDishPref;
+module.exports.addLocationPref = users.addLocationPref;
