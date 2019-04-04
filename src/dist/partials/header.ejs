@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>PorkBun</title>
+      <link rel="stylesheet" href="/style/styles.css">
+      <!-- Bootstrap v4 -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+         <a class="navbar-brand" href="#">PorkBun</a>
+         <ul class="navbar-nav">
+            <li class="nav-item active">
+               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="#">Preferences</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="#">Weekly Menu</a>
+            </li>
+         </ul>
+
+         <ul class="navbar-nav ml-auto">
+            <% if (netid) { %>
+               <li class="nav-item active">
+                  <a class="nav-link">Welcome, <%= netid %>!<span class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/auth/logout">Logout</a>
+               </li>
+            <% } else { %>
+               <li class="nav-item">
+                  <a class="nav-link" href="/auth/login">Log In</span></a>
+               </li>
+            <% } %>
+         </ul>
+      </nav>

@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>PorkBun</title>
-        <link rel="stylesheet" href="/style/styles.css">
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-        <p>Welcome to Porkbun!</p>
-        <% if (netid) { %>
-            <p>Your netid is <%= netid %> <a href="/auth/logout">(logout)</a></p>
-            <form action="/addprefs" method="post">
-                <label for="dish">Add a dish to your preferences:</label>
-                <input type="text" placeholder="Pork Buns" name="dish" id="dish">
-                <input type="submit">
-            </form>
-        <% } else { %>
+<!-- partials are elements common to all pages -->
+<% include ../partials/header %>
+   <div class="container">
+      <h1>PorkBun</h1>
+      <% if (netid) { %>
+         
+         <form action="/addprefs" method="post">
+            <label for="dish">Add a dish to your preferences:</label>
+            <input type="text" placeholder="Pork Buns" name="dish" id="dish">
+            <input type="submit">
+         </form>
+   
+      <% } else { %>
             <a href="/auth/login">Login</a>
-        <% } %>
-    </body>
-</html>
+      <% } %>
+   </div> 
+<% include ../partials/footer %>

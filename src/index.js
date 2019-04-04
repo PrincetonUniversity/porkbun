@@ -18,7 +18,7 @@ const app = express();
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/dist/views');
-app.use(express.static(__dirname + '/static'));
+app.use(express.static(__dirname + '/dist'));
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // save a cookie 
