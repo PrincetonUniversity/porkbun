@@ -1,12 +1,13 @@
-// Load node modules
+// Load modules --------------------------------------------------------
 // CAUTION: uncomment this when pushing to heroku
-require('newrelic');
+// require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const cron = require('node-cron');
 const cookieSession = require('cookie-session');
 const scraper = require('./scripts/scraper.js');
+const menus = require('./scripts/menus.js');
 const db = require('./scripts/db/db.js');
 const config = require('./config.js');
 const auth = require('./controllers/auth.js');
@@ -34,8 +35,21 @@ app.use('/auth', auth.router);
 
 // GET request handling
 app.get('/', function(req, res) {
-  res.render("index", {
+  res.render('index', {
     netid: req.session.netid
+  });
+});
+
+app.get('/menu', function(req, res) {
+  let mealItems;
+  const reqMeal = req.query.meal;
+  if      (reqMeal == 'breakfast') mealItems = menus.breakfast()[0];
+  else if (reqMeal == 'lunch') mealItems = menus.lunch()[0];
+  else if (reqMeal == 'dinner') mealItems = menus.dinner()[0];
+  else mealItems = menus.lunch()[0];
+  res.render('menu', {
+    netid: req.session.netid,
+    meal: mealItems
   });
 });
 
@@ -51,6 +65,11 @@ app.post('/addprefs', auth.isLoggedIn, function(req, res) {
   res.redirect('back');
 });
 
+// TESTING change meal for menu
+app.post('/changemeal', function(req, res) {
+
+});
+
 // Start server
 app.listen(config.port, async function() {
   // Scrape dishes into database once every day
@@ -61,5 +80,6 @@ app.listen(config.port, async function() {
     timezone: 'America/New_York'
   });
 
+  menus.init();
   console.log("Listening on %d", config.port);
 });

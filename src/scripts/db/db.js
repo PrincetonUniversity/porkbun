@@ -1,6 +1,6 @@
-// Load node modules
+// Load modules
 const mongodb = require('mongodb');
-const config  = require('../../config');
+const config  = require('../../config.js');
 
 // Constants
 const MongoClient = mongodb.MongoClient;

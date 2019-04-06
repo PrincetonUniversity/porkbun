@@ -1,10 +1,10 @@
-// Load node modules
+// Load node modules -----------------------------------------------------------
 const cheerio = require('cheerio');
 const axios = require('axios');
 const fs = require('fs');
 const db = require('./db/db.js');
 
-// Constants
+// Constants -------------------------------------------------------------------
 const baseurl = 'http://menus.princeton.edu/dining/_Foodpro/online-menu/menuDetails.asp?';
 const locations = {
   roma: '01',
@@ -14,6 +14,8 @@ const locations = {
   cjl: '05',
   whitman: '08'
 };
+
+// Methods ---------------------------------------------------------------------
 
 // Get the URL to fetch data from, based on date and dining hall
 const getURL = (date, loc) => {
@@ -94,6 +96,40 @@ const scrapeDishes = async () => {
   }
 }
 
-// Export modules
-module.exports.scrape = scrape;
+// Scrape the menu for a given date and location and return as an array
+const scrapeMenu = (date, loc) => {
+  return new Promise((resolve, reject) => {
+    axios.get(getURL(date, locations[loc]))
+      .then(res => {
+        let $ = cheerio.load(res.data);
+        let items = {
+          Breakfast: [],
+          Lunch:     [],
+          Dinner:    []
+        };
+        
+        $('.card').each((i, item) => {
+          let mealName = $(item).find($('.mealName')).text();
+          if (mealName == "Brunch") mealName = "Lunch";
+
+          const listItems = $(item).find($('.list-group-item'));
+          listItems.each((j, listItem) => {
+            items[mealName].push($(listItem).find($('h6')).text());
+
+            const dishes = $(listItem).find($('.recipe'));
+            dishes.each((k, dish) => {
+              items[mealName].push($(dish).text());
+            });
+          });
+        });
+        return resolve(items);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+}
+
+// Export modules --------------------------------------------------------------
 module.exports.scrapeDishes = scrapeDishes;
+module.exports.scrapeMenu = scrapeMenu;

@@ -5,7 +5,7 @@ database.init()
   .then(db =>   { dishes = db.collection('dishes'); })
   .catch(err => { console.log(err.message); });
 
-// Operatring on 'dishes' collection ------------------------------------------------
+// Operatring on 'dishes' collection -------------------------------------------
 
 // Insert one item into the dishes collection with parameters loc and meal
 const insertDish = (item, loc, meal) => {
