@@ -81,5 +81,13 @@ const addLocationPref = (netid, location, meal, day) => {
   });
 }
 
+// get the user's dish preferences as an array
+const getDishPref = async netid => {
+  let user = await users.findOne({netid:netid});
+  if (!user) return [];
+  return user.dish_prefs;
+}
+
 module.exports.addDishPref = addDishPref;
+module.exports.getDishPref = getDishPref;
 module.exports.addLocationPref = addLocationPref;

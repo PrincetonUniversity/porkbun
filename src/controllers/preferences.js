@@ -7,9 +7,10 @@ const auth = require('./auth.js');
 const router = express.Router();
 
 // Display the preferences page if user is logged in
-router.get('/', auth.isLoggedIn, function(req, res) {
+router.get('/', auth.isLoggedIn, async function(req, res) {
   res.render('preferences', {
     netid: req.session.netid,
+    prefs: await db.getDishPref(req.session.netid)
   });
 });
   
