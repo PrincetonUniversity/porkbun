@@ -35,22 +35,32 @@ app.use('/auth', auth.router);
 
 // GET request handling
 app.get('/', function(req, res) {
-  res.render('index', {
-    netid: req.session.netid
-  });
+  res.redirect('/menu');
 });
 
 app.get('/menu', function(req, res) {
-  let mealItems;
-  const reqMeal = req.query.meal;
-  if      (reqMeal == 'breakfast') mealItems = menus.breakfast()[0];
-  else if (reqMeal == 'lunch') mealItems = menus.lunch()[0];
-  else if (reqMeal == 'dinner') mealItems = menus.dinner()[0];
-  else mealItems = menus.lunch()[0];
+  const mealItems = menus.getMenus(req.query.meal)[0];
+
   res.render('menu', {
     netid: req.session.netid,
     meal: mealItems
   });
+});
+
+app.get('/weekly', function(req, res) {
+  res.render('weekly', {
+
+  });
+});
+
+app.get('/prefs', function(req, res) {
+  res.render('prefs', {
+    netid: req.session.netid
+  });
+});
+
+app.get('/landing', function(req, res) {
+  // Landing page - should basically look pretty and lead to our website
 });
 
 // Default
@@ -65,19 +75,18 @@ app.post('/addprefs', auth.isLoggedIn, function(req, res) {
   res.redirect('back');
 });
 
-// TESTING change meal for menu
-app.post('/changemeal', function(req, res) {
-
-});
-
 // Start server
 app.listen(config.port, async function() {
   // Scrape dishes into database once every day
   cron.schedule('0 0 0 * * *', () => {
     console.log("Scraping today's dishes: " + new Date());
     scraper.scrapeDishes();
-  }, {
-    timezone: 'America/New_York'
+  });
+
+  // Update scraped menus after 8pm each day
+  cron.schedule('0 0 20 * * *', () => {
+    console.log("Updating weekly menus: " + new Date());
+    menus.updateMenus();
   });
 
   menus.init();
