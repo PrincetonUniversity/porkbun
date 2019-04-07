@@ -11,6 +11,7 @@ const menus = require('./scripts/menus.js');
 const db = require('./scripts/db/db.js');
 const config = require('./config.js');
 const auth = require('./controllers/auth.js');
+const prefs = require('./controllers/preferences.js');
 
 const app = express();
 
@@ -29,7 +30,9 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 // 1 day
 }));
 
+// set routers
 app.use('/auth', auth.router);
+app.use('/preferences', prefs.router);
 
 // Routing -------------------------------------------------------------
 
@@ -53,22 +56,9 @@ app.get('/menu', function(req, res) {
   });
 });
 
-app.get('/preferences', auth.isLoggedIn, function(req, res) {
-  res.render('preferences', {
-    netid: req.session.netid,
-  });
-});
-
 // Default
 app.get(/\/.+/, function(req, res) {
   res.send("Page not found");
-});
-
-// TESTING insertion into preferences
-app.post('/addprefs', auth.isLoggedIn, function(req, res) {
-  if (req.body.dish) 
-    db.addDishPref(req.session.netid, req.body.dish);
-  res.redirect('back');
 });
 
 // TESTING change meal for menu
