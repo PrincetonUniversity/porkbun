@@ -53,6 +53,12 @@ app.get('/menu', function(req, res) {
   });
 });
 
+app.get('/preferences', auth.isLoggedIn, function(req, res) {
+  res.render('preferences', {
+    netid: req.session.netid,
+  });
+});
+
 // Default
 app.get(/\/.+/, function(req, res) {
   res.send("Page not found");

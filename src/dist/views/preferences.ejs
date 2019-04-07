@@ -14,7 +14,17 @@
     <% include ../partials/header %>
 
     <div class='container'>
-      <h1>PorkBun</h1>
+      <% if (netid) { %>
+      <form action='/addprefs' method='post'>
+        <h2>Preferences</h2>
+        <label for='dish'>Add a dish to your preferences:</label>
+        <input type='text' placeholder='Pork Buns' name='dish' id='dish'>
+        <input type='submit'>
+      </form>
+
+      <% } else { %>
+      <a href='/auth/login'>Login</a>
+      <% } %>
     </div>
 
     <% include ../partials/footer %>
