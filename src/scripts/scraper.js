@@ -1,7 +1,6 @@
 // Load node modules -----------------------------------------------------------
 const cheerio = require('cheerio');
 const axios = require('axios');
-const fs = require('fs');
 const db = require('./db/db.js');
 
 // Constants -------------------------------------------------------------------
@@ -25,40 +24,11 @@ const getURL = (date, loc) => {
   return `${baseurl}dtdate=${month}%2F${day}%2F${year}&locationNum=${loc}`;
 }
 
-// Scrape individual dining hall menu, based on date and dining hall
-const getItems = (date, loc) => {
-  return new Promise((resolve, reject) => {
-    axios.get(getURL(date, locations[loc]))
-      .then(res => {
-        let items = [];
-        let $ = cheerio.load(res.data);
-        $('.recipe').each((i, recipe) => {
-          items.push($(recipe).text()+'\n');
-        });
-
-        return resolve(items);
-      })
-      .catch(err => {
-        return reject(err.message);
-      });
-  });
-}
-
-// Scrape all dining hall menus for today's menus
-const scrape = async function() {
-  const date = new Date();
-  const file = fs.createWriteStream('./temp');
-
-  for (const loc in locations) {
-    file.write(loc.toUpperCase() + '\n');
-    await getItems(date, loc)
-      .then(items => {
-        items.forEach(item => {
-          file.write(item);
-        });
-      });
-  }
-  file.end("END OF SCRAPING");
+// Format word so it doesn't have any special characters or consecutive spaces
+const formatWord = (word) => {
+  let result = word.replace(/�/g, 'é');
+  result = result.replace(/\s\s+/g, ' ');
+  return result;
 }
 
 // Scrape all of today's dishes into the dishes database
@@ -75,11 +45,12 @@ const scrapeDishes = async () => {
 
         for (meal of meals) {
           const mealName = $(meal).find($('.mealName')).text();
+          if (mealName == "Brunch") mealName = "Lunch";
           const dishes = $(meal).find($('.recipe'));
           
           let items = [];
           dishes.each((i, elem) => {
-            items.push($(elem).text());
+            items.push(formatWord($(elem).text()));
           });
 
           for (item of items) {
@@ -118,7 +89,7 @@ const scrapeMenu = (date, loc) => {
 
             const dishes = $(listItem).find($('.recipe'));
             dishes.each((k, dish) => {
-              items[mealName].push($(dish).text());
+              items[mealName].push(formatWord($(dish).text()));
             });
           });
         });

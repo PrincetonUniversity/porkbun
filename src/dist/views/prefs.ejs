@@ -14,7 +14,17 @@
     <% include ../partials/header %>
 
     <div class='container'>
-      <h1>PorkBun</h1>
+      <h1>Your Preferences</h1>
+      <form action='/preferences/add' method='post'>
+        <ul>
+            <% prefs.forEach(item => { %>
+              <li><%= item %></li>
+            <% }) %>
+        </ul>
+        <label for='dish'>Add a dish to your preferences:</label>
+        <input type='text' placeholder='Pork Buns' name='dish' id='dish'>
+        <input type='submit'>
+      </form>
     </div>
 
     <% include ../partials/footer %>

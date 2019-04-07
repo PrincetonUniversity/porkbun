@@ -22,7 +22,7 @@ router.get("/login", (req, res) => {
 router.get("/verify", (req, res) => {
   // if user is already logged in
   if (req.session.netid) {
-    res.redirect('/');
+    res.redirect(req.session.redirect || '/');
     return;
   }
 
@@ -35,7 +35,7 @@ router.get("/verify", (req, res) => {
     }
 
     req.session.netid = netid;
-    res.redirect('/');
+    res.redirect(req.session.redirect || '/');
   });
 });
 
@@ -51,6 +51,7 @@ const isLoggedIn = (req, res, next) => {
     // move on to the next middleware if user is logged in
     next();
   } else {
+    req.session.redirect = req.originalUrl;
     res.redirect('/auth/login');
   }
 }

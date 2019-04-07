@@ -21,4 +21,5 @@ const users = require('./db_users');
 const dishes = require('./db_dishes');
 module.exports.updateDish = dishes.updateDish;
 module.exports.addDishPref = users.addDishPref;
+module.exports.getDishPref = users.getDishPref;
 module.exports.addLocationPref = users.addLocationPref;
