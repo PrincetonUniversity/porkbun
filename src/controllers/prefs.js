@@ -15,7 +15,7 @@ router.get('/', auth.isLoggedIn, async function(req, res) {
 });
   
 // Insertion into preferences
-router.post('/add', auth.isLoggedIn, function(req, res) {
+router.post('/', auth.isLoggedIn, function(req, res) {
   if (req.body.dish) 
     db.addDishPref(req.session.netid, req.body.dish);
   res.redirect('back');
