@@ -1,9 +1,9 @@
-// load modules
+// Load modules
 const express = require('express');
 const db = require('../scripts/db/db.js');
 const auth = require('./auth.js');
 
-// router for preferences
+// Router for preferences
 const router = express.Router();
 
 // Display the preferences page if user is logged in

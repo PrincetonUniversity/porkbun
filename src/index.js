@@ -41,20 +41,26 @@ app.get('/', function(req, res) {
   res.redirect('/menu');
 });
 
-app.get('/menu', function(req, res) {
-  const mealItems = menus.getMenus(req.query.meal)[0];
+app.get('/menu', async function(req, res) {
+  let prefs;
+  await db.getDishPref(req.session.netid)
+    .then(res => {
+      prefs = res;
+    });
 
   res.render('menu', {
     netid: req.session.netid,
-    meal: mealItems
+    prefs: prefs,
+    meal: menus.getMenus(req.query.meal)[0],
+    highlight: db.matchPrefs
   });
 });
 
 app.get('/weekly', function(req, res) {
   res.render('weekly', {
-
+    netid: req.session.netid
   });
-});
+})
 
 app.get('/landing', function(req, res) {
   res.render('landing', {
@@ -65,11 +71,6 @@ app.get('/landing', function(req, res) {
 // Default
 app.get(/\/.+/, function(req, res) {
   res.send("Page not found");
-});
-
-// TESTING change meal for menu
-app.post('/changemeal', function(req, res) {
-
 });
 
 // Start server

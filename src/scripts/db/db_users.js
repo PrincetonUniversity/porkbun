@@ -34,9 +34,9 @@ const insertUser = netid => {
       if (err) return reject(err);
       if (res.insertedCount != 1) return reject('Error while inserting user');
       return resolve(res);
-      });
     });
-  }
+  });
+}
   
 // Add 'dish' to the dish preferences of user 'netid'
 const addDishPref = (netid, dish) => {
@@ -58,7 +58,7 @@ const addDishPref = (netid, dish) => {
   });
 }
 
-// add preferred location "location" at preferred meal time "meal" on preferred day
+// Add preferred location "location" at preferred meal time "meal" on preferred day
 const addLocationPref = (netid, location, meal, day) => {
   if (!meal || !day) return; // for now
 
@@ -81,13 +81,25 @@ const addLocationPref = (netid, location, meal, day) => {
   });
 }
 
-// get the user's dish preferences as an array
-const getDishPref = async netid => {
-  let user = await users.findOne({netid:netid});
+// Get the user's dish preferences as an array
+const getDishPref = async (netid) => {
+  const user = await users.findOne({ netid: netid });
   if (!user) return [];
   return user.dish_prefs;
 }
 
+// See if given dish is in user's dish preferences
+const matchPrefs = (prefs, menuItem) => {
+  for (var i in prefs) {
+    const rePref = new RegExp(prefs[i], 'i');
+    if (menuItem.match(rePref))
+      return true;
+  }
+  return false;
+}
+
+// Export modules
 module.exports.addDishPref = addDishPref;
 module.exports.getDishPref = getDishPref;
 module.exports.addLocationPref = addLocationPref;
+module.exports.matchPrefs = matchPrefs;

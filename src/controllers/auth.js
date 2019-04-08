@@ -1,26 +1,26 @@
-// load modules
+// Load modules
 const express = require('express');
 const config = require('../config.js');
 const CAS = require('cas');
 
-// auth configuration
+// Auth configuration
 const casUrl = "https://fed.princeton.edu/cas/";
 const cas = new CAS({
   base_url: casUrl,
   service: config.host + '/auth/verify'
 });
 
-// router to handle requests specific to authentication
+// Router to handle requests specific to authentication
 const router = express.Router();
 
-// redirect user to CAS server
+// Redirect user to CAS server
 router.get("/login", (req, res) => {
   res.redirect(casUrl + "login?service=" + config.host + '/auth/verify');
 });
 
-// validate the service ticket sent by CAS
+// Validate the service ticket sent by CAS
 router.get("/verify", (req, res) => {
-  // if user is already logged in
+  // If user is already logged in
   if (req.session.netid) {
     res.redirect(req.session.redirect || '/');
     return;

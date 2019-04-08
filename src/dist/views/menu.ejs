@@ -32,7 +32,11 @@
             <h3><%= hall %></h3>
             <ul>
               <% meal[hall].forEach(item => { %>
-                <li class='dish'><%= item %></li>
+                <% if (highlight(prefs, item)) { %>
+                  <li class='dish match-prefs'><%= item %></li>
+                <% } else { %>
+                  <li class='dish'><%= item %></li>
+                <% } %>
               <% }); %>
             </ul>
           </li>
