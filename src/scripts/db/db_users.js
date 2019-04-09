@@ -46,13 +46,11 @@ const addDishPref = (netid, dish) => {
     }, {
       $addToSet: { dish_prefs: dish }
     }, async (err, res) => {
-      let count = await users.countDocuments({netid: netid});
-      if (count != 0) return resolve('Dish already in preferences');
       if (err) return reject(err);
-      if (res.modifiedCount == 0)
-        await insertUser(netid)
-          .then(() =>   { addDishPref(netid, dish); })
-          .catch(err => { return reject(err);       });
+      if (await users.countDocuments({netid: netid}) == 0) {
+        await insertUser(netid);
+        addDishPref(netid, dish);
+      }
       return resolve("Success");
     });
   });
@@ -67,15 +65,13 @@ const addLocationPref = (netid, location, meal, day) => {
     users.updateOne({
       netid: netid
     }, {
-      $push: { [key]: location }
+      $addToSet: { [key]: location }
     }, async (err, res) => {
-      let count = await users.countDocuments({netid: netid});
-      if (count != 0) return resolve('Location already in preferences');
       if (err) return reject(err);
-      if (res.modifiedCount == 0)
-        await insertUser(netid)
-          .then(() =>   { addLocationPref(netid, location, meal, day); })
-          .catch(err => { return reject(err);       });
+      if (await users.countDocuments({netid: netid}) == 0) {
+        await insertUser(netid);
+        addLocationPref(netid, location, meal, day);
+      }
       return resolve("Success");
     });
   });
