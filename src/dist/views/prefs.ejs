@@ -5,6 +5,7 @@
     <title>PorkBun</title>
     <meta name='author' content='Khatanbuuvei Bold and Justin Chang'>
     <link rel='stylesheet' href='/style/styles.css'>
+    <link rel='stylesheet' href='/style/prefs.css'>
     <!-- Bootstrap v4 -->
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
       integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
@@ -19,11 +20,13 @@
           <h3>Dishes</h3>
           <ul>
             <% prefs.forEach(item => { %>
-              <li><%= item %></li>
+              <li>
+                <%= item %> <a class='remove' href='/prefs/remove?dish=<%= item %>'>(remove)</a>
+              </li>
             <% }) %>
           </ul>
           <form action='/prefs' method='post'>
-            <label style="display:block; margin-top:25px" for='dish'>
+            <label for='dish'>
               <em>Add a dish to your preferences:</em>
             </label>
             <input type='text' placeholder='Pork Buns' name='dish' id='dish'>

@@ -22,5 +22,6 @@ const dishes = require('./db_dishes');
 module.exports.updateDish = dishes.updateDish;
 module.exports.addDishPref = users.addDishPref;
 module.exports.getDishPref = users.getDishPref;
+module.exports.removeDishPref = users.removeDishPref;
 module.exports.addLocationPref = users.addLocationPref;
 module.exports.matchPrefs = users.matchPrefs;

@@ -15,10 +15,18 @@ router.get('/', auth.isLoggedIn, async function(req, res) {
 });
   
 // Insertion into preferences
-router.post('/', auth.isLoggedIn, function(req, res) {
+router.post('/', auth.isLoggedIn, async function(req, res) {
   if (req.body.dish) 
-    db.addDishPref(req.session.netid, req.body.dish);
-  res.redirect('back');
+    await db.addDishPref(req.session.netid, req.body.dish);
+  await db.addLocationPref(req.session.netid, "roma", "lunch", "monday");
+  res.redirect('/prefs');
+});
+
+// Removes dish (dish passed as query parameter)
+router.get('/remove', auth.isLoggedIn, async function(req, res) {
+  if (req.query.dish)
+    await db.removeDishPref(req.session.netid, req.query.dish);
+  res.redirect('/prefs');
 });
 
 module.exports.router = router;

@@ -84,6 +84,20 @@ const getDishPref = async (netid) => {
   return user.dish_prefs;
 }
 
+// Remove 'dish' from user's dish preferences
+const removeDishPref = (netid, dish) => {
+  return new Promise((resolve, reject) => {
+    users.updateOne({
+      netid: netid
+    }, {
+      $pull: { dish_prefs: dish }
+    }, async (err, res) => {
+      if (err) return reject(err);
+      return resolve("Success");
+    });
+  });
+}
+
 // See if given dish is in user's dish preferences
 const matchPrefs = (prefs, menuItem) => {
   for (var i in prefs) {
@@ -97,5 +111,6 @@ const matchPrefs = (prefs, menuItem) => {
 // Export modules
 module.exports.addDishPref = addDishPref;
 module.exports.getDishPref = getDishPref;
+module.exports.removeDishPref = removeDishPref;
 module.exports.addLocationPref = addLocationPref;
 module.exports.matchPrefs = matchPrefs;
