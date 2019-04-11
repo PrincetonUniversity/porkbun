@@ -1,9 +1,6 @@
-const database = require('./db')
-
-var dishes;
-database.init()
-  .then(db =>   { dishes = db.collection('dishes'); })
-  .catch(err => { console.log(err.message); });
+let db = require('./db')
+let dishes = db.dishes;
+if (!dishes) console.log("db_dishes: connection not made to database");
 
 // Operatring on 'dishes' collection -------------------------------------------
 

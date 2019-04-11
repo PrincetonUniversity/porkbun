@@ -6,22 +6,28 @@ const config  = require('../../config.js');
 const MongoClient = mongodb.MongoClient;
 
 // Initialize connection to MongoDB database
-const init = () => {
-  return new Promise((resolve, reject) => {
+async function init() {
+  await new Promise((resolve, reject) => {
     MongoClient.connect(config.dbUri, { useNewUrlParser: true })
-      .then(client => { return resolve(client.db(config.dbName)); })
-      .catch(err =>   { return reject(err); });
+      .then(client => {
+        let db = client.db(config.dbName);
+        module.exports.dishes = db.collection('dishes');
+        module.exports.users = db.collection('users');
+        return resolve("Success");
+      })
+      .catch(err => {
+        return reject(err);
+      });
   });
+
+  const db_users = require('./db_users');
+  const db_dishes = require('./db_dishes');
+  module.exports.updateDish = db_dishes.updateDish;
+  module.exports.addDishPref = db_users.addDishPref;
+  module.exports.getDishPref = db_users.getDishPref;
+  module.exports.removeDishPref = db_users.removeDishPref;
+  module.exports.addLocationPref = db_users.addLocationPref;
+  module.exports.matchPrefs = db_users.matchPrefs;
 }
 
-// Export modules
-module.exports.init = init;
-
-const users = require('./db_users');
-const dishes = require('./db_dishes');
-module.exports.updateDish = dishes.updateDish;
-module.exports.addDishPref = users.addDishPref;
-module.exports.getDishPref = users.getDishPref;
-module.exports.removeDishPref = users.removeDishPref;
-module.exports.addLocationPref = users.addLocationPref;
-module.exports.matchPrefs = users.matchPrefs;
+init();

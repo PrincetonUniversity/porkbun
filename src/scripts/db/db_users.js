@@ -1,9 +1,6 @@
-let database = require('./db')
-
-var users;
-database.init()
-  .then(db =>   { users = db.collection('users'); })
-  .catch(err => { console.log(err.message); });
+let db = require('./db')
+let users = db.users;
+if (!users) console.log("db_users: connection not made to database");
 
 // Operatring on 'users' collection ------------------------------------------------
 
