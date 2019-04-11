@@ -7,33 +7,77 @@
     <link rel='stylesheet' href='/style/styles.css'>
     <link rel='stylesheet' href='/style/prefs.css'>
     <!-- Bootstrap v4 -->
-    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
-      integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
   </head>
 
   <body>
     <% include ../partials/header %>
     <div class='container'>
       <h1>Your Preferences</h1>
-      <ul class="list-inline">
-        <li class="list-inline-item">
-          <h3>Dishes</h3>
-          <ul>
-            <% prefs.forEach(item => { %>
-              <li>
-                <%= item %> <a class='remove' href='/prefs/remove?dish=<%= item %>'>(remove)</a>
-              </li>
-            <% }) %>
-          </ul>
-          <form action='/prefs' method='post'>
-            <label for='dish'>
-              <em>Add a dish to your preferences:</em>
-            </label>
-            <input type='text' placeholder='Pork Buns' name='dish' id='dish'>
-            <input type='submit'>
-          </form>
-        </li>
-      </ul>
+      <div class="container">
+        <div class="row">
+          <!-- Dishes prefs -->
+          <div class="col-sm-12 col-lg-6">
+            <h3>Dishes</h3>
+            <ul class="list-group">
+              <% prefs.forEach(item => { %>
+                <li class="list-group-item">
+                  <%= item %> <a class='remove' href='/prefs/remove?dish=<%= item %>'>(remove)</a>
+                </li>
+              <% }) %>
+            </ul>
+            <form action='/prefs' method='post' id="add-dish-form">
+              <h5>Add a dish to your preferences</h5>
+              <div class="form-group">
+                <input type="text" class="form-control" id="dish-input" name="dish" placeholder="Pork Buns">
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Add</button>
+            </form>
+          </div>
+
+          <!-- Set location preferences -->
+          <div class="col-sm-12 col-lg-6">
+            <h3>Locations</h3>
+            <form action="/prefs/locs" method="post">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="meal" class="col-form-label">Meal</label>
+                  <select class="custom-select" id="meal" name="meal">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="day" class="col-form-label">Day</label>
+                  <select class="custom-select" id="day" name="day">
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5">Friday</option>
+                    <option value="6">Saturday</option>
+                    <option value="7">Sunday</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="dhall" class="col-form-label">Dining Hall</label>
+                  <select class="custom-select" id="dhall" name="dhall">
+                    <option value="roma">RoMa</option>
+                    <option value="wucox">Wu Wilcox</option>
+                    <option value="whitman">Whitman</option>
+                    <option value="forbes">Forbes</option>
+                    <option value="cjl">CJL</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Add</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
     <% include ../partials/footer %>

@@ -22,6 +22,10 @@ router.post('/', auth.isLoggedIn, async function(req, res) {
   res.redirect('/prefs');
 });
 
+router.post('/locs', auth.isLoggedIn, function(req, res) {
+  res.send(req.body);
+});
+
 // Removes dish (dish passed as query parameter)
 router.get('/remove', auth.isLoggedIn, async function(req, res) {
   if (req.query.dish)
