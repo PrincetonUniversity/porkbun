@@ -10,27 +10,9 @@ const meals  = ['breakfast', 'lunch', 'dinner'];
 
 // Insert user 'netid' into the database, if it doesn't exist yet
 const insertUser = netid => {
-  let emptyMealPref = {
-    breakfast: [/* e.g. 'roma' */],
-    lunch:     [],
-    dinner:    []
-  }
-  
-  let emptyLocPrefs = {
-    sun: emptyMealPref,
-    mon: emptyMealPref,
-    tue: emptyMealPref,
-    wed: emptyMealPref,
-    thu: emptyMealPref,
-    fri: emptyMealPref,
-    sat: emptyMealPref,
-  }
-  
   return new Promise((resolve, reject) => {
     users.insertOne({
-      netid: netid,
-      location_prefs: emptyLocPrefs,
-      dish_prefs: []
+      netid: netid
     }, (err, res) => {
       if (err) return reject(err);
       if (res.insertedCount != 1) return reject('Error while inserting user');
