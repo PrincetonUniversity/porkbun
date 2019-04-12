@@ -44,8 +44,6 @@ const addLocationPref = (netid, dhall, meal, day) => {
   if (!meal || !day) return; // for now
 
   if (!dhalls.includes(dhall) || !meals.includes(meal) || !days.includes(day)) {
-    console.log(meal, day, dhall);
-    console.log(meals, days, dhalls);
     console.log('db_users.js: tried to add invalid location preference.');
     return;
   }
