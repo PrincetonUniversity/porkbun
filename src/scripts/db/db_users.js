@@ -1,25 +1,29 @@
 let db = require('./db')
 let users = db.users;
-if (!users) console.log("db_users: connection not made to database");
+if (!users) console.log('db_users.js: connection not made to database');
+
+const dhalls = ['roma', 'wucox', 'whitman', 'forbes', 'cjl'];
+const days   = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+const meals  = ['breakfast', 'lunch', 'dinner'];
 
 // Operatring on 'users' collection ------------------------------------------------
 
 // Insert user 'netid' into the database, if it doesn't exist yet
 const insertUser = netid => {
   let emptyMealPref = {
-    breakfast: [/* e.g. "roma" */],
+    breakfast: [/* e.g. 'roma' */],
     lunch:     [],
     dinner:    []
   }
   
   let emptyLocPrefs = {
-    sunday:    emptyMealPref,
-    monday:    emptyMealPref,
-    tuesday:   emptyMealPref,
-    wednesday: emptyMealPref,
-    thursday:  emptyMealPref,
-    friday:    emptyMealPref,
-    saturday:  emptyMealPref,
+    sun: emptyMealPref,
+    mon: emptyMealPref,
+    tue: emptyMealPref,
+    wed: emptyMealPref,
+    thu: emptyMealPref,
+    fri: emptyMealPref,
+    sat: emptyMealPref,
   }
   
   return new Promise((resolve, reject) => {
@@ -48,28 +52,35 @@ const addDishPref = (netid, dish) => {
         await insertUser(netid);
         addDishPref(netid, dish);
       }
-      return resolve("Success");
+      return resolve('Success');
     });
   });
 }
 
-// Add preferred location "location" at preferred meal time "meal" on preferred day
-const addLocationPref = (netid, location, meal, day) => {
+// Add preferred dining hall at preferred meal time 'meal' on preferred day
+const addLocationPref = (netid, dhall, meal, day) => {
   if (!meal || !day) return; // for now
 
+  if (!dhalls.includes(dhall) || !meals.includes(meal) || !days.includes(day)) {
+    console.log(meal, day, dhall);
+    console.log(meals, days, dhalls);
+    console.log('db_users.js: tried to add invalid location preference.');
+    return;
+  }
+  
   let key = `location_prefs.${day}.${meal}`;
   return new Promise((resolve, reject) => {
     users.updateOne({
       netid: netid
     }, {
-      $addToSet: { [key]: location }
+      $addToSet: { [key]: dhall }
     }, async (err, res) => {
       if (err) return reject(err);
       if (await users.countDocuments({netid: netid}) == 0) {
         await insertUser(netid);
-        addLocationPref(netid, location, meal, day);
+        addLocationPref(netid, dhall, meal, day);
       }
-      return resolve("Success");
+      return resolve('Success');
     });
   });
 }
@@ -90,7 +101,7 @@ const removeDishPref = (netid, dish) => {
       $pull: { dish_prefs: dish }
     }, async (err, res) => {
       if (err) return reject(err);
-      return resolve("Success");
+      return resolve('Success');
     });
   });
 }
@@ -105,7 +116,7 @@ const matchPrefs = (prefs, menuItem) => {
   return false;
 }
 
-// Export modules
+// Export functions
 module.exports.addDishPref = addDishPref;
 module.exports.getDishPref = getDishPref;
 module.exports.removeDishPref = removeDishPref;

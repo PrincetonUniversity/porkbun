@@ -7,27 +7,33 @@ const auth = require('./auth.js');
 const router = express.Router();
 
 // Display the preferences page if user is logged in
-router.get('/', auth.isLoggedIn, async function(req, res) {
+router.get('/', auth.isLoggedIn, async (req, res) => {
   res.render('prefs', {
     netid: req.session.netid,
     prefs: await db.getDishPref(req.session.netid)
   });
 });
   
-// Insertion into preferences
-router.post('/', auth.isLoggedIn, async function(req, res) {
-  if (req.body.dish) 
+// Insert dish into preferences
+router.post('/', auth.isLoggedIn, async (req, res) => {
+  if (req.body.dish)
     await db.addDishPref(req.session.netid, req.body.dish);
-  await db.addLocationPref(req.session.netid, "roma", "lunch", "monday");
   res.redirect('/prefs');
 });
 
-router.post('/locs', auth.isLoggedIn, function(req, res) {
-  res.send(req.body);
+// Insert location, day, and meal time into preferences
+router.post('/locs', auth.isLoggedIn, async (req, res) => {
+  if (req.body.dhall) {
+    let dhall = req.body.dhall;
+    let meal  = req.body.meal;
+    let day   = req.body.day;
+    await db.addLocationPref(req.session.netid, dhall, meal, day);
+  }
+  res.redirect('/prefs');
 });
 
 // Removes dish (dish passed as query parameter)
-router.get('/remove', auth.isLoggedIn, async function(req, res) {
+router.get('/remove', auth.isLoggedIn, async (req, res) => {
   if (req.query.dish)
     await db.removeDishPref(req.session.netid, req.query.dish);
   res.redirect('/prefs');
