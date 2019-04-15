@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>PorkBun</title>
+    <meta name='author' content='Khatanbuuvei Bold and Justin Chang'>
+    <link rel='stylesheet' href='/style/styles.css'>
+    <link rel='stylesheet' href='/style/week.css'>
+    <!-- Bootstrap v4 -->
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
+      integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+  </head>
+
+  <body>
+    <% include ../partials/header %>
+    
+    <div class='container'>
+      <h1>Today's Menu</h1>
+      <form action='/week' method='get'>
+        <button type='submit' name='meal' value='breakfast'>Breakfast</button>
+        <button type='submit' name='meal' value='lunch'>Lunch</button>
+        <button type='submit' name='meal' value='dinner'>Dinner</button>
+      </form>
+      <ul class='list-inline'>
+        <% for (var i = 0; i < weekMenus.length; i++) { %>
+          <li class='list-inline-item date'>
+            <h3><%= (dates[i].getMonth()+1) + "/" + dates[i].getDate() %></h3>
+            <ul>
+              <% for (const hall in weekMenus[i]) { %>
+                <li>
+                  <button class='btn btn-link' type='button' data-toggle='collapse' data-target="<%= '#' + hall + dates[i].getDay() %>" aria-expanded='false' aria-controls="<%= hall + dates[i].getDay() %>">
+                    <h5><%= hall %></h5>
+                  </button>
+
+                  <div id="<%= hall + dates[i].getDay() %>" class='collapse show'>
+                    <div class='card card-body'>
+                      <ul class='dhall'>
+                        <% weekMenus[i][hall].forEach(item => { %>
+                          <% if (highlight(prefs, item)) { %>
+                            <li class='dish match-prefs'><%= item %></li>
+                          <% } else { %>
+                            <li class='dish'><%= item %></li>
+                          <% } %>
+                        <% }); %>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              <% } %>
+            </ul>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+
+    <% include ../partials/footer %>
+  </body>
+</html>

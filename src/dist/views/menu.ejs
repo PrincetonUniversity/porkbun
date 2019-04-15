@@ -16,22 +16,17 @@
     
     <div class='container'>
       <h1>Today's Menu</h1>
-      <!-- <ul class='list-inline'>
-        <a class='list-inline-item' href='/menu/breakfast'>Breakfast</a>
-        <a class='list-inline-item' href='/menu/lunch'>Lunch</a>
-        <a class='list-inline-item' href='/menu/dinner'>Dinner</a>
-      </ul> -->
       <form action='/menu' method='get'>
         <button type='submit' name='meal' value='breakfast'>Breakfast</button>
         <button type='submit' name='meal' value='lunch'>Lunch</button>
         <button type='submit' name='meal' value='dinner'>Dinner</button>
       </form>
-      <ul class='list-inline'>
-        <% for (const hall in meal) { %>
+      <ul class='list-inline dhalls'>
+        <% for (const hall in menus) { %>
           <li class='list-inline-item dhall'>
             <h3><%= hall %></h3>
             <ul>
-              <% meal[hall].forEach(item => { %>
+              <% menus[hall].forEach(item => { %>
                 <% if (highlight(prefs, item)) { %>
                   <li class='dish match-prefs'><%= item %></li>
                 <% } else { %>

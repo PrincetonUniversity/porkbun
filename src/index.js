@@ -47,18 +47,30 @@ app.get('/menu', async function(req, res) {
     .then(res => {
       prefs = res;
     });
+  const rankedMenus = await menus.getRankedMenus(req.session.netid, req.query.meal); 
 
   res.render('menu', {
     netid: req.session.netid,
     prefs: prefs,
-    meal: menus.getMenus(req.query.meal)[0],
+    menus: rankedMenus[0],
     highlight: db.matchPrefs
   });
 });
 
-app.get('/weekly', function(req, res) {
-  res.render('weekly', {
-    netid: req.session.netid
+app.get('/week', async function(req, res) {
+  let prefs;
+  await db.getDishPref(req.session.netid)
+    .then(res => {
+      prefs = res;
+    });
+  const rankedMenus = await menus.getRankedMenus(prefs, req.query.meal);
+
+  res.render('week', {
+    netid: req.session.netid,
+    prefs: prefs,
+    weekMenus: rankedMenus,
+    dates: menus.getDates(),
+    highlight: db.matchPrefs
   });
 })
 

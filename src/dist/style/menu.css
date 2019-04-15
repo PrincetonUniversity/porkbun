@@ -2,9 +2,13 @@
     width: 100%;
 }
 
+.dhalls {
+    margin: auto;
+}
+
 .dhall {
     vertical-align: top;
-    width: 15%;
+    width: 18%;
     text-align: center;
     font-size: 14px;
 }
