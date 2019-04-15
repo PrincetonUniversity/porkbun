@@ -1,5 +1,6 @@
 // Load modules ----------------------------------------------------------------
 const scraper = require('./scraper.js');
+const db = require('./db/db.js');
 
 // Constants -------------------------------------------------------------------
 const locations = [
@@ -8,7 +9,7 @@ const locations = [
   'whitman',
   'forbes',
   'cjl',
-  'grad'
+  //'grad'
 ];
 
 var breakfast = [];
@@ -28,8 +29,9 @@ const init = () => {
 
     const date = new Date();
     for (var i = 0; i < 7; i++) {
+      const tempDate = new Date(date.getTime());
       for (const loc of locations) {
-        await scraper.scrapeMenu(date, loc)
+        await scraper.scrapeMenu(tempDate, loc)
           .then(res => {
             breakfast[i][loc] = res.Breakfast;
             lunch[i][loc]     = res.Lunch;
@@ -59,7 +61,6 @@ const updateMenus = () => {
           lunch[0][loc]     = res.Lunch;
           dinner[0][loc]    = res.Dinner;
         });
-    
     return resolve("Success");
   });
 }
@@ -77,7 +78,56 @@ const getMenus = (meal) => {
   }
 }
 
+// Get dates in the current week
+const getDates = () => {
+  const date = new Date();
+  let dates = [];
+
+  for (var i = 0; i < 7; i++) {
+    const tempDate = new Date(date.getTime());
+    dates.push(tempDate);
+    date.setDate(date.getDate()+1);
+  }
+
+  return dates;
+}
+
+const getRankedMenus = async (prefs, meal) => {
+    const reqMeal = getMenus(meal);
+    if (prefs) return reqMeal;
+
+    let prefCounts = [];
+    for (var i = 0; i < 7; i++) {
+      prefCounts[i] = [];
+      for (const loc of locations) {
+        let count = 0;
+        if (reqMeal[i][loc]) {
+          for (const item of reqMeal[i][loc]) {
+            if (db.matchPrefs(prefs, item))
+              count++;
+          }
+        }
+        prefCounts[i].push([loc, count]);
+      }
+      prefCounts[i].sort(function(a, b) {
+        return (b[1] - a[1]);
+      });
+    }
+
+    let rankedMenu = [];
+    for (var i = 0; i < 7; i++) {
+      rankedMenu[i] = {};
+      for (var j = 0; j < prefCounts[i].length; j++) {
+        let dhall = prefCounts[i][j][0];
+        rankedMenu[i][dhall] = reqMeal[i][dhall];
+      }
+    }
+    return rankedMenu;
+}
+
 // Export modules --------------------------------------------------------------
 module.exports.init = init;
 module.exports.updateMenus = updateMenus;
 module.exports.getMenus = getMenus;
+module.exports.getDates = getDates;
+module.exports.getRankedMenus = getRankedMenus;
