@@ -69,7 +69,7 @@ const addLocationPref = (netid, dhall, meal, day) => {
 const getDishPref = async (netid) => {
   const user = await users.findOne({ netid: netid });
   if (!user) return [];
-  return user.dish_prefs;
+  return user.dish_prefs || [];
 }
 
 // Remove 'dish' from user's dish preferences
