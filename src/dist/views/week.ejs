@@ -9,6 +9,7 @@
     <!-- Bootstrap v4 -->
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
       integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+    <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -24,36 +25,90 @@
         <button type='submit' name='meal' value='lunch'>Lunch</button>
         <button type='submit' name='meal' value='dinner'>Dinner</button>
       </form>
-      <ul class='list-inline'>
-        <% for (var i = 0; i < weekMenus.length; i++) { %>
-          <li class='list-inline-item date'>
-            <h3><%= (dates[i].getMonth()+1) + "/" + dates[i].getDate() %></h3>
-            <ul>
-              <% for (const hall in weekMenus[i]) { %>
-                <li>
-                  <button class='btn btn-link' type='button' data-toggle='collapse' data-target="<%= '#' + hall + dates[i].getDay() %>" aria-expanded='false' aria-controls="<%= hall + dates[i].getDay() %>">
-                    <h5><%= hall %></h5>
-                  </button>
+      
+      <div id='menu-carousel' class='carousel slide' data-ride='carousel' data-interval='false' data-wrap='false'>
+        <ol class='carousel-indicators'>
+          <li data-target='#menu-carousel' data-slide-to='0' class='active'></li>
+          <li data-target='#menu-carousel' data-slide-to='1'></li>
+        </ol>
 
-                  <div id="<%= hall + dates[i].getDay() %>" class='collapse'>
-                    <div class='card card-body'>
-                      <ul class='dhall'>
-                        <% weekMenus[i][hall].forEach(item => { %>
-                          <% if (highlight(prefs, item)) { %>
-                            <li class='dish match-prefs'><%= item %></li>
-                          <% } else { %>
-                            <li class='dish'><%= item %></li>
-                          <% } %>
-                        <% }); %>
-                      </ul>
-                    </div>
-                  </div>
+        <div class='carousel-inner menu-page'>
+          <div class='carousel-item active'>
+            <ul class='list-inline dates'>
+              <% for (var i = 0; i < 4; i++) { %>
+                <li class='list-inline-item date'>
+                  <h3><%= (dates[i].getMonth()+1) + "/" + dates[i].getDate() %></h3>
+                  <ul>
+                    <% for (const hall in weekMenus[i]) { %>
+                      <li>
+                        <button class='btn btn-link' type='button' data-toggle='collapse' data-target="<%= '#' + hall + dates[i].getDay() %>" aria-expanded='false' aria-controls="<%= hall + dates[i].getDay() %>">
+                          <h5><%= hall %></h5>
+                        </button>
+      
+                        <div id="<%= hall + dates[i].getDay() %>" class='collapse'>
+                          <div class='card card-body'>
+                            <ul class='dhall'>
+                              <% weekMenus[i][hall].forEach(item => { %>
+                                <% if (highlight(prefs, item)) { %>
+                                  <li class='dish match-prefs'><%= item %></li>
+                                <% } else { %>
+                                  <li class='dish'><%= item %></li>
+                                <% } %>
+                              <% }); %>
+                            </ul>
+                          </div>
+                        </div>
+                      </li>
+                    <% } %>
+                  </ul>
                 </li>
               <% } %>
             </ul>
-          </li>
-        <% } %>
-      </ul>
+          </div>
+
+          <div class='carousel-item'>
+            <ul class='list-inline dates'>
+              <% for (var i = 4; i < 7; i++) { %>
+                <li class='list-inline-item date'>
+                  <h3><%= (dates[i].getMonth()+1) + "/" + dates[i].getDate() %></h3>
+                  <ul>
+                    <% for (const hall in weekMenus[i]) { %>
+                      <li>
+                        <button class='btn btn-link' type='button' data-toggle='collapse' data-target="<%= '#' + hall + dates[i].getDay() %>" aria-expanded='false' aria-controls="<%= hall + dates[i].getDay() %>">
+                          <h5><%= hall %></h5>
+                        </button>
+      
+                        <div id="<%= hall + dates[i].getDay() %>" class='collapse'>
+                          <div class='card card-body'>
+                            <ul class='dhall'>
+                              <% weekMenus[i][hall].forEach(item => { %>
+                                <% if (highlight(prefs, item)) { %>
+                                  <li class='dish match-prefs'><%= item %></li>
+                                <% } else { %>
+                                  <li class='dish'><%= item %></li>
+                                <% } %>
+                              <% }); %>
+                            </ul>
+                          </div>
+                        </div>
+                      </li>
+                    <% } %>
+                  </ul>
+                </li>
+              <% } %>
+            </ul>
+          </div>
+
+          <a class='carousel-control-prev carousel-button' href='#menu-carousel' role='button' data-slide='prev'>
+            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+            <span class='sr-only'>Previous</span>
+          </a>
+          <a class='carousel-control-next carousel-button' href='#menu-carousel' role='button' data-slide='next'>
+            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+            <span class='sr-only'>Next</span>
+          </a>
+        </div>
+      </div>
     </div>
 
     <% include ../partials/footer %>

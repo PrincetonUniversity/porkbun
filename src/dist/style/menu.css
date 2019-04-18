@@ -1,16 +1,15 @@
-.list-inline {
-    width: 100%;
-}
-
 .dhalls {
-    margin: auto;
+    width: 100%;
+    display: flex;
 }
 
 .dhall {
+    flex: 1;
     vertical-align: top;
-    width: 18%;
     text-align: center;
     font-size: 14px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .dish {

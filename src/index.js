@@ -42,12 +42,8 @@ app.get('/', function(req, res) {
 });
 
 app.get('/menu', async function(req, res) {
-  let prefs;
-  await db.getDishPref(req.session.netid)
-    .then(res => {
-      prefs = res;
-    });
-  const rankedMenus = await menus.getRankedMenus(req.session.netid, req.query.meal); 
+  const prefs = await db.getDishPref(req.session.netid);
+  const rankedMenus = await menus.getRankedMenus(prefs, req.query.meal); 
 
   res.render('menu', {
     netid: req.session.netid,
@@ -58,11 +54,7 @@ app.get('/menu', async function(req, res) {
 });
 
 app.get('/week', async function(req, res) {
-  let prefs;
-  await db.getDishPref(req.session.netid)
-    .then(res => {
-      prefs = res;
-    });
+  const prefs = await db.getDishPref(req.session.netid);
   const rankedMenus = await menus.getRankedMenus(prefs, req.query.meal);
 
   res.render('week', {
