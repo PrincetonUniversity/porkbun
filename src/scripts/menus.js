@@ -33,9 +33,9 @@ const init = () => {
       for (const loc of locations) {
         await scraper.scrapeMenu(tempDate, loc)
           .then(res => {
-            breakfast[i][loc] = res.Breakfast;
-            lunch[i][loc]     = res.Lunch;
-            dinner[i][loc]    = res.Dinner;
+            breakfast[i][loc] = orderMenu(res.Breakfast);
+            lunch[i][loc]     = orderMenu(res.Lunch);
+            dinner[i][loc]    = orderMenu(res.Dinner);
           });
       }
       date.setDate(date.getDate()+1);
@@ -45,37 +45,42 @@ const init = () => {
 }
 
 // Update the menus by shifting all menus forward by one
-const updateMenus = () => {
-  return new Promise(async (resolve, reject) => {
-    for (var i = 6; i > 0; i--) {
-      breakfast[i] = breakfast[i-1];
-      lunch[i]     = lunch[i-1];
-      dinner[i]    = dinner[i-1];
-    }
-  
-    const date = new Date();
-    for (const loc of locations)
-      await scraper.scrapeMenu(date, loc)
-        .then(res => {
-          breakfast[0][loc] = res.Breakfast;
-          lunch[0][loc]     = res.Lunch;
-          dinner[0][loc]    = res.Dinner;
-        });
-    return resolve("Success");
-  });
+const updateMenus = async () => {
+  for (var i = 6; i > 0; i--) {
+    breakfast[i] = breakfast[i-1];
+    lunch[i]     = lunch[i-1];
+    dinner[i]    = dinner[i-1];
+  }
+
+  const date = new Date();
+  for (const loc of locations)
+    await scraper.scrapeMenu(date, loc)
+      .then(res => {
+        breakfast[0][loc] = orderMenu(res.Breakfast);
+        lunch[0][loc]     = orderMenu(res.Lunch);
+        dinner[0][loc]    = orderMenu(res.Dinner);
+      });
 }
 
-// Get menus, based on the given meal
-const getMenus = (meal) => {
-  if      (meal == 'breakfast') return breakfast;
-  else if (meal == 'lunch')     return lunch;
-  else if (meal == 'dinner')    return dinner;
-  else {
-    const hour = new Date().getHours();
-    if (14 <= hour && hour < 20)
-      return dinner;
-    return lunch;
+// Order menus to prioritize entrees
+const orderMenu = (items) => {
+  let priority = [];
+  let normal = [];
+
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].match(/-.*Entree.*-/)) {
+      priority.push(items[i]);
+      for (var j = i + 1; j < items.length; j++) {
+        if (items[j].match(/-.*-/)) break;
+        
+        priority.push(items[j]);
+        i = j;
+      }
+    }
+    else normal.push(items[i]);
   }
+
+  return priority.concat(normal);  
 }
 
 // Get dates in the current week
@@ -92,9 +97,23 @@ const getDates = () => {
   return dates;
 }
 
+// Get menus, based on the given meal
+const getMenus = (meal) => {
+  if      (meal == 'breakfast') return breakfast;
+  else if (meal == 'lunch')     return lunch;
+  else if (meal == 'dinner')    return dinner;
+  else {
+    const hour = new Date().getHours();
+    if (14 <= hour && hour < 20)
+      return dinner;
+    return lunch;
+  }
+}
+
+// Get ranked menus, based on the given meal and prefs
 const getRankedMenus = async (prefs, meal) => {
     const reqMeal = getMenus(meal);
-    if (prefs) return reqMeal;
+    if (!prefs) return reqMeal;
 
     let prefCounts = [];
     for (var i = 0; i < 7; i++) {
