@@ -110,38 +110,69 @@ const getMenus = (meal) => {
   }
 }
 
+// See if given dish is in a set of preferences
+const matchPrefs = (prefs, menuItem) => {
+  for (var i in prefs) {
+    const rePref = new RegExp(prefs[i], 'i');
+    if (menuItem.match(rePref))
+      return true;
+  }
+  return false;
+}
+
 // Get ranked menus, based on the given meal and prefs
 const getRankedMenus = async (prefs, meal) => {
-    const reqMeal = getMenus(meal);
-    if (!prefs) return reqMeal;
+  const reqMeal = getMenus(meal);
+  if (!prefs) return reqMeal;
 
-    let prefCounts = [];
-    for (var i = 0; i < 7; i++) {
-      prefCounts[i] = [];
-      for (const loc of locations) {
-        let count = 0;
-        if (reqMeal[i][loc]) {
-          for (const item of reqMeal[i][loc]) {
-            if (db.matchPrefs(prefs, item))
-              count++;
-          }
+  let prefCounts = [];
+  for (var i = 0; i < 7; i++) {
+    prefCounts[i] = [];
+    for (const loc of locations) {
+      let count = 0;
+      if (reqMeal[i][loc]) {
+        for (const item of reqMeal[i][loc]) {
+          if (matchPrefs(prefs, item))
+            count++;
         }
-        prefCounts[i].push([loc, count]);
       }
-      prefCounts[i].sort(function(a, b) {
-        return (b[1] - a[1]);
-      });
+      prefCounts[i].push([loc, count]);
     }
+    prefCounts[i].sort(function(a, b) {
+      return (b[1] - a[1]);
+    });
+  }
 
-    let rankedMenu = [];
-    for (var i = 0; i < 7; i++) {
-      rankedMenu[i] = {};
-      for (var j = 0; j < prefCounts[i].length; j++) {
-        let dhall = prefCounts[i][j][0];
-        rankedMenu[i][dhall] = reqMeal[i][dhall];
+  let rankedMenu = [];
+  for (var i = 0; i < 7; i++) {
+    rankedMenu[i] = {};
+    for (var j = 0; j < prefCounts[i].length; j++) {
+      let dhall = prefCounts[i][j][0];
+      rankedMenu[i][dhall] = reqMeal[i][dhall];
+    }
+  }
+  return rankedMenu;
+}
+
+// Get matches between menu and prefs
+const getPrefMatches = async (prefs, meal) => {
+  const reqMeal = getMenus(meal);
+  if (!prefs) return reqMeal;
+
+  let matches = [];
+  for (var i = 0; i < 7; i++) {
+    matches[i] = {};
+    for (const loc of locations) {
+      matches[i][loc] = [];
+      if (reqMeal[i][loc]) {
+        for (const item of reqMeal[i][loc]) {
+          if (matchPrefs(prefs, item))
+            matches[i][loc].push(item);
+        }
       }
     }
-    return rankedMenu;
+  }
+  return matches;
 }
 
 // Export modules --------------------------------------------------------------
@@ -150,3 +181,5 @@ module.exports.updateMenus = updateMenus;
 module.exports.getMenus = getMenus;
 module.exports.getDates = getDates;
 module.exports.getRankedMenus = getRankedMenus;
+module.exports.getPrefMatches = getPrefMatches;
+module.exports.matchPrefs = matchPrefs;
