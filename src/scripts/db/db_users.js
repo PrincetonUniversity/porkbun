@@ -96,8 +96,21 @@ const removeDishPref = (netid, dish) => {
 }
 
 // Remove location preference from user database
-const removeLocationPref = (netid, dish) => {
-  // TODO;
+const removeLocationPref = (netid, pref) => {
+  return new Promise((resolve, reject) => {
+    users.updateOne({
+      netid: netid
+    }, {
+      $pull: { location_prefs: {
+        dhall: pref.dhall,
+        day: pref.day,
+        meal: pref.meal
+      } }
+    }, async (err, res) => {
+      if (err) return reject(err);
+      return resolve('Success');
+    });
+  });
 }
 
 // Get the user's dish preferences as an array
@@ -130,5 +143,6 @@ module.exports.getDishPrefs = getDishPrefs;
 module.exports.getLocationPrefs = getLocationPrefs;
 module.exports.removeDishPref = removeDishPref;
 module.exports.addLocationPref = addLocationPref;
+module.exports.removeLocationPref = removeLocationPref;
 module.exports.getLocationPref = addLocationPref;
 module.exports.matchPrefs = matchPrefs;

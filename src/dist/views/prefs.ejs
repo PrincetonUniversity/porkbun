@@ -23,7 +23,8 @@
             <ul class="list-group">
               <% dishPrefs.forEach(item => { %>
                 <li class="list-group-item">
-                  <%= item %> <a class='remove' href='/prefs/remove?dish=<%= item %>'>(remove)</a>
+                  <%= item %> 
+                  <a class='remove' href='/prefs/remove?dish=<%= item %>'>(remove)</a>
                 </li>
               <% }) %>
             </ul>
@@ -41,7 +42,10 @@
             <h3>Locations</h3>
             <ul class="list-group">
               <% locationPrefs.forEach(item => { %>
-                <li class="list-group-item"><%= `${item.meal} at ${item.dhall} on ${item.day}` %></li>
+                <li class="list-group-item">
+                  <%= `${item.meal} at ${item.dhall} on ${item.day}` %>
+                  <a class='remove' href='/prefs/remove?dhall=<%= item.dhall %>&day=<%= item.day %>&meal=<%= item.meal %>'>(remove)</a>
+                </li>
               <% }) %>
             </ul>
             <form action="/prefs/locs" method="post">

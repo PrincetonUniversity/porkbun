@@ -37,6 +37,8 @@ router.post('/locs', auth.isLoggedIn, async (req, res) => {
 router.get('/remove', auth.isLoggedIn, async (req, res) => {
   if (req.query.dish)
     await db.removeDishPref(req.session.netid, req.query.dish);
+  if (req.query.dhall && req.query.day && req.query.meal)
+    await db.removeLocationPref(req.session.netid, req.query);
   res.redirect('/prefs');
 });
 

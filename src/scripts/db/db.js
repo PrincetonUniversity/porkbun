@@ -28,6 +28,7 @@ async function init() {
   module.exports.getLocationPrefs = db_users.getLocationPrefs;
   module.exports.removeDishPref = db_users.removeDishPref;
   module.exports.addLocationPref = db_users.addLocationPref;
+  module.exports.removeLocationPref = db_users.removeLocationPref;
   module.exports.matchPrefs = db_users.matchPrefs;
 }
 
