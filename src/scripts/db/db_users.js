@@ -127,6 +127,7 @@ const matchPrefs = (prefs, menuItem) => {
 // Export functions
 module.exports.addDishPref = addDishPref;
 module.exports.getDishPrefs = getDishPrefs;
+module.exports.getLocationPrefs = getLocationPrefs;
 module.exports.removeDishPref = removeDishPref;
 module.exports.addLocationPref = addLocationPref;
 module.exports.getLocationPref = addLocationPref;

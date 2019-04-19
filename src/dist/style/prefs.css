@@ -2,10 +2,22 @@ h1, h3 {
   text-align: center;
 }
 
-.remove {
-  color: red;
+/* Styling the list of preferences shown */
+
+.list-group {
+  height: 250px;
+  margin-bottom: 10px;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+  -webkit-overflow-scrolling: touch;
 }
 
-#add-dish-form {
-  margin-top: 30px;
+.list-group::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
+}
+
+.remove {
+  color: red;
 }

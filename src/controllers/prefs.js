@@ -10,7 +10,8 @@ const router = express.Router();
 router.get('/', auth.isLoggedIn, async (req, res) => {
   res.render('prefs', {
     netid: req.session.netid,
-    prefs: await db.getDishPrefs(req.session.netid)
+    dishPrefs: await db.getDishPrefs(req.session.netid),
+    locationPrefs: await db.getLocationPrefs(req.session.netid)
   });
 });
   

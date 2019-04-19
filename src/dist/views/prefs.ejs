@@ -21,15 +21,15 @@
           <div class="col-sm-12 col-lg-6">
             <h3>Dishes</h3>
             <ul class="list-group">
-              <% prefs.forEach(item => { %>
+              <% dishPrefs.forEach(item => { %>
                 <li class="list-group-item">
                   <%= item %> <a class='remove' href='/prefs/remove?dish=<%= item %>'>(remove)</a>
                 </li>
               <% }) %>
             </ul>
             <form action='/prefs' method='post' id="add-dish-form">
-              <h5>Add a dish to your preferences</h5>
               <div class="form-group">
+                <label for="dish_input" class="col-form-label">Add a dish to your preferences</label>
                 <input type="text" class="form-control" id="dish-input" name="dish" placeholder="Pork Buns">
               </div>
               <button type="submit" class="btn btn-primary mb-2">Add</button>
@@ -39,9 +39,14 @@
           <!-- Set location preferences -->
           <div class="col-sm-12 col-lg-6">
             <h3>Locations</h3>
+            <ul class="list-group">
+              <% locationPrefs.forEach(item => { %>
+                <li class="list-group-item"><%= `${item.meal} at ${item.dhall} on ${item.day}` %></li>
+              <% }) %>
+            </ul>
             <form action="/prefs/locs" method="post">
               <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                   <label for="meal" class="col-form-label">Meal</label>
                   <select class="custom-select" id="meal" name="meal">
                     <option value="all">All Meals</option>
@@ -50,7 +55,7 @@
                     <option value="dinner">Dinner</option>
                   </select>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                   <label for="day" class="col-form-label">Day</label>
                   <select class="custom-select" id="day" name="day">
                     <option value="all">Everyday</option>
@@ -63,9 +68,7 @@
                     <option value="sun">Sunday</option>
                   </select>
                 </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-4">
                   <label for="dhall" class="col-form-label">Dining Hall</label>
                   <select class="custom-select" id="dhall" name="dhall">
                     <option value="roma">RoMa</option>
@@ -78,18 +81,6 @@
               </div>
               <button type="submit" class="btn btn-primary mb-2">Add</button>
             </form>
-          </div><div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="dhall" class="col-form-label">Dining Hall</label>
-              <select class="custom-select" id="dhall">
-                <option value="1">RoMa</option>
-                <option value="2">Wu Wilcox</option>
-                <option value="3">Whitman</option>
-                <option value="3">Forbes</option>
-                <option value="3">CJL</option>
-              </select>
-              <!-- <input type="text" class="form-control" placeholder="Dining Hall"> -->
-            </div>
           </div>
         </div>
       </div>
