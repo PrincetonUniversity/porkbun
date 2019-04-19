@@ -42,7 +42,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/menu', async function(req, res) {
-  const prefs = await db.getDishPref(req.session.netid);
+  const prefs = await db.getDishPrefs(req.session.netid);
   const rankedMenus = await menus.getRankedMenus(prefs, req.query.meal); 
 
   res.render('menu', {
@@ -54,7 +54,7 @@ app.get('/menu', async function(req, res) {
 });
 
 app.get('/week', async function(req, res) {
-  const prefs = await db.getDishPref(req.session.netid);
+  const prefs = await db.getDishPrefs(req.session.netid);
   const rankedMenus = await menus.getRankedMenus(prefs, req.query.meal);
 
   res.render('week', {

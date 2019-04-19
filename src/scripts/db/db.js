@@ -24,7 +24,7 @@ async function init() {
   const db_dishes = require('./db_dishes');
   module.exports.updateDish = db_dishes.updateDish;
   module.exports.addDishPref = db_users.addDishPref;
-  module.exports.getDishPref = db_users.getDishPref;
+  module.exports.getDishPrefs = db_users.getDishPrefs;
   module.exports.removeDishPref = db_users.removeDishPref;
   module.exports.addLocationPref = db_users.addLocationPref;
   module.exports.matchPrefs = db_users.matchPrefs;

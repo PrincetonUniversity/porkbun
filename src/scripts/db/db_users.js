@@ -6,7 +6,23 @@ const dhalls = ['roma', 'wucox', 'whitman', 'forbes', 'cjl'];
 const days   = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const meals  = ['breakfast', 'lunch', 'dinner'];
 
-// Operatring on 'users' collection ------------------------------------------------
+// Helper functions -----------------------------------------------------------
+
+// Generate location preferences with given queries
+let generatePrefs = (dhall, day, meal, prefs) => {
+  if (day == 'all')
+    days.forEach(d => generatePrefs(dhall, d, meal, prefs));
+  else if (meal == 'all')
+    meals.forEach(m => generatePrefs(dhall, day, m, prefs));
+  else 
+    prefs.push({
+      dhall: dhall,
+      day: day,
+      meal: meal
+    });
+};
+
+// Public methods -------------------------------------------------------------
 
 // Insert user 'netid' into the database, if it doesn't exist yet
 const insertUser = netid => {
@@ -41,19 +57,19 @@ const addDishPref = (netid, dish) => {
 
 // Add preferred dining hall at preferred meal time 'meal' on preferred day
 const addLocationPref = (netid, dhall, meal, day) => {
-  if (!meal || !day) return; // for now
-
   if (!dhalls.includes(dhall) || !meals.includes(meal) || !days.includes(day)) {
-    console.log('db_users.js: tried to add invalid location preference.');
-    return;
+    if (meal != 'all' && day !='all') {
+      console.log('db_users.js: tried to add invalid location preference.');
+      return;
+    }
   }
-  
-  let key = `location_prefs.${day}.${meal}`;
+
+  let prefs = []; generatePrefs(dhall, day, meal, prefs);
   return new Promise((resolve, reject) => {
     users.updateOne({
       netid: netid
     }, {
-      $addToSet: { [key]: dhall }
+      $addToSet: { "location_prefs": { $each:prefs }}
     }, async (err, res) => {
       if (err) return reject(err);
       if (await users.countDocuments({netid: netid}) == 0) {
@@ -63,13 +79,6 @@ const addLocationPref = (netid, dhall, meal, day) => {
       return resolve('Success');
     });
   });
-}
-
-// Get the user's dish preferences as an array
-const getDishPref = async (netid) => {
-  const user = await users.findOne({ netid: netid });
-  if (!user) return [];
-  return user.dish_prefs || [];
 }
 
 // Remove 'dish' from user's dish preferences
@@ -86,6 +95,25 @@ const removeDishPref = (netid, dish) => {
   });
 }
 
+// Remove location preference from user database
+const removeLocationPref = (netid, dish) => {
+  // TODO;
+}
+
+// Get the user's dish preferences as an array
+const getDishPrefs = async (netid) => {
+  const user = await users.findOne({ netid: netid });
+  if (!user) return [];
+  return user.dish_prefs || [];
+}
+
+// Get the user's location preferences as an array
+const getLocationPrefs = async (netid) => {
+  const user = await users.findOne({ netid: netid });
+  if (!user) return [];
+  return user.location_prefs || [];
+}
+
 // See if given dish is in user's dish preferences
 const matchPrefs = (prefs, menuItem) => {
   for (var i in prefs) {
@@ -98,7 +126,8 @@ const matchPrefs = (prefs, menuItem) => {
 
 // Export functions
 module.exports.addDishPref = addDishPref;
-module.exports.getDishPref = getDishPref;
+module.exports.getDishPrefs = getDishPrefs;
 module.exports.removeDishPref = removeDishPref;
 module.exports.addLocationPref = addLocationPref;
+module.exports.getLocationPref = addLocationPref;
 module.exports.matchPrefs = matchPrefs;
