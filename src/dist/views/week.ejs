@@ -86,6 +86,17 @@
                         <button class='btn btn-link' type='button' data-toggle='collapse' data-target="<%= '#' + hall + dates[i].getDay() %>" aria-expanded='false' aria-controls="<%= hall + dates[i].getDay() %>">
                           <h5><%= hall %></h5>
                         </button>
+
+                        <div class='dish-matches'>
+                          <% if (matches[i][hall].length > 0) { %>
+                            <h6>Matches: </h6>
+                          <% } %>
+                          <ul>
+                            <% for (const dish of matches[i][hall]) { %>
+                              <li><%= dish %></li>
+                            <% } %>
+                          </ul>
+                        </div>
       
                         <div id="<%= hall + dates[i].getDay() %>" class='collapse'>
                           <ul class='dhall'>
