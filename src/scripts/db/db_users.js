@@ -6,7 +6,7 @@ const dhalls = ['roma', 'wucox', 'whitman', 'forbes', 'cjl'];
 const days   = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const meals  = ['breakfast', 'lunch', 'dinner'];
 
-// Operatring on 'users' collection ------------------------------------------------
+// Operatring on 'users' collection --------------------------------------------
 
 // Insert user 'netid' into the database, if it doesn't exist yet
 const insertUser = netid => {
@@ -86,19 +86,8 @@ const removeDishPref = (netid, dish) => {
   });
 }
 
-// See if given dish is in user's dish preferences
-const matchPrefs = (prefs, menuItem) => {
-  for (var i in prefs) {
-    const rePref = new RegExp(prefs[i], 'i');
-    if (menuItem.match(rePref))
-      return true;
-  }
-  return false;
-}
-
 // Export functions
 module.exports.addDishPref = addDishPref;
 module.exports.getDishPref = getDishPref;
 module.exports.removeDishPref = removeDishPref;
 module.exports.addLocationPref = addLocationPref;
-module.exports.matchPrefs = matchPrefs;

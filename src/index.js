@@ -49,20 +49,22 @@ app.get('/menu', async function(req, res) {
     netid: req.session.netid,
     prefs: prefs,
     menus: rankedMenus[0],
-    highlight: db.matchPrefs
+    highlight: menus.matchPrefs
   });
 });
 
 app.get('/week', async function(req, res) {
   const prefs = await db.getDishPref(req.session.netid);
   const rankedMenus = await menus.getRankedMenus(prefs, req.query.meal);
+  const prefMatches = await menus.getPrefMatches(prefs, req.query);
 
   res.render('week', {
     netid: req.session.netid,
     prefs: prefs,
     weekMenus: rankedMenus,
+    matches: prefMatches,
     dates: menus.getDates(),
-    highlight: db.matchPrefs
+    highlight: menus.matchPrefs
   });
 })
 
