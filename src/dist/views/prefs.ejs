@@ -41,12 +41,10 @@
           <div class="col-sm-12 col-lg-6">
             <h3>Locations</h3>
             <ul class="list-group">
-              <% locationPrefs.forEach(item => { %>
                 <li class="list-group-item">
-                  <%= `${item.meal} at ${item.dhall} on ${item.day}` %>
-                  <a class='remove' href='/prefs/remove?dhall=<%= item.dhall %>&day=<%= item.day %>&meal=<%= item.meal %>'>(remove)</a>
+                  <%= locationPrefs %>
+                  <a class='remove' href='/prefs/remove?dhall=<%= locationPrefs %>'>(remove)</a>
                 </li>
-              <% }) %>
             </ul>
             <form action="/prefs/locs" method="post">
               <div class="form-row">

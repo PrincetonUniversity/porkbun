@@ -7,35 +7,6 @@ const days   = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const meals  = ['breakfast', 'lunch', 'dinner'];
 
 // Helper functions -----------------------------------------------------------
-
-// Generate location preferences with given queries
-let generatePrefs = (dhall, day, meal, prefs) => {
-  if (day == 'all')
-    days.forEach(d => generatePrefs(dhall, d, meal, prefs));
-  else if (meal == 'all')
-    meals.forEach(m => generatePrefs(dhall, day, m, prefs));
-  else 
-    prefs.push({
-      dhall: dhall,
-      day: day,
-      meal: meal
-    });
-};
-
-// Public methods -------------------------------------------------------------
-
-// Insert user 'netid' into the database, if it doesn't exist yet
-const insertUser = netid => {
-  return new Promise((resolve, reject) => {
-    users.insertOne({
-      netid: netid
-    }, (err, res) => {
-      if (err) return reject(err);
-      if (res.insertedCount != 1) return reject('Error while inserting user');
-      return resolve(res);
-    });
-  });
-}
   
 // Add 'dish' to the dish preferences of user 'netid'
 const addDishPref = (netid, dish) => {
@@ -44,12 +15,11 @@ const addDishPref = (netid, dish) => {
       netid: netid
     }, {
       $addToSet: { dish_prefs: dish }
-    }, async (err, res) => {
+    }, {
+      // 'upsert' option inserts a document before updating, if no matching documents exist
+      upsert: true
+    }, (err, res) => {
       if (err) return reject(err);
-      if (await users.countDocuments({netid: netid}) == 0) {
-        await insertUser(netid);
-        addDishPref(netid, dish);
-      }
       return resolve('Success');
     });
   });
@@ -57,28 +27,29 @@ const addDishPref = (netid, dish) => {
 
 // Add preferred dining hall at preferred meal time 'meal' on preferred day
 const addLocationPref = (netid, dhall, meal, day) => {
-  if (!dhalls.includes(dhall) || !meals.includes(meal) || !days.includes(day)) {
-    if (meal != 'all' && day !='all') {
+  if (day == 'all')
+    days.forEach(async d => { await addLocationPref(netid, dhall, meal, d); });
+  else if (meal == 'all')
+    meals.forEach(async m => { await addLocationPref(netid, dhall, m, day); });
+  else {
+    if (!dhalls.includes(dhall) || !meals.includes(meal) || !days.includes(day)) {
       console.log('db_users.js: tried to add invalid location preference.');
       return;
     }
-  }
-
-  let prefs = []; generatePrefs(dhall, day, meal, prefs);
-  return new Promise((resolve, reject) => {
-    users.updateOne({
-      netid: netid
-    }, {
-      $addToSet: { "location_prefs": { $each:prefs }}
-    }, async (err, res) => {
-      if (err) return reject(err);
-      if (await users.countDocuments({netid: netid}) == 0) {
-        await insertUser(netid);
-        addLocationPref(netid, dhall, meal, day);
-      }
-      return resolve('Success');
+  
+    return new Promise((resolve, reject) => {
+      users.updateOne({
+        netid: netid
+      }, {
+        $addToSet: { [`location_prefs.${day}.${meal}`]: dhall }
+      }, {
+        upsert:true 
+      }, (err, res) => {
+        if (err) return reject(err);
+        return resolve('Success');
+      });
     });
-  });
+  }
 }
 
 // Remove 'dish' from user's dish preferences
@@ -124,7 +95,7 @@ const getDishPrefs = async (netid) => {
 const getLocationPrefs = async (netid) => {
   const user = await users.findOne({ netid: netid });
   if (!user) return [];
-  return user.location_prefs || [];
+  return user.location_prefs || {};
 }
 
 // See if given dish is in user's dish preferences
