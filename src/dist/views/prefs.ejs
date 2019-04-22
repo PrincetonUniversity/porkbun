@@ -70,17 +70,18 @@
                   <% } else { %>
                     <div class="tab-pane fade" id="<%=days[i]%>">
                   <% } %>
-                    <% if (!locationPrefs[short(days[i])]) { %>
-                    <%= `No location preferences on ${days[i]}.` %>
-                    <% } else { %>
-                      <% let dayPrefs = locationPrefs[short(days[i])] %>
+                    <% if (locationPrefs[short(days[i])]) {
+                      let dayPrefs = locationPrefs[short(days[i])] %>
                       <div class="row">
                         <% for (let j = 0; j < 3; j++) { %>
                           <div class="col-sm-12 col-md-4">
                             <h6><%= Meals[j] %></h6>
                             <ul>
                               <% if (dayPrefs[meals[j]]) { dayPrefs[meals[j]].forEach(dhall => { %>
-                                <li><%= dhall %></li>
+                                <li>
+                                  <%= dhall %> 
+                                  <a class="remove" href='/prefs/remove?dhall=<%= dhall %>&meal=<%= meals[j] %>&day=<%= short(days[i]) %>'>remove</a>
+                                </li>
                               <% }) } %>
                             </ul>
                           </div>

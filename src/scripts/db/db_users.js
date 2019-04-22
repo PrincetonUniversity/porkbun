@@ -67,16 +67,12 @@ const removeDishPref = (netid, dish) => {
 }
 
 // Remove location preference from user database
-const removeLocationPref = (netid, pref) => {
+const removeLocationPref = (netid, dhall, meal, day) => {
   return new Promise((resolve, reject) => {
     users.updateOne({
       netid: netid
     }, {
-      $pull: { location_prefs: {
-        dhall: pref.dhall,
-        day: pref.day,
-        meal: pref.meal
-      } }
+      $pull: { [`location_prefs.${day}.${meal}`]: dhall }
     }, async (err, res) => {
       if (err) return reject(err);
       return resolve('Success');
