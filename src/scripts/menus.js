@@ -79,7 +79,6 @@ const orderMenu = (items) => {
     }
     else normal.push(items[i]);
   }
-
   return priority.concat(normal);  
 }
 
@@ -121,43 +120,86 @@ const matchPrefs = (prefs, menuItem) => {
 }
 
 // Get ranked menus, based on the given meal and prefs
-const getRankedMenus = async (prefs, meal) => {
+const getRankedMenus = async (dishPrefs, locPrefs, meal) => {
   const reqMeal = getMenus(meal);
-  if (!prefs) return reqMeal;
+  if (!dishPrefs && !locPrefs) return reqMeal;
 
-  let prefCounts = [];
+  let ranked = [];
   for (var i = 0; i < 7; i++) {
-    prefCounts[i] = [];
+    ranked[i] = [];
     for (const loc of locations) {
-      let count = 0;
+      // Handle dish preferences
+      let dishPrefMatches = 0;
       if (reqMeal[i][loc]) {
         for (const item of reqMeal[i][loc]) {
-          if (matchPrefs(prefs, item))
-            count++;
+          if (matchPrefs(dishPrefs, item))
+            dishPrefMatches++;
         }
       }
-      prefCounts[i].push([loc, count]);
+
+      // Handle location preferences
+      if (meal != 'breakfast' && meal != 'lunch' && meal != 'dinner') {
+        const hour = new Date().getHours();
+        if (14 <= hour && hour < 20) meal = 'dinner';
+        else meal = 'lunch';
+      }
+      const locPrefDay = locPrefs[Object.keys(locPrefs)[i]][meal];
+      const locPrefIndex = locPrefDay ? locPrefDay.indexOf(loc) : -1;
+      ranked[i].push([loc, dishPrefMatches, locPrefIndex]);
     }
-    prefCounts[i].sort(function(a, b) {
-      return (b[1] - a[1]);
-    });
+
+    // Sort based on the ranking algorithm
+    ranked[i].sort(rankingAlgorithm);
   }
 
   let rankedMenu = [];
   for (var i = 0; i < 7; i++) {
     rankedMenu[i] = {};
-    for (var j = 0; j < prefCounts[i].length; j++) {
-      let dhall = prefCounts[i][j][0];
+    for (var j = 0; j < ranked[i].length; j++) {
+      let dhall = ranked[i][j][0];
       rankedMenu[i][dhall] = reqMeal[i][dhall];
     }
   }
   return rankedMenu;
 }
 
+// Ranking algorithm for the various dining hall options for a given meal
+const rankingAlgorithm = (a, b) => {
+  // Case 1: a and b are both not in loc prefs (based on dish matches)
+  if (a[2] == -1 && b[2] == -1)
+    return (b[1] - a[1]);
+  
+  // Case 2: a fits location prefs, but b doesn't (a gets returned)
+  else if (a[2] >= 0 && b[2] == -1)
+    return -1;
+  
+  // Case 3: b fits location prefs, but a doesn't (b gets returned)
+  else if (b[2] >= 0 && a[2] == -1)
+    return 1;
+  
+  // Case 4: a and b are both in loc prefs (based on both dish and loc matches)
+  else {
+    let locDiff, dishDiff;
+    // a's loc is more preferred
+    if (a[2] < b[2]) {
+      locDiff = b[2] - a[2];
+      dishDiff = b[1] - a[1];
+    }
+
+    // b's loc is more preferred 
+    else {
+      locDiff = a[2] - b[2];
+      dishDiff = a[1] - b[1]
+    }
+    
+    return dishDiff - (locDiff * 2);
+  }
+}
+
 // Get matches between menu and prefs
 const getPrefMatches = async (prefs, meal) => {
+  if (!prefs) return null;
   const reqMeal = getMenus(meal);
-  if (!prefs) return reqMeal;
 
   let matches = [];
   for (var i = 0; i < 7; i++) {

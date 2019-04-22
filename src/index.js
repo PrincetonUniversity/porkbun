@@ -42,25 +42,33 @@ app.get('/', function(req, res) {
 });
 
 app.get('/menu', async function(req, res) {
-  const prefs = await db.getDishPrefs(req.session.netid);
-  const rankedMenus = await menus.getRankedMenus(prefs, req.query.meal); 
+  const [dishPrefs, locPrefs] = await Promise.all([
+    db.getDishPrefs(req.session.netid),
+    db.getLocationPrefs(req.session.netid)
+  ]);
+  const rankedMenus = await menus.getRankedMenus(dishPrefs, locPrefs, req.query.meal); 
 
   res.render('menu', {
     netid: req.session.netid,
-    prefs: prefs,
+    prefs: dishPrefs,
     menus: rankedMenus[0],
     highlight: menus.matchPrefs
   });
 });
 
 app.get('/week', async function(req, res) {
-  const prefs = await db.getDishPrefs(req.session.netid);
-  const rankedMenus = await menus.getRankedMenus(prefs, req.query.meal);
-  const prefMatches = await menus.getPrefMatches(prefs, req.query);
+  const [dishPrefs, locPrefs] = await Promise.all([
+    db.getDishPrefs(req.session.netid),
+    db.getLocationPrefs(req.session.netid)
+  ]);
+  const [rankedMenus, prefMatches] = await Promise.all([
+    menus.getRankedMenus(dishPrefs, locPrefs, req.query.meal),
+    menus.getPrefMatches(dishPrefs, req.query.meal)
+  ]);
 
   res.render('week', {
     netid: req.session.netid,
-    prefs: prefs,
+    prefs: dishPrefs,
     weekMenus: rankedMenus,
     matches: prefMatches,
     dates: menus.getDates(),
@@ -71,6 +79,7 @@ app.get('/week', async function(req, res) {
 app.get('/landing', function(req, res) {
   res.render('landing', {
     // Landing page - should basically look pretty and lead to our website
+    netid: req.session.netid
   });
 });
 
