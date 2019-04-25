@@ -23,9 +23,12 @@ router.get('/', auth.isLoggedIn, async (req, res) => {
   
 // Insert dish into preferences
 router.post('/', auth.isLoggedIn, async (req, res) => {
-  if (req.body.dish)
-    await db.addDishPref(req.session.netid, req.body.dish);
-  res.redirect('/prefs');
+  if (req.body.dish) {
+    db.addDishPref(req.session.netid, req.body.dish);
+    res.send("Success");
+  } else {
+    res.send("Empty request");
+  } 
 });
 
 // Insert location, day, and meal time into preferences
@@ -41,7 +44,6 @@ router.post('/locs', auth.isLoggedIn, async (req, res) => {
 
 // Removes dish (dish passed as query parameter)
 router.get('/remove', auth.isLoggedIn, async (req, res) => {
-  console.log(req.query);
   if (req.query.dish)
     await db.removeDishPref(req.session.netid, req.query.dish);
   if (req.query.dhall && req.query.day && req.query.meal)
