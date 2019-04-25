@@ -9,7 +9,6 @@ const locations = [
   'whitman',
   'forbes',
   'cjl',
-  //'grad'
 ];
 
 var breakfast = [];
@@ -122,7 +121,7 @@ const matchPrefs = (prefs, menuItem) => {
 // Get ranked menus, based on the given meal and prefs
 const getRankedMenus = async (dishPrefs, locPrefs, meal) => {
   const reqMeal = getMenus(meal);
-  if (!dishPrefs && !locPrefs) return reqMeal;
+  if (dishPrefs.length == 0 && locPrefs.length == 0) return reqMeal;
 
   let ranked = [];
   for (var i = 0; i < 7; i++) {
@@ -138,13 +137,17 @@ const getRankedMenus = async (dishPrefs, locPrefs, meal) => {
       }
 
       // Handle location preferences
-      if (meal != 'breakfast' && meal != 'lunch' && meal != 'dinner') {
-        const hour = new Date().getHours();
-        if (14 <= hour && hour < 20) meal = 'dinner';
-        else meal = 'lunch';
+      let locPrefIndex = -1;
+      if (Object.keys(locPrefs).length > 0) {
+        if (meal != 'breakfast' && meal != 'lunch' && meal != 'dinner') {
+          const hour = new Date().getHours();
+          if (14 <= hour && hour < 20) meal = 'dinner';
+          else meal = 'lunch';
+        }
+        const locPrefDay = locPrefs[Object.keys(locPrefs)[i]][meal];
+        if (locPrefDay) locPrefIndex = locPrefDay.indexOf(loc);
+        console.log(locPrefIndex);
       }
-      const locPrefDay = locPrefs[Object.keys(locPrefs)[i]][meal];
-      const locPrefIndex = locPrefDay ? locPrefDay.indexOf(loc) : -1;
       ranked[i].push([loc, dishPrefMatches, locPrefIndex]);
     }
 
@@ -185,7 +188,7 @@ const rankingAlgorithm = (a, b) => {
       locDiff = b[2] - a[2];
       dishDiff = b[1] - a[1];
     }
-
+    
     // b's loc is more preferred 
     else {
       locDiff = a[2] - b[2];
