@@ -46,4 +46,24 @@ const updateDish = (item, loc, meal) => {
   });
 }
 
+// 
+const findDishes = (input) => {
+  return new Promise((resolve, reject) => {
+    const reDish = new RegExp(input, 'i');
+    const query = { name: reDish };
+    const sort = { count: -1 };
+
+    let matches = [];
+    dishes.find(query).sort(sort).toArray((err, res) => {
+      if (err) return reject(err);
+      
+      for (var i = 0; i < 10; i++) {
+        if (res[i]) matches.push(res[i].name);
+      }
+      return resolve(matches);
+    });
+  })
+}
+
 module.exports.updateDish = updateDish;
+module.exports.findDishes = findDishes;

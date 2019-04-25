@@ -20,16 +20,19 @@ async function init() {
       });
   });
 
-  const db_users = require('./db_users');
   const db_dishes = require('./db_dishes');
   module.exports.updateDish = db_dishes.updateDish;
-  module.exports.addDishPref = db_users.addDishPref;
-  module.exports.getDishPrefs = db_users.getDishPrefs;
-  module.exports.getLocationPrefs = db_users.getLocationPrefs;
-  module.exports.removeDishPref = db_users.removeDishPref;
-  module.exports.addLocationPref = db_users.addLocationPref;
+  module.exports.findDishes = db_dishes.findDishes;
+
+  const db_users = require('./db_users');
+  module.exports.addDishPref        = db_users.addDishPref;
+  module.exports.getDishPrefs       = db_users.getDishPrefs;
+  module.exports.getLocationPrefs   = db_users.getLocationPrefs;
+  module.exports.removeDishPref     = db_users.removeDishPref;
+  module.exports.addLocationPref    = db_users.addLocationPref;
   module.exports.removeLocationPref = db_users.removeLocationPref;
-  module.exports.matchPrefs = db_users.matchPrefs;
+  module.exports.matchPrefs         = db_users.matchPrefs;
 }
 
-init();
+//init();
+module.exports.init = init;

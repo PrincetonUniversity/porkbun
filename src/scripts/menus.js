@@ -1,6 +1,5 @@
 // Load modules ----------------------------------------------------------------
 const scraper = require('./scraper.js');
-const db = require('./db/db.js');
 
 // Constants -------------------------------------------------------------------
 const locations = [
@@ -123,6 +122,7 @@ const getRankedMenus = async (dishPrefs, locPrefs, meal) => {
   const reqMeal = getMenus(meal);
   if (dishPrefs.length == 0 && locPrefs.length == 0) return reqMeal;
 
+  const dates = getDates();
   let ranked = [];
   for (var i = 0; i < 7; i++) {
     ranked[i] = [];
@@ -144,9 +144,9 @@ const getRankedMenus = async (dishPrefs, locPrefs, meal) => {
           if (14 <= hour && hour < 20) meal = 'dinner';
           else meal = 'lunch';
         }
-        const locPrefDay = locPrefs[Object.keys(locPrefs)[i]][meal];
+        const day = dates[i].getDay();
+        const locPrefDay = locPrefs[Object.keys(locPrefs)[day]][meal];
         if (locPrefDay) locPrefIndex = locPrefDay.indexOf(loc);
-        console.log(locPrefIndex);
       }
       ranked[i].push([loc, dishPrefMatches, locPrefIndex]);
     }
@@ -183,19 +183,19 @@ const rankingAlgorithm = (a, b) => {
   // Case 4: a and b are both in loc prefs (based on both dish and loc matches)
   else {
     let locDiff, dishDiff;
+
     // a's loc is more preferred
     if (a[2] < b[2]) {
-      locDiff = b[2] - a[2];
-      dishDiff = b[1] - a[1];
+      locDiff  = b[2] - a[2];   // how many more indices a is above b
+      dishDiff = b[1] - a[1];   // how many more matches b has than a
+      return dishDiff - locDiff;
     }
-    
     // b's loc is more preferred 
     else {
-      locDiff = a[2] - b[2];
-      dishDiff = a[1] - b[1]
+      locDiff  = a[2] - b[2];   // how many more indices b is above a
+      dishDiff = a[1] - b[1];   // how many more matches a has than b
+      return locDiff - dishDiff;
     }
-    
-    return dishDiff - (locDiff * 2);
   }
 }
 

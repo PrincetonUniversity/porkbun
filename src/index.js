@@ -1,6 +1,6 @@
 // Load modules --------------------------------------------------------
 // CAUTION: uncomment this when pushing to heroku
-require('newrelic');
+//require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
@@ -102,6 +102,6 @@ app.listen(config.port, async function() {
     menus.updateMenus();
   });
 
-  menus.init();
+  await Promise.all([ db.init(), menus.init() ]);
   console.log("Listening on %d", config.port);
 });

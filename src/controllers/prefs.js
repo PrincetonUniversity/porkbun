@@ -8,10 +8,16 @@ const router = express.Router();
 
 // Display the preferences page if user is logged in
 router.get('/', auth.isLoggedIn, async (req, res) => {
+  const [dishPrefs, locPrefs] = await Promise.all([
+    db.getDishPrefs(req.session.netid),
+    db.getLocationPrefs(req.session.netid)
+  ]);
+
   res.render('prefs', {
     netid: req.session.netid,
-    dishPrefs: await db.getDishPrefs(req.session.netid),
-    locationPrefs: await db.getLocationPrefs(req.session.netid)
+    dishPrefs: dishPrefs,
+    locationPrefs: locPrefs,
+    autocomplete: db.findDishes
   });
 });
   
