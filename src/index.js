@@ -1,6 +1,6 @@
 // Load modules --------------------------------------------------------
 // CAUTION: uncomment this when pushing to heroku
-// require('newrelic');
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
