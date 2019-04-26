@@ -30,7 +30,7 @@
             <ul class="list-group" id="dish-list">
               <% dishPrefs.forEach(item => { %>
                 <li class="list-group-item">
-                  <%= item %> 
+                  <span class='dish-item'><%= item %></span> 
                   <a class='remove' href='/prefs/remove?dish=<%= item %>'>(remove)</a>
                 </li>
               <% }) %>
