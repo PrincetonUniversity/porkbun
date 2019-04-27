@@ -21,25 +21,26 @@ router.get('/', auth.isLoggedIn, async (req, res) => {
   });
 });
   
-// Insert dish into preferences
+// Insert dish into preferences, and echo the dish added
 router.post('/', auth.isLoggedIn, async (req, res) => {
-  if (req.body.dish) {
+  if (req.body.dish)
     db.addDishPref(req.session.netid, req.body.dish);
-    res.send("Success");
-  } else {
-    res.send("Empty request");
-  } 
+  res.send(req.body.dish || '');
 });
 
-// Insert location, day, and meal time into preferences
+// Insert location, day, and meal time into preferences and echo the pref added
 router.post('/locs', auth.isLoggedIn, async (req, res) => {
   if (req.body.dhall) {
     let dhall = req.body.dhall;
     let meal  = req.body.meal;
     let day   = req.body.day;
-    await db.addLocationPref(req.session.netid, dhall, meal, day);
-  }
-  res.redirect('/prefs');
+    db.addLocationPref(req.session.netid, dhall, meal, day);
+    res.send({
+      dhall: dhall,
+      meal: meal,
+      day: day
+    });
+  } else res.send('');
 });
 
 // Removes dish (dish passed as query parameter)

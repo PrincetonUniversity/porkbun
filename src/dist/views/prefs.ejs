@@ -10,15 +10,17 @@
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <% const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %>
-    <% const short = x => x.substring(0,3).toLowerCase() %>
+    <% const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] %>
+    <% const daysLong = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %>
     <% const meals = ['breakfast', 'lunch', 'dinner'] %>
     <% const Meals = ['Breakfast', 'Lunch', 'Dinner'] %>
   </head>
 
   <body>
+    
     <% include ../partials/header %>
     <div class='container'>
       <h1>Your Preferences</h1>
@@ -27,7 +29,7 @@
           <!-- DISH PREFERENCES -->
           <div class="col-sm-12 col-lg-6">
             <h3>Dishes</h3>
-            <ul class="list-group" id="dish-list">
+            <ul class="list-group" id="dishprefs">
               <% dishPrefs.forEach(item => { %>
                 <li class="list-group-item">
                   <span class='dish-item'><%= item %></span> 
@@ -52,78 +54,74 @@
             <div id="locprefs">
               <ul class="nav nav-tabs" id="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#Sunday" role="tab">Sun</a>
+                  <a class="nav-link active" data-toggle="tab" href="#sun" role="tab">Sun</a>
                 </li>
                 <% for (let i = 1; i < 7; i++) { %>
                   <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#<%= days[i] %>" role="tab"><%= days[i].substring(0,3) %></a>
+                    <a class="nav-link" data-toggle="tab" href="#<%= days[i] %>" role="tab"><%= daysLong[i].substring(0,3) %></a>
                   </li>
                 <% } %>
               </ul>
-              <div class="tab-content" id="tabcontents">
+              <div class="tab-content">
                 <% for (let i = 0; i < 7; i++) { %>
                   <% if (i == 0) { %>
                     <div class="tab-pane fade show active" id="<%=days[i]%>">
                   <% } else { %>
                     <div class="tab-pane fade" id="<%=days[i]%>">
                   <% } %>
-                    <% if (locationPrefs[short(days[i])]) {
-                      let dayPrefs = locationPrefs[short(days[i])] %>
-                      <div class="row">
-                        <% for (let j = 0; j < 3; j++) { %>
-                          <div class="col-sm-12 col-md-4">
-                            <h6><%= Meals[j] %></h6>
-                            <ul>
-                              <% if (dayPrefs[meals[j]]) { dayPrefs[meals[j]].forEach(dhall => { %>
-                                <li>
-                                  <%= dhall %> 
-                                  <a class="remove" href='/prefs/remove?dhall=<%= dhall %>&meal=<%= meals[j] %>&day=<%= short(days[i]) %>'>remove</a>
-                                </li>
-                              <% }) } %>
-                            </ul>
-                          </div>
-                        <% } %>
-                      </div>
-                    <% } %>
+                    <% let dayPrefs = locationPrefs[days[i]] || { breakfast:[], lunch:[], dinner:[] }%>
+                    <div class="row">
+                      <% for (let j = 0; j < 3; j++) { %>
+                        <div class="col-sm-12 col-md-4">
+                          <h6><%= Meals[j] %></h6>
+                          <ul id="<%= `${days[i]}-${meals[j]}` %>">
+                            <% if (dayPrefs[meals[j]]) { dayPrefs[meals[j]].forEach(dhall => { %>
+                              <li>
+                                <span><%= dhall %></span>
+                                <a class="remove" href='/prefs/remove?dhall=<%= dhall %>&meal=<%= meals[j] %>&day=<%= days[i] %>'>remove</a>
+                              </li>
+                            <% }) } %>
+                          </ul>
+                        </div>
+                      <% } %>
+                    </div>
                   </div>
                 <% } %>
               </div>
             </div>
 
             <!-- Update location preferences -->
-            <form action="/prefs/locs" method="post">
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="meal" class="col-form-label">Meal</label>
-                  <select class="custom-select" id="meal" name="meal">
-                    <option value="all">All Meals</option>
-                    <option value="breakfast">Breakfast</option>
-                    <option value="lunch">Lunch</option>
-                    <option value="dinner">Dinner</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="day" class="col-form-label">Day</label>
-                  <select class="custom-select" id="day" name="day">
-                    <option value="all">Everyday</option>
-                    <% for (let i = 0; i < 7; i++) { %>
-                      <option value=<%=short(days[i])%>><%= days[i] %></option>
-                    <% } %>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="dhall" class="col-form-label">Dining Hall</label>
-                  <select class="custom-select" id="dhall" name="dhall">
-                    <option value="roma">RoMa</option>
-                    <option value="wucox">Wu Wilcox</option>
-                    <option value="whitman">Whitman</option>
-                    <option value="forbes">Forbes</option>
-                    <option value="cjl">CJL</option>
-                  </select>
-                </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="meal" class="col-form-label">Meal</label>
+                <select class="custom-select" id="meal" name="meal">
+                  <option value="all">All Meals</option>
+                  <option value="breakfast">Breakfast</option>
+                  <option value="lunch">Lunch</option>
+                  <option value="dinner">Dinner</option>
+                </select>
               </div>
-              <button type="submit" class="btn btn-primary mb-2">Add</button>
-            </form>
+              <div class="form-group col-md-4">
+                <label for="day" class="col-form-label">Day</label>
+                <select class="custom-select" id="day" name="day">
+                  <option value="all">Everyday</option>
+                  <% for (let i = 0; i < 7; i++) { %>
+                    <option value=<%=days[i]%>><%= daysLong[i] %></option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="dhall" class="col-form-label">Dining Hall</label>
+                <select class="custom-select" id="dhall" name="dhall">
+                  <option value="roma">RoMa</option>
+                  <option value="wucox">Wu Wilcox</option>
+                  <option value="whitman">Whitman</option>
+                  <option value="forbes">Forbes</option>
+                  <option value="cjl">CJL</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" id="loc-submit">Add</button>
           </div>
         </div>
       </div>
