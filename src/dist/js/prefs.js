@@ -76,3 +76,8 @@ $('#loc-submit').click(function() {
     }
   });
 });
+
+// Drag and drop functionality
+$(function() {
+  $(".dhall-list").sortable();
+});

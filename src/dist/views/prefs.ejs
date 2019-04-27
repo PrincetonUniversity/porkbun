@@ -74,7 +74,7 @@
                       <% for (let j = 0; j < 3; j++) { %>
                         <div class="col-sm-12 col-md-4">
                           <h6><%= Meals[j] %></h6>
-                          <ul id="<%= `${days[i]}-${meals[j]}` %>">
+                          <ul class="dhall-list" id="<%= `${days[i]}-${meals[j]}` %>">
                             <% if (dayPrefs[meals[j]]) { dayPrefs[meals[j]].forEach(dhall => { %>
                               <li>
                                 <span><%= dhall %></span>
