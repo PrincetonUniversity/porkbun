@@ -52,6 +52,20 @@ const addLocationPref = (netid, dhall, meal, day) => {
   }
 }
 
+// Update the ranking of dhalls for a given meal and day (dhalls must be ranked)
+const updateLocationRank = (netid, dhalls, meal, day) => {
+  return new Promise((resolve, reject) => {
+    users.updateOne({
+      netid: netid
+    }, {
+      $set: { [`location_prefs.${day}.${meal}`]: dhalls }
+    }, (err, res) => {
+      if (err) return reject(err);
+      return resolve('Success');
+    });
+  });
+}
+
 // Remove 'dish' from user's dish preferences
 const removeDishPref = (netid, dish) => {
   return new Promise((resolve, reject) => {
@@ -110,6 +124,7 @@ module.exports.getDishPrefs = getDishPrefs;
 module.exports.getLocationPrefs = getLocationPrefs;
 module.exports.removeDishPref = removeDishPref;
 module.exports.addLocationPref = addLocationPref;
+module.exports.updateLocationRank = updateLocationRank;
 module.exports.removeLocationPref = removeLocationPref;
 module.exports.getLocationPref = addLocationPref;
 module.exports.matchPrefs = matchPrefs;

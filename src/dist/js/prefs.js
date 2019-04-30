@@ -60,6 +60,7 @@ function addPref(day, meal, dhall) {
         <span>${dhall}</span>
         <a class="remove" href='/prefs/remove?dhall=${dhall}&meal=${meal}&day=${day}'>remove</a>
       </li>`);
+    locationPrefs[day][meal].add(dhall);
   }
 } 
 
@@ -79,5 +80,19 @@ $('#loc-submit').click(function() {
 
 // Drag and drop functionality
 $(function() {
-  $(".dhall-list").sortable();
+  $(".dhall-list").sortable({
+    stop: function () {
+      let ranked = [];
+      $(this).children().children('span').each(function() {
+        ranked.push($(this).text());
+      });
+
+      let id = $(this).attr('id'); // id format: '[day]-[meal]'
+      $.post('prefs/rank', {
+        day: id.substr(0, id.indexOf('-')),
+        meal: id.substr(id.indexOf('-')+1),
+        dhalls: ranked
+      });
+    }
+  });
 });

@@ -22,15 +22,18 @@ router.get('/', auth.isLoggedIn, async (req, res) => {
 });
   
 // Insert dish into preferences, and echo the dish added
-router.post('/', auth.isLoggedIn, async (req, res) => {
-  if (req.body.dish)
+router.post('/', auth.isLoggedIn, (req, res) => {
+  if (req.body.dish) {
     db.addDishPref(req.session.netid, req.body.dish);
-  res.send(req.body.dish || '');
+    res.send(req.body.dish);
+  } else {
+    res.status(400);
+  }
 });
 
 // Insert location, day, and meal time into preferences and echo the pref added
-router.post('/locs', auth.isLoggedIn, async (req, res) => {
-  if (req.body.dhall) {
+router.post('/locs', auth.isLoggedIn, (req, res) => {
+  if (req.body.dhall && req.body.day && req.body.meal) {
     let dhall = req.body.dhall;
     let meal  = req.body.meal;
     let day   = req.body.day;
@@ -40,7 +43,22 @@ router.post('/locs', auth.isLoggedIn, async (req, res) => {
       meal: meal,
       day: day
     });
-  } else res.send('');
+  } else {
+    res.status(400);
+  }
+});
+
+// Updates the ranking of location preferences for a given day and meal
+router.post('/rank', auth.isLoggedIn, (req, res) => {
+  if (req.body.dhalls && req.body.day && req.body.meal) {
+    let dhalls = req.body.dhalls;
+    let meal   = req.body.meal;
+    let day    = req.body.day;
+    db.updateLocationRank(req.session.netid, dhalls, meal, day);
+    res.send('Success');
+  } else {
+    res.status(400);
+  }
 });
 
 // Removes dish (dish passed as query parameter)
