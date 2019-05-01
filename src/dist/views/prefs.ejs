@@ -33,7 +33,7 @@
               <% dishPrefs.forEach(item => { %>
                 <li class="list-group-item">
                   <span class='dish-item'><%= item %></span> 
-                  <a class='remove' href='/prefs/remove?dish=<%= item %>'>(remove)</a>
+                  <span class='remove'>(remove)</span>
                 </li>
               <% }) %>
             </ul>
@@ -77,8 +77,8 @@
                           <ul class="dhall-list" id="<%= `${days[i]}-${meals[j]}` %>">
                             <% if (dayPrefs[meals[j]]) { dayPrefs[meals[j]].forEach(dhall => { %>
                               <li>
-                                <span><%= dhall %></span>
-                                <a class="remove" href='/prefs/remove?dhall=<%= dhall %>&meal=<%= meals[j] %>&day=<%= days[i] %>'>remove</a>
+                                <span class="dhall-item"><%= dhall %></span>
+                                <span class="remove">remove</a>
                               </li>
                             <% }) } %>
                           </ul>

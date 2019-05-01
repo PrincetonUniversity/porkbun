@@ -23,6 +23,7 @@ h1, h3 {
 
 .remove {
   color: red;
+  cursor: pointer
 }
 
 #locprefs {

@@ -33,10 +33,10 @@ router.post('/', auth.isLoggedIn, (req, res) => {
 
 // Insert location, day, and meal time into preferences and echo the pref added
 router.post('/locs', auth.isLoggedIn, (req, res) => {
-  if (req.body.dhall && req.body.day && req.body.meal) {
-    let dhall = req.body.dhall;
-    let meal  = req.body.meal;
-    let day   = req.body.day;
+  let dhall = req.body.dhall;
+  let meal  = req.body.meal;
+  let day   = req.body.day;
+  if (dhall && day && meal) {
     db.addLocationPref(req.session.netid, dhall, meal, day);
     res.send({
       dhall: dhall,
@@ -50,10 +50,10 @@ router.post('/locs', auth.isLoggedIn, (req, res) => {
 
 // Updates the ranking of location preferences for a given day and meal
 router.post('/rank', auth.isLoggedIn, (req, res) => {
-  if (req.body.dhalls && req.body.day && req.body.meal) {
-    let dhalls = req.body.dhalls;
-    let meal   = req.body.meal;
-    let day    = req.body.day;
+  let dhalls = req.body.dhalls;
+  let meal   = req.body.meal;
+  let day    = req.body.day;
+  if (dhalls && day && meal) {
     db.updateLocationRank(req.session.netid, dhalls, meal, day);
     res.send('Success');
   } else {
@@ -67,11 +67,15 @@ router.get('/remove', auth.isLoggedIn, async (req, res) => {
   let dhall = req.query.dhall;
   let meal = req.query.meal;
   let day = req.query.day;
-  if (dish)
-    await db.removeDishPref(req.session.netid, dish);
-  if (dhall && day && meal)
-    await db.removeLocationPref(req.session.netid, dhall, meal, day);
-  res.redirect('/prefs');
+  if (dish) {
+    db.removeDishPref(req.session.netid, dish);
+    res.send(`Removed ${dish}`);
+  } else if (dhall && day && meal) {
+    db.removeLocationPref(req.session.netid, dhall, meal, day);
+    res.send(`Removed ${day} ${meal} ${dhall}`);
+  } else {
+    res.status(400);
+  }
 });
 
 module.exports.router = router;

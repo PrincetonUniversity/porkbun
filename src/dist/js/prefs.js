@@ -16,12 +16,23 @@ $('#dish-submit').click(function() {
       $('#dishprefs').append(
         `<li class="list-group-item" data-dishname=${res}>
           <span class='dish-item'>${res}</span>  
-          <a class='remove' href='/prefs/remove?dish=${res}'>(remove)</a>
+          <span class='remove'>(remove)</a>
         </li>`);
       dishPrefs.add(res);
     }
   });
   $('#dish-input').val('');
+});
+
+// Delete a dish asynchronously and remove from page
+$(document).on('click', '.dish-item + .remove', function() {
+  let dish = $(this).prev().text();
+  $.get(`/prefs/remove?dish=${dish}`,
+    res => { 
+      console.log(res);
+      dishPrefs.delete(dish); 
+      $(this).parent().remove();
+    });
 });
 
 // Location preferences -------------------------------------------------------
@@ -34,7 +45,7 @@ for (day of days) {
   locationPrefs[day] = {};
   for (meal of meals) {
     locationPrefs[day][meal] = new Set();
-    $(`ul#${day}-${meal} li span`).each(function() {
+    $(`#${day}-${meal} li .dhall-item`).each(function() {
       locationPrefs[day][meal].add($(this).text());
     });
   }
@@ -57,8 +68,8 @@ function addPref(day, meal, dhall) {
   else if (!locationPrefs[day][meal].has(dhall)) {
     $(`#${day}-${meal}`).append(
       `<li>
-        <span>${dhall}</span>
-        <a class="remove" href='/prefs/remove?dhall=${dhall}&meal=${meal}&day=${day}'>remove</a>
+        <span class="dhall-item">${dhall}</span>
+        <span class="remove">remove</span>
       </li>`);
     locationPrefs[day][meal].add(dhall);
   }
@@ -78,12 +89,12 @@ $('#loc-submit').click(function() {
   });
 });
 
-// Drag and drop functionality
+// Location prefs drag and drop functionality
 $(function() {
   $(".dhall-list").sortable({
     stop: function () {
       let ranked = [];
-      $(this).children().children('span').each(function() {
+      $(this).children().children('.dhall-item').each(function() {
         ranked.push($(this).text());
       });
 
@@ -95,4 +106,18 @@ $(function() {
       });
     }
   });
+});
+
+// Delete a location pref asynchronously and remove from page
+$(document).on('click', '.dhall-item + .remove', function() {
+  let id = $(this).parent().parent().attr('id');
+  let dhall = $(this).prev().text();
+  let day = id.substr(0, id.indexOf('-'));
+  let meal = id.substr(id.indexOf('-')+1);
+  $.get(`/prefs/remove?dhall=${dhall}&meal=${meal}&day=${day}`,
+    res => { 
+      console.log(res);
+      locationPrefs[day][meal].delete(dhall); 
+      $(this).parent().remove();
+    });
 });
