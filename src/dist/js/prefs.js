@@ -6,22 +6,59 @@ $('span.dish-item').each(function() {
   dishPrefs.add($(this).text());
 });
 
-// Add dish preference asynchronously and add to page
-$('#dish-submit').click(function() {
+// Append autocomplete entries based on changes to input field
+$('#dish-input').on('input', function() {
+  $.post('/prefs/auto', {
+    input: $('#dish-input').val()
+  }, res => {
+    $('#autocomplete').empty();
+    res.forEach(item => {
+      $('#autocomplete').append(
+        `<li class='list-group-item'>
+          <span class='autocomplete-item'>${item}</span>
+        </li>`
+      );
+    });
+  });
+});
+
+// Add dish preference based on click to a suggested autocomplete
+$(document).on('click', '.autocomplete-item', function() {
+  console.log($(this).text());
   $.post('/prefs', {
-    dish: $('#dish-input').val()
-  }, 
-  res => {
+    dish: $(this).text()
+  }, res => {
     if (res && !dishPrefs.has(res)) {
       $('#dishprefs').append(
         `<li class="list-group-item" data-dishname=${res}>
           <span class='dish-item'>${res}</span>  
           <span class='remove'>(remove)</a>
-        </li>`);
+        </li>`
+      );
       dishPrefs.add(res);
     }
   });
   $('#dish-input').val('');
+  $('#autocomplete').empty();
+});
+
+// Add dish preference asynchronously and add to page
+$('#dish-submit').click(function() {
+  $.post('/prefs', {
+    dish: $('#dish-input').val()
+  }, res => {
+    if (res && !dishPrefs.has(res)) {
+      $('#dishprefs').append(
+        `<li class="list-group-item" data-dishname=${res}>
+          <span class='dish-item'>${res}</span>  
+          <span class='remove'>(remove)</a>
+        </li>`
+      );
+      dishPrefs.add(res);
+    }
+  });
+  $('#dish-input').val('');
+  $('#autocomplete').empty();
 });
 
 // Delete a dish asynchronously and remove from page

@@ -17,7 +17,6 @@ router.get('/', auth.isLoggedIn, async (req, res) => {
     netid: req.session.netid,
     dishPrefs: dishPrefs,
     locationPrefs: locPrefs,
-    autocomplete: db.findDishes
   });
 });
   
@@ -47,6 +46,12 @@ router.post('/locs', auth.isLoggedIn, (req, res) => {
     res.status(400);
   }
 });
+
+router.post('/auto', auth.isLoggedIn, async (req, res) => {
+  let input = req.body.input;
+  let suggestions = await db.findDishes(input);
+  res.send(suggestions);
+})
 
 // Updates the ranking of location preferences for a given day and meal
 router.post('/rank', auth.isLoggedIn, (req, res) => {

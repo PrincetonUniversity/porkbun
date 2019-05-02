@@ -20,8 +20,8 @@
   </head>
 
   <body>
-    
     <% include ../partials/header %>
+
     <div class='container'>
       <h1>Your Preferences</h1>
       <div class="container">
@@ -42,6 +42,8 @@
             <div class="form-group">
               <label for="dish_input" class="col-form-label">Add a dish to your preferences</label>
               <input type="text" class="form-control" id="dish-input" placeholder="Pork Buns">
+              <ul id='autocomplete' class='list-group'>
+              </ul>
             </div>
             <button class="btn btn-primary mb-2" id="dish-submit">Add</button>
           </div>

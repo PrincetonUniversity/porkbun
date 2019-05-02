@@ -46,18 +46,21 @@ const updateDish = (item, loc, meal) => {
   });
 }
 
-// 
+// Find a ranked array of dishes (max size 5) based on the given input
 const findDishes = (input) => {
   return new Promise((resolve, reject) => {
+    let matches = [];
+    if (!/\S/.test(input))
+      return resolve(matches);
+
     const reDish = new RegExp(input, 'i');
     const query = { name: reDish };
     const sort = { count: -1 };
 
-    let matches = [];
     dishes.find(query).sort(sort).toArray((err, res) => {
       if (err) return reject(err);
       
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < 5; i++) {
         if (res[i]) matches.push(res[i].name);
       }
       return resolve(matches);
