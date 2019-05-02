@@ -51,6 +51,7 @@ app.get('/menu', async function(req, res) {
   res.render('menu', {
     netid: req.session.netid,
     prefs: dishPrefs,
+    meal: menus.getMeal(req.query.meal),
     menus: rankedMenus[0],
     highlight: menus.matchPrefs
   });
@@ -69,6 +70,7 @@ app.get('/week', async function(req, res) {
   res.render('week', {
     netid: req.session.netid,
     prefs: dishPrefs,
+    meal: menus.getMeal(req.query.meal),
     weekMenus: rankedMenus,
     matches: prefMatches,
     dates: menus.getDates(),

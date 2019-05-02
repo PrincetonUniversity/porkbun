@@ -94,6 +94,19 @@ const getDates = () => {
   return dates;
 }
 
+// Get name of meal, based on time and url
+const getMeal = (meal) => {
+  if      (meal == 'breakfast') return "Breakfast";
+  else if (meal == 'lunch')     return "Lunch";
+  else if (meal == 'dinner')    return "Dinner";
+  else {
+    const hour = new Date().getHours();
+    if (14 <= hour && hour < 20)
+      return "Dinner";
+    return "Lunch";
+  }
+}
+
 // Get menus, based on the given meal
 const getMenus = (meal) => {
   if      (meal == 'breakfast') return breakfast;
@@ -111,7 +124,7 @@ const getMenus = (meal) => {
 const matchPrefs = (prefs, menuItem) => {
   for (var i in prefs) {
     const rePref = new RegExp(prefs[i], 'i');
-    if (menuItem.match(rePref))
+    if (menuItem.match(rePref) && !/--.*--/.test(menuItem))
       return true;
   }
   return false;
@@ -224,6 +237,7 @@ const getPrefMatches = async (prefs, meal) => {
 module.exports.init = init;
 module.exports.updateMenus = updateMenus;
 module.exports.getMenus = getMenus;
+module.exports.getMeal = getMeal;
 module.exports.getDates = getDates;
 module.exports.getRankedMenus = getRankedMenus;
 module.exports.getPrefMatches = getPrefMatches;

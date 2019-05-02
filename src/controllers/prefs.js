@@ -72,8 +72,9 @@ router.get('/remove', auth.isLoggedIn, async (req, res) => {
   let dhall = req.query.dhall;
   let meal = req.query.meal;
   let day = req.query.day;
+  console.log(dish);
   if (dish) {
-    db.removeDishPref(req.session.netid, dish);
+    await db.removeDishPref(req.session.netid, dish);
     res.send(`Removed ${dish}`);
   } else if (dhall && day && meal) {
     db.removeLocationPref(req.session.netid, dhall, meal, day);

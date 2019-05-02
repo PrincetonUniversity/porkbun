@@ -1,4 +1,9 @@
-h1, h3 {
+h1 {
+  text-align: center;
+  padding-top: 25px;
+} 
+
+h3 {
   text-align: center;
 }
 
@@ -24,6 +29,10 @@ h1, h3 {
 .remove {
   color: red;
   cursor: pointer
+}
+
+#autocomplete {
+  height: 0px;
 }
 
 #locprefs {

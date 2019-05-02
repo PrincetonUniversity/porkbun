@@ -12,6 +12,7 @@ $('#dish-input').on('input', function() {
     input: $('#dish-input').val()
   }, res => {
     $('#autocomplete').empty();
+    $('#autocomplete').css('height', `${res.length * 55}px`);
     res.forEach(item => {
       $('#autocomplete').append(
         `<li class='list-group-item'>
@@ -24,7 +25,6 @@ $('#dish-input').on('input', function() {
 
 // Add dish preference based on click to a suggested autocomplete
 $(document).on('click', '.autocomplete-item', function() {
-  console.log($(this).text());
   $.post('/prefs', {
     dish: $(this).text()
   }, res => {
@@ -40,6 +40,7 @@ $(document).on('click', '.autocomplete-item', function() {
   });
   $('#dish-input').val('');
   $('#autocomplete').empty();
+  $('#autocomplete').css('height', '0px');
 });
 
 // Add dish preference asynchronously and add to page
@@ -59,6 +60,7 @@ $('#dish-submit').click(function() {
   });
   $('#dish-input').val('');
   $('#autocomplete').empty();
+  $('#autocomplete').css('height', '0px');
 });
 
 // Delete a dish asynchronously and remove from page

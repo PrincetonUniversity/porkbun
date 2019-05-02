@@ -13,14 +13,23 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      function changeActive() {
+        let doc = document.getElementById('nav-link-week');
+        doc.className += " active";
+      }
+      window.onload = changeActive;
+    </script>
+    <% const daysLong = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %>
+    <% const hallNames = { roma: "RoMa", wucox: "Wu/Wilcox", whitman: "Whitman", forbes: "Forbes", cjl: "CJL" } %>
   </head>
 
   <body>
     <% include ../partials/header %>
     
     <div class='container'>
-      <h1>Today's Menu</h1>
-      <form action='/week' method='get'>
+      <h1>This Week's Menu - <%= meal %></h1>
+      <form id='meal-select' action='/week' method='get'>
         <button type='submit' name='meal' value='breakfast'>Breakfast</button>
         <button type='submit' name='meal' value='lunch'>Lunch</button>
         <button type='submit' name='meal' value='dinner'>Dinner</button>
@@ -37,17 +46,17 @@
             <ul class='list-inline dates'>
               <% for (var i = 0; i < 4; i++) { %>
                 <li class='list-inline-item date'>
-                  <h3><%= (dates[i].getMonth()+1) + "/" + dates[i].getDate() %></h3>
+                  <h3><%= daysLong[dates[i].getDay()].substring(0, 3) + " " + (dates[i].getMonth()+1) + "/" + dates[i].getDate() %></h3>
                   <ul>
                     <% for (const hall in weekMenus[i]) { %>
                       <li class='card card-body'>
                         <button class='btn btn-link' type='button' data-toggle='collapse' data-target="<%= '#' + hall + dates[i].getDay() %>" aria-expanded='false' aria-controls="<%= hall + dates[i].getDay() %>">
-                          <h5><%= hall %></h5>
+                          <h5><%= hallNames[hall] %></h5>
                         </button>
 
                         <div class='dish-matches'>
                           <% if (matches && matches[i][hall].length > 0) { %>
-                            <h6>Matches: </h6>
+                            <h6>Matches:</h6>
                           <% } %>
                           <ul>
                             <% for (const dish of matches[i][hall]) { %>
@@ -57,6 +66,7 @@
                         </div>
       
                         <div id="<%= hall + dates[i].getDay() %>" class='collapse'>
+                          <hr>
                           <ul class='dhall'>
                             <% weekMenus[i][hall].forEach(item => { %>
                               <% if (highlight(prefs, item)) { %>
@@ -79,12 +89,12 @@
             <ul class='list-inline dates'>
               <% for (var i = 4; i < 7; i++) { %>
                 <li class='list-inline-item date'>
-                  <h3><%= (dates[i].getMonth()+1) + "/" + dates[i].getDate() %></h3>
+                  <h3><%= daysLong[dates[i].getDay()].substring(0, 3) + " " + (dates[i].getMonth()+1) + "/" + dates[i].getDate() %></h3>
                   <ul>
                     <% for (const hall in weekMenus[i]) { %>
                       <li class='card card-body'>
                         <button class='btn btn-link' type='button' data-toggle='collapse' data-target="<%= '#' + hall + dates[i].getDay() %>" aria-expanded='false' aria-controls="<%= hall + dates[i].getDay() %>">
-                          <h5><%= hall %></h5>
+                          <h5><%= hallNames[hall] %></h5>
                         </button>
 
                         <div class='dish-matches'>

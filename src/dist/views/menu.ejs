@@ -9,22 +9,32 @@
     <!-- Bootstrap v4 -->
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
       integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+    <script type="text/javascript">
+      function changeActive() {
+        let doc = document.getElementById('nav-link-menu');
+        doc.className += " active";
+      }
+      window.onload = changeActive;
+    </script>
+    <% const hallNames = { roma: "RoMa", wucox: "Wu/Wilcox", whitman: "Whitman", forbes: "Forbes", cjl: "CJL" } %>
   </head>
 
   <body>
     <% include ../partials/header %>
     
     <div class='container menu'>
-      <h1>Today's Menu</h1>
-      <form action='/menu' method='get'>
+      <h1>Today's Menu - <%= meal %></h1>
+
+      <form id='meal-select' action='/menu' method='get'>
         <button type='submit' name='meal' value='breakfast'>Breakfast</button>
         <button type='submit' name='meal' value='lunch'>Lunch</button>
         <button type='submit' name='meal' value='dinner'>Dinner</button>
       </form>
+
       <ul class='list-inline dhalls'>
         <% for (const hall in menus) { %>
           <li class='list-inline-item dhall'>
-            <h3><%= hall %></h3>
+            <h3><%= hallNames[hall] %></h3>
             <ul>
               <% menus[hall].forEach(item => { %>
                 <% if (highlight(prefs, item)) { %>

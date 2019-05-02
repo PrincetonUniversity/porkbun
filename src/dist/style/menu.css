@@ -1,3 +1,19 @@
+h1 {
+    text-align: center;
+    padding-top: 25px;
+}
+
+#meal-select {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+#meal-select button {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
 .dhalls {
     width: 100%;
     display: flex;
