@@ -67,18 +67,22 @@ router.post('/rank', auth.isLoggedIn, (req, res) => {
 });
 
 // Removes dish (dish passed as query parameter)
-router.get('/remove', auth.isLoggedIn, async (req, res) => {
-  let dish = req.query.dish;
-  let dhall = req.query.dhall;
-  let meal = req.query.meal;
-  let day = req.query.day;
+router.post('/remove', auth.isLoggedIn, async (req, res) => {
+  let dish = req.body.dish;
+  let dhall = req.body.dhall;
+  let meal = req.body.meal;
+  let day = req.body.day;
   console.log(dish);
   if (dish) {
-    await db.removeDishPref(req.session.netid, dish);
-    res.send(`Removed ${dish}`);
+    db.removeDishPref(req.session.netid, dish);
+    res.send(dish);
   } else if (dhall && day && meal) {
     db.removeLocationPref(req.session.netid, dhall, meal, day);
-    res.send(`Removed ${day} ${meal} ${dhall}`);
+    res.send({
+      dhall: dhall,
+      meal: meal,
+      day: day
+    });
   } else {
     res.status(400);
   }

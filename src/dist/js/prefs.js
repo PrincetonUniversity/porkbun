@@ -52,7 +52,7 @@ $('#dish-submit').click(function() {
       $('#dishprefs').append(
         `<li class="list-group-item" data-dishname=${res}>
           <span class='dish-item'>${res}</span>  
-          <span class='remove'>(remove)</a>
+          <span class='remove'>(remove)</span>
         </li>`
       );
       dishPrefs.add(res);
@@ -65,11 +65,10 @@ $('#dish-submit').click(function() {
 
 // Delete a dish asynchronously and remove from page
 $(document).on('click', '.dish-item + .remove', function() {
-  let dish = $(this).prev().text();
-  $.get(`/prefs/remove?dish=${dish}`,
-    res => { 
-      console.log(res);
-      dishPrefs.delete(dish); 
+  $.post(`/prefs/remove`, {
+    dish: $(this).prev().text()
+  }, res => {
+      dishPrefs.delete(res); 
       $(this).parent().remove();
     });
 });
@@ -150,13 +149,12 @@ $(function() {
 // Delete a location pref asynchronously and remove from page
 $(document).on('click', '.dhall-item + .remove', function() {
   let id = $(this).parent().parent().attr('id');
-  let dhall = $(this).prev().text();
-  let day = id.substr(0, id.indexOf('-'));
-  let meal = id.substr(id.indexOf('-')+1);
-  $.get(`/prefs/remove?dhall=${dhall}&meal=${meal}&day=${day}`,
-    res => { 
-      console.log(res);
-      locationPrefs[day][meal].delete(dhall); 
+  $.post(`/prefs/remove`, {
+    dhall: $(this).prev().text(),
+    day: id.substr(0, id.indexOf('-')),
+    meal: id.substr(id.indexOf('-')+1)
+  }, res => {
+      locationPrefs[day][meal].delete(res.dhall); 
       $(this).parent().remove();
     });
 });
