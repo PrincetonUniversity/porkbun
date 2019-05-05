@@ -1,3 +1,7 @@
+body {
+  overflow: overlay;
+}
+
 h1 {
   text-align: center;
   padding-top: 25px;
@@ -9,16 +13,21 @@ h3 {
 
 .list-group {
   height: 250px;
-  margin-bottom: 10px;
-  overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE 10+ */
+  overflow-y: overlay;
+  scrollbar-width: 5px; /* Firefox */
+  -ms-overflow-style: 5px;  /* IE 10+ */
   -webkit-overflow-scrolling: touch;
 }
-
 .list-group::-webkit-scrollbar { /* WebKit */
-  width: 0;
-  height: 0;
+  width: 5px;
+}
+.list-group::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px; 
+}
+.list-group::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px; 
 }
 
 .nav-tabs .nav-item {
@@ -32,6 +41,7 @@ h3 {
 }
 
 #autocomplete {
+  cursor: pointer;
   height: 0px;
 }
 

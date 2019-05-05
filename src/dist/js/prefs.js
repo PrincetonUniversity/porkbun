@@ -15,8 +15,8 @@ $('#dish-input').on('input', function() {
     $('#autocomplete').css('height', `${res.length * 55}px`);
     res.forEach(item => {
       $('#autocomplete').append(
-        `<li class='list-group-item'>
-          <span class='autocomplete-item'>${item}</span>
+        `<li class='list-group-item autocomplete-item'>
+          ${item}
         </li>`
       );
     });
