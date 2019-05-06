@@ -1,11 +1,11 @@
 body {
     font-family: 'Lato', sans-serif;
-    background-image: url("landing.jpg");
-    background-color: rgba(255, 255, 255, 0.8);
+    background-image: url("dumplings.jpg");
+    background-color: rgba(255, 255, 255, 0.9);
     background-blend-mode: lighten;
     background-size: 100%;
     background-position-x: center;
-    background-position-y: 1500px;
+    background-position-y: 800px;
 }
 
 ul {
