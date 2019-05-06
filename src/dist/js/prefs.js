@@ -30,9 +30,9 @@ $(document).on('click', '.autocomplete-item', function() {
   }, res => {
     if (res && !dishPrefs.has(res)) {
       $('#dishprefs').append(
-        `<li class="list-group-item" data-dishname=${res}>
+        `<li class="list-group-item">
           <span class='dish-item'>${res}</span>  
-          <span class='remove'>(remove)</a>
+          <span class='remove'><i class="fas fa-times"></i></a>
         </li>`
       );
       dishPrefs.add(res);
@@ -50,9 +50,9 @@ $('#dish-submit').click(function() {
   }, res => {
     if (res && !dishPrefs.has(res)) {
       $('#dishprefs').append(
-        `<li class="list-group-item" data-dishname=${res}>
+        `<li class="list-group-item">
           <span class='dish-item'>${res}</span>  
-          <span class='remove'>(remove)</span>
+          <span class='remove'><i class="fas fa-times"></i></span>
         </li>`
       );
       dishPrefs.add(res);
@@ -100,14 +100,14 @@ function switchTabs(day) {
 // Add location preference asynchronously and add to page
 function addPref(day, meal, dhall) {
   if (day == 'all')
-    days.forEach(d => { addPref(d, meal, dhall) });
+    days.forEach(async d => { addPref(d, meal, dhall) });
   else if (meal == 'all')
-    meals.forEach(m => { addPref(day, m, dhall) });
+    meals.forEach(async m => { addPref(day, m, dhall) });
   else if (!locationPrefs[day][meal].has(dhall)) {
     $(`#${day}-${meal}`).append(
-      `<li>
+      `<li class="list-group-item" style="padding-top:4px;padding-bottom:4px">
         <span class="dhall-item">${dhall}</span>
-        <span class="remove">remove</span>
+        <span class="remove"><i class="fas fa-times"></i></span>
       </li>`);
     locationPrefs[day][meal].add(dhall);
   }
@@ -154,7 +154,7 @@ $(document).on('click', '.dhall-item + .remove', function() {
     day: id.substr(0, id.indexOf('-')),
     meal: id.substr(id.indexOf('-')+1)
   }, res => {
-      locationPrefs[day][meal].delete(res.dhall); 
+      locationPrefs[res.day][res.meal].delete(res.dhall); 
       $(this).parent().remove();
     });
 });

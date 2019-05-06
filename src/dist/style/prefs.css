@@ -12,7 +12,7 @@ h3 {
 }
 
 .list-group {
-  height: 250px;
+  height: 15.5em;
   overflow-y: overlay;
   scrollbar-width: 5px; /* Firefox */
   -ms-overflow-style: 5px;  /* IE 10+ */
@@ -30,12 +30,24 @@ h3 {
   border-radius: 10px; 
 }
 
+.list-group-item {
+  padding: 5px auto;
+}
+
 .nav-tabs .nav-item {
   width: calc(100% / 7);
   text-align: center;
 }
 
+.mealtime {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
 .remove {
+  position: absolute;
+  right: 15px;
   color: red;
   cursor: pointer
 }
@@ -46,5 +58,5 @@ h3 {
 }
 
 #locprefs {
-  height: 250px;
+  height: 15.5em;
 }
