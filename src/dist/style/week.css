@@ -31,7 +31,16 @@ h1 {
 .carousel-button {
     background-color: #A9A9A9;
     max-width: 30px;
-    max-height: 90%;
+    max-height: 50%;
+    margin-top: 13%;
+    border-radius: 10px;
+}
+
+.carousel-control-next-icon {
+
+}
+.carousel-control-prev-icon {
+
 }
 
 .carousel-indicators {
