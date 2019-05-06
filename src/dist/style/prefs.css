@@ -56,3 +56,7 @@ h3 {
 #locprefs {
   height: 15.5em;
 }
+
+.list-group-flush .list-group-item {
+  background: none;
+}
