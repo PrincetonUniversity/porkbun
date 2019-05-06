@@ -72,7 +72,6 @@ router.post('/remove', auth.isLoggedIn, async (req, res) => {
   let dhall = req.body.dhall;
   let meal = req.body.meal;
   let day = req.body.day;
-  console.log(dish);
   if (dish) {
     db.removeDishPref(req.session.netid, dish);
     res.send(dish);
