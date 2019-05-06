@@ -31,12 +31,12 @@ router.post('/', auth.isLoggedIn, (req, res) => {
 });
 
 // Insert location, day, and meal time into preferences and echo the pref added
-router.post('/locs', auth.isLoggedIn, (req, res) => {
+router.post('/locs', auth.isLoggedIn, async (req, res) => {
   let dhall = req.body.dhall;
   let meal  = req.body.meal;
   let day   = req.body.day;
   if (dhall && day && meal) {
-    db.addLocationPref(req.session.netid, dhall, meal, day);
+    await db.addLocationPref(req.session.netid, dhall, meal, day);
     res.send({
       dhall: dhall,
       meal: meal,
@@ -72,7 +72,6 @@ router.post('/remove', auth.isLoggedIn, async (req, res) => {
   let dhall = req.body.dhall;
   let meal = req.body.meal;
   let day = req.body.day;
-  console.log(dish);
   if (dish) {
     db.removeDishPref(req.session.netid, dish);
     res.send(dish);

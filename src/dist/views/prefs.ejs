@@ -4,8 +4,6 @@
   <head>
     <title>PorkBun</title>
     <meta name='author' content='Khatanbuuvei Bold and Justin Chang'>
-    <link rel='stylesheet' href='/style/styles.css'>
-    <link rel='stylesheet' href='/style/prefs.css'>
     <!-- Bootstrap v4 -->
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
     <!-- Bootstrap JS -->
@@ -24,13 +22,17 @@
     <% const daysLong = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %>
     <% const meals = ['breakfast', 'lunch', 'dinner'] %>
     <% const Meals = ['Breakfast', 'Lunch', 'Dinner'] %>
+    <link rel='stylesheet' href='/style/styles.css'>
+    <link rel='stylesheet' href='/style/prefs.css'>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   </head>
 
   <body>
     <% include ../partials/header %>
 
     <div class='container'>
-      <h1>Your Preferences</h1>
+      <h1>Preferences</h1>
       <div class="container">
         <div class="row">
           <!-- DISH PREFERENCES -->
@@ -49,12 +51,13 @@
               </ul>
             </div>
             
+            <h5 style="text-align:center">Your Favorite Dishes</h5>
             
             <ul class="list-group" id="dishprefs">
               <% dishPrefs.forEach(item => { %>
                 <li class="list-group-item">
                   <span class='dish-item'><%= item %></span> 
-                  <span class='remove'>(remove)</span>
+                  <span class='remove'><i class="fas fa-times"></i></span>
                 </li>
               <% }) %>
             </ul>
@@ -102,6 +105,7 @@
               </div>
             </div>
 
+            <h5 style="text-align:center">Your Favorite Dining Halls</h5>
 
             <!-- List location preferences -->
             <div id="locprefs">
@@ -126,12 +130,12 @@
                     <div class="row">
                       <% for (let j = 0; j < 3; j++) { %>
                         <div class="col-sm-12 col-md-4">
-                          <h6><%= Meals[j] %></h6>
-                          <ul class="dhall-list" id="<%= `${days[i]}-${meals[j]}` %>">
+                          <h6 class="mealtime"><%= Meals[j] %></h6>
+                          <ul class="dhall-list list-group list-group-flush" id="<%= `${days[i]}-${meals[j]}` %>">
                             <% if (dayPrefs[meals[j]]) { dayPrefs[meals[j]].forEach(dhall => { %>
-                              <li>
+                              <li style="padding-top:4px;padding-bottom:4px" class="list-group-item">
                                 <span class="dhall-item"><%= dhall %></span>
-                                <span class="remove">remove</a>
+                                <span class="remove"><i class="fas fa-times"></i></span>
                               </li>
                             <% }) } %>
                           </ul>
