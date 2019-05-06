@@ -233,6 +233,20 @@ const getPrefMatches = async (prefs, meal) => {
   return matches;
 }
 
+// Get entrees of a given meal
+// const getEntrees = async (meal) => {
+//   const reqMeal = getMenus(meal);
+
+//   let entrees = [];
+//   for (var i = 0; i < 7; i++) {
+//     entrees[i] = {};
+//     for (const loc of locations) {
+//       matches[i][loc] = [];
+
+//     }
+//   }
+// }
+
 // Export modules --------------------------------------------------------------
 module.exports.init = init;
 module.exports.updateMenus = updateMenus;

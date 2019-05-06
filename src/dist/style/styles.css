@@ -12,3 +12,10 @@ div.container {
     border-radius: 10px;
     margin-top: 15px;
 }
+
+.login {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 1em;
+    margin-bottom: -1em;
+}

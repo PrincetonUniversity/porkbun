@@ -27,6 +27,7 @@
 
   <body>
     <% include ../partials/header %>
+    <% include ../partials/login %>
     
     <div class='container'>
       <h1>This Week's Menu - <%= meal %></h1>
@@ -37,10 +38,10 @@
       </form>
       
       <div id='menu-carousel' class='carousel slide' data-ride='carousel' data-interval='false' data-wrap='false'>
-        <ol class='carousel-indicators'>
+        <!-- <ol class='carousel-indicators'>
           <li data-target='#menu-carousel' data-slide-to='0' class='active'></li>
           <li data-target='#menu-carousel' data-slide-to='1'></li>
-        </ol>
+        </ol> -->
 
         <div class='carousel-inner menu-page'>
           <div class='carousel-item active'>

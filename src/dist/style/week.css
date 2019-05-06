@@ -15,7 +15,8 @@ h1 {
 }
 
 .dates {
-    width: 100%;
+    margin: auto;
+    width: 90%;
     display: flex;
 }
 
@@ -29,8 +30,17 @@ h1 {
 
 .carousel-button {
     background-color: #A9A9A9;
-    max-width: 50px;
-    max-height: 100px;
+    max-width: 30px;
+    max-height: 50%;
+    margin-top: 13%;
+    border-radius: 10px;
+}
+
+.carousel-control-next-icon {
+
+}
+.carousel-control-prev-icon {
+
 }
 
 .carousel-indicators {
@@ -43,7 +53,6 @@ h1 {
 
 .btn {
     margin-top: -10px;
-    padding-bottom: 100px;
 }
 
 .card {
