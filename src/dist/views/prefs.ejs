@@ -33,121 +33,119 @@
 
     <div class='container'>
       <h1>Preferences</h1>
-      <div class="container">
-        <div class="row">
-          <!-- DISH PREFERENCES -->
-          <div class="col-sm-12 col-lg-6">
-            <h3>Dishes</h3>
-            <!-- Add dish form -->
-            <div class="form-group">
-              <!-- <label for="dish_input" class="col-form-label">Add a dish to your preferences</label> -->
-              <div class="input-group">
-                <input type="text" class="form-control" id="dish-input" placeholder="Pork Buns">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary mb-2" id="dish-submit">Add</button>
-                  </div>
-              </div>
-              <ul id='autocomplete' class='list-group'>
-              </ul>
+      <div class="row">
+        <!-- DISH PREFERENCES -->
+        <div class="col-sm-12 col-lg-6">
+          <h3>Dishes</h3>
+          <!-- Add dish form -->
+          <div class="form-group">
+            <!-- <label for="dish_input" class="col-form-label">Add a dish to your preferences</label> -->
+            <div class="input-group">
+              <input type="text" class="form-control" id="dish-input" placeholder="Pork Buns">
+                <div class="input-group-append">
+                  <button class="btn btn-primary mb-2" id="dish-submit">Add</button>
+                </div>
             </div>
-            
-            <h5 style="text-align:center">Your Favorite Dishes</h5>
-            
-            <ul class="list-group" id="dishprefs">
-              <% dishPrefs.forEach(item => { %>
-                <li class="list-group-item">
-                  <span class='dish-item'><%= item %></span> 
-                  <span class='remove'><i class="fas fa-times"></i></span>
-                </li>
-              <% }) %>
+            <ul id='autocomplete' class='list-group'>
             </ul>
           </div>
+          
+          <h5 style="text-align:center">Your Favorite Dishes</h5>
+          
+          <ul class="list-group" id="dishprefs">
+            <% dishPrefs.forEach(item => { %>
+              <li class="list-group-item">
+                <span class='dish-item'><%= item %></span> 
+                <span class='remove'><i class="fas fa-times"></i></span>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
 
-          <!-- LOCATION PREFERENCES -->
-          <div class="col-sm-12 col-lg-6">
-            <h3>Locations</h3>
-            
-            <!-- Update location preferences -->
-            <div class="form-row">
-              <div class="form-group col-md-3">
-                <!-- <label for="meal" class="col-form-label">Meal</label> -->
-                <select class="custom-select" id="meal" name="meal">
-                  <option value="" disabled selected>Meal</option>
-                  <option value="all">All Meals</option>
-                  <option value="breakfast">Breakfast</option>
-                  <option value="lunch">Lunch</option>
-                  <option value="dinner">Dinner</option>
-                </select>
-              </div>
-              <div class="form-group col-md-4">
-                <!-- <label for="day" class="col-form-label">Day</label> -->
-                <select class="custom-select" id="day" name="day">
-                  <option value="" disabled selected>Day</option>
-                  <option value="all">Everyday</option>
-                  <% for (let i = 0; i < 7; i++) { %>
-                    <option value=<%=days[i]%>><%= daysLong[i] %></option>
-                  <% } %>
-                </select>
-              </div>
-              <div class="form-group col-md-3">
-                <!-- <label for="dhall" class="col-form-label">Dining Hall</label> -->
-                <select class="custom-select" id="dhall" name="dhall">
-                  <option value="" disabled selected>Dining Hall</option>
-                  <option value="roma">RoMa</option>
-                  <option value="wucox">Wu Wilcox</option>
-                  <option value="whitman">Whitman</option>
-                  <option value="forbes">Forbes</option>
-                  <option value="cjl">CJL</option>
-                </select>
-              </div>
-              <div class="form-group col-md-2">
-                <button style="width:100%" type="submit" class="btn btn-primary mb-2" id="loc-submit">Add</button>
-              </div>
+        <!-- LOCATION PREFERENCES -->
+        <div class="col-sm-12 col-lg-6">
+          <h3>Locations</h3>
+          
+          <!-- Update location preferences -->
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <!-- <label for="meal" class="col-form-label">Meal</label> -->
+              <select class="custom-select" id="meal" name="meal">
+                <option value="" disabled selected>Meal</option>
+                <option value="all">All Meals</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+              </select>
             </div>
-
-            <h5 style="text-align:center">Your Favorite Dining Halls</h5>
-
-            <!-- List location preferences -->
-            <div id="locprefs">
-              <ul class="nav nav-tabs" id="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#sun" role="tab">Sun</a>
-                </li>
-                <% for (let i = 1; i < 7; i++) { %>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#<%= days[i] %>" role="tab"><%= daysLong[i].substring(0,3) %></a>
-                  </li>
-                <% } %>
-              </ul>
-              <div class="tab-content">
+            <div class="form-group col-md-4">
+              <!-- <label for="day" class="col-form-label">Day</label> -->
+              <select class="custom-select" id="day" name="day">
+                <option value="" disabled selected>Day</option>
+                <option value="all">Everyday</option>
                 <% for (let i = 0; i < 7; i++) { %>
-                  <% if (i == 0) { %>
-                    <div class="tab-pane fade show active" id="<%=days[i]%>">
-                  <% } else { %>
-                    <div class="tab-pane fade" id="<%=days[i]%>">
-                  <% } %>
-                    <% let dayPrefs = locationPrefs[days[i]] || { breakfast:[], lunch:[], dinner:[] }%>
-                    <div class="row">
-                      <% for (let j = 0; j < 3; j++) { %>
-                        <div class="col-sm-12 col-md-4">
-                          <h6 class="mealtime"><%= Meals[j] %></h6>
-                          <ul class="dhall-list list-group list-group-flush" id="<%= `${days[i]}-${meals[j]}` %>">
-                            <% if (dayPrefs[meals[j]]) { dayPrefs[meals[j]].forEach(dhall => { %>
-                              <li style="padding-top:4px;padding-bottom:4px" class="list-group-item">
-                                <span class="dhall-item"><%= dhall %></span>
-                                <span class="remove"><i class="fas fa-times"></i></span>
-                              </li>
-                            <% }) } %>
-                          </ul>
-                        </div>
-                      <% } %>
-                    </div>
-                  </div>
+                  <option value=<%=days[i]%>><%= daysLong[i] %></option>
                 <% } %>
-              </div>
+              </select>
             </div>
-            
+            <div class="form-group col-md-3">
+              <!-- <label for="dhall" class="col-form-label">Dining Hall</label> -->
+              <select class="custom-select" id="dhall" name="dhall">
+                <option value="" disabled selected>Dining Hall</option>
+                <option value="roma">RoMa</option>
+                <option value="wucox">Wu Wilcox</option>
+                <option value="whitman">Whitman</option>
+                <option value="forbes">Forbes</option>
+                <option value="cjl">CJL</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <button style="width:100%" type="submit" class="btn btn-primary mb-2" id="loc-submit">Add</button>
+            </div>
           </div>
+
+          <h5 style="text-align:center">Your Favorite Dining Halls</h5>
+
+          <!-- List location preferences -->
+          <div id="locprefs">
+            <ul class="nav nav-tabs" id="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#sun" role="tab">Sun</a>
+              </li>
+              <% for (let i = 1; i < 7; i++) { %>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#<%= days[i] %>" role="tab"><%= daysLong[i].substring(0,3) %></a>
+                </li>
+              <% } %>
+            </ul>
+            <div class="tab-content">
+              <% for (let i = 0; i < 7; i++) { %>
+                <% if (i == 0) { %>
+                  <div class="tab-pane fade show active" id="<%=days[i]%>">
+                <% } else { %>
+                  <div class="tab-pane fade" id="<%=days[i]%>">
+                <% } %>
+                  <% let dayPrefs = locationPrefs[days[i]] || { breakfast:[], lunch:[], dinner:[] }%>
+                  <div class="row">
+                    <% for (let j = 0; j < 3; j++) { %>
+                      <div class="col-sm-12 col-md-4">
+                        <h6 class="mealtime"><%= Meals[j] %></h6>
+                        <ul class="dhall-list list-group list-group-flush" id="<%= `${days[i]}-${meals[j]}` %>">
+                          <% if (dayPrefs[meals[j]]) { dayPrefs[meals[j]].forEach(dhall => { %>
+                            <li style="padding-top:4px;padding-bottom:4px" class="list-group-item">
+                              <span class="dhall-item"><%= dhall %></span>
+                              <span class="remove"><i class="fas fa-times"></i></span>
+                            </li>
+                          <% }) } %>
+                        </ul>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>

@@ -11,27 +11,23 @@ h3 {
   text-align: center;
 }
 
-.list-group {
+#dishprefs {
   height: 15.5em;
   overflow-y: overlay;
   scrollbar-width: 5px; /* Firefox */
   -ms-overflow-style: 5px;  /* IE 10+ */
   -webkit-overflow-scrolling: touch;
 }
-.list-group::-webkit-scrollbar { /* WebKit */
+#dishprefs::-webkit-scrollbar { /* WebKit */
   width: 5px;
 }
-.list-group::-webkit-scrollbar-track {
+#dishprefs::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 10px; 
 }
-.list-group::-webkit-scrollbar-thumb {
+#dishprefs::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 10px; 
-}
-
-.list-group-item {
-  padding: 5px auto;
 }
 
 .nav-tabs .nav-item {
