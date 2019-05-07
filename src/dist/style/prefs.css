@@ -42,6 +42,7 @@ h3 {
 }
 
 .remove {
+  display: none;
   position: absolute;
   right: 15px;
   color: red;

@@ -158,3 +158,12 @@ $(document).on('click', '.dhall-item + .remove', function() {
       $(this).parent().remove();
     });
 });
+
+// Remove button appears on hover
+$(".remove").parent().hover(
+  function() {
+    $(':nth-child(2)', this).css('display', 'inline');
+  }, function() {
+    $(':nth-child(2)', this).css('display', 'none');
+  }
+);
