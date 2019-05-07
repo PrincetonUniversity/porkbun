@@ -52,5 +52,13 @@
     </div>
 
     <% include ../partials/footer %>
+
+    <script type="text/javascript">
+      document.querySelectorAll('.dish').forEach(e => {
+        if (e.innerHTML.includes('--')) {
+          e.innerHTML = `<strong>${e.innerHTML}</strong>`;
+        }
+      });
+    </script>
   </body>
 </html>
