@@ -1,5 +1,6 @@
 body {
   overflow: overlay;
+  background-position-y: 15px;
 }
 
 h1 {
