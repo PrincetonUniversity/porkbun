@@ -26,7 +26,7 @@ $('#dish-input').on('input', function() {
 // Add dish preference based on click to a suggested autocomplete
 $(document).on('click', '.autocomplete-item', function() {
   $.post('/prefs', {
-    dish: $(this).text()
+    dish: $(this).text().trim()
   }, res => {
     if (res && !dishPrefs.has(res)) {
       $('#dishprefs').append(
