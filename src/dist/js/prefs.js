@@ -160,10 +160,12 @@ $(document).on('click', '.dhall-item + .remove', function() {
 });
 
 // Remove button appears on hover
-$(".remove").parent().hover(
+$(document)
+  .on('mouseenter', '.list-group-item',
   function() {
     $(':nth-child(2)', this).css('display', 'inline');
-  }, function() {
+  })
+  .on('mouseleave', '.list-group-item', function() {
     $(':nth-child(2)', this).css('display', 'none');
   }
 );
