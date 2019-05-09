@@ -1,6 +1,11 @@
 <nav class='navbar navbar-expand-lg navbar-light' style="background-color:#eee">
   <a class='navbar-brand' href='/landing'>PorkBun</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsedContent">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
+
+  <div class="collapse navbar-collapse" id="collapsedContent">
   <ul class='navbar-nav'>
     <li class='nav-item'>
       <a class='nav-link' id='nav-link-menu' href='/'>Menu</a>
@@ -13,18 +18,19 @@
     </li>
   </ul>
 
-  <ul class='navbar-nav ml-auto'>
-    <% if (netid) { %>
-      <li class='nav-item active'>
-        <a class='nav-link'>Welcome, <%= netid %>!</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link' href='/auth/logout'>Logout</a>
-      </li>
-    <% } else { %>
-      <li class='nav-item'>
-        <a class='nav-link' href='/auth/login'>Log In</span></a>
-      </li>
-    <% } %>
-  </ul>
+    <ul class='navbar-nav ml-auto'>
+      <% if (netid) { %>
+        <li class='nav-item active'>
+          <a class='nav-link'>Welcome, <%= netid %>!</a>
+        </li>
+        <li class='nav-item'>
+          <a class='nav-link' href='/auth/logout'>Logout</a>
+        </li>
+      <% } else { %>
+        <li class='nav-item'>
+          <a class='nav-link' href='/auth/login'>Log In</span></a>
+        </li>
+      <% } %>
+    </ul>
+  </div>
 </nav>
