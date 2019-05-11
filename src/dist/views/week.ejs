@@ -31,9 +31,9 @@
     <div class='container'>
       <h1>This Week's Menu - <%= meal %></h1>
       <form id='meal-select' action='/week' method='get'>
-        <button type='submit' name='meal' value='breakfast'>Breakfast</button>
-        <button type='submit' name='meal' value='lunch'>Lunch</button>
-        <button type='submit' name='meal' value='dinner'>Dinner</button>
+        <button class='btn btn-outline-danger' type='submit' name='meal' value='breakfast'>Breakfast</button>
+        <button class='btn btn-outline-danger' type='submit' name='meal' value='lunch'>Lunch</button>
+        <button class='btn btn-outline-danger' type='submit' name='meal' value='dinner'>Dinner</button>
       </form>
       
       <div id='menu-carousel' class='carousel slide' data-ride='carousel' data-interval='false' data-wrap='false'>
@@ -115,7 +115,11 @@
                               <% if (highlight(prefs, item)) { %>
                                 <li class='dish match-prefs'><%= item %></li>
                               <% } else { %>
-                                <li class='dish'><%= item %></li>
+                                <% if (item.indexOf("--") >= 0) { %>
+                                  <li class='dish'><strong><%= item %></strong></li>
+                                <% } else { %>
+                                  <li class='dish'><%= item %></li>
+                                <% } %>
                               <% } %>
                             <% }); %>
                           </ul>

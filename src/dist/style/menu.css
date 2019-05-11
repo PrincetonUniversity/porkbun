@@ -1,17 +1,26 @@
+body {
+    background-image: url("/style/static/dumplings.jpg");
+    background-color: rgba(255, 255, 255, 0.7);
+    background-blend-mode: lighten;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+}
+
 h1 {
     text-align: center;
-    padding-top: 25px;
+    padding-top: 0.7em;
 }
 
 #meal-select {
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 2em;
 }
 
 #meal-select button {
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+    border-radius: 5px;
 }
 
 .dhalls {

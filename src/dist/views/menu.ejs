@@ -26,39 +26,34 @@
     
     <div class='container menu'>
       <h1>Today's Menu - <%= meal %></h1>
-
       <form id='meal-select' action='/menu' method='get'>
-        <button type='submit' name='meal' value='breakfast'>Breakfast</button>
-        <button type='submit' name='meal' value='lunch'>Lunch</button>
-        <button type='submit' name='meal' value='dinner'>Dinner</button>
+        <button class='btn btn-outline-danger' type='submit' name='meal' value='breakfast'>Breakfast</button>
+        <button class='btn btn-outline-danger' type='submit' name='meal' value='lunch'>Lunch</button>
+        <button class='btn btn-outline-danger' type='submit' name='meal' value='dinner'>Dinner</button>
       </form>
 
-      <ul class='list-inline dhalls'>
+      <ul class='list-inline row dhalls'>
         <% for (const hall in menus) { %>
-          <li class='list-inline-item dhall'>
+          <li class='list-inline-item col-lg dhall'>
             <h3><%= hallNames[hall] %></h3>
             <ul>
               <% menus[hall].forEach(item => { %>
                 <% if (highlight(prefs, item)) { %>
                   <li class='dish match-prefs'><%= item %></li>
                 <% } else { %>
-                  <li class='dish'><%= item %></li>
+                  <% if (item.indexOf("--") >= 0) { %>
+                    <li class='dish'><strong><%= item %></strong></li>
+                  <% } else { %>
+                    <li class='dish'><%= item %></li>
+                  <% } %>
                 <% } %>
               <% }); %>
-            </ul>
+            </ul> 
           </li>
         <% } %>
       </ul>
     </div>
 
     <% include ../partials/footer %>
-
-    <script type="text/javascript">
-      document.querySelectorAll('.dish').forEach(e => {
-        if (e.innerHTML.includes('--')) {
-          e.innerHTML = `<strong>${e.innerHTML}</strong>`;
-        }
-      });
-    </script>
   </body>
 </html>

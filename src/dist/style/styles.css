@@ -1,17 +1,41 @@
 body {
     font-family: 'Lato', sans-serif;
-    background-image: url("dumplings.jpg");
-    background-color: rgba(255, 255, 255, 0.85);
-    background-blend-mode: lighten;
-    background-size: 100%;
-    background-position-x: center;
-    background-position-y: center;
 }
 
 ul {
     list-style-type: none;
+    flex-direction: row;
     padding: 0;
     margin: 0;
+}
+
+.header-button:hover {
+    background-color: gray;
+    border-radius: 10px;
+}
+
+#nav-link-menu:hover {
+    color: white;
+}
+
+#nav-link-week:hover {
+    color: white;
+}
+
+#nav-link-prefs:hover {
+    color: white;
+}
+
+#nav-link-login:hover {
+    background-color: #82d170;
+    border-radius: 10px;
+    color: white;
+}
+
+#nav-link-logout:hover {
+    background-color: #ff6060;
+    border-radius: 10px;
+    color: white;
 }
 
 .login {
