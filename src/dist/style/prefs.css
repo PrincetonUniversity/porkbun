@@ -5,6 +5,7 @@ body {
     background-size: cover;
     background-position-x: center;
     background-position-y: center;
+    background-attachment: fixed;
     overflow: overlay;
 }
 
@@ -16,6 +17,11 @@ h1 {
 h3 {
     text-align: center;
     margin-bottom: 1em;
+}
+
+#pref-container {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
 }
 
 #dishprefs {
