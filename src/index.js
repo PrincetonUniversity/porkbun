@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const cron = require('node-cron');
 const cookieSession = require('cookie-session');
+const favicon = require('serve-favicon');
 const scraper = require('./scripts/scraper.js');
 const menus = require('./scripts/menus.js');
 const db = require('./scripts/db/db.js');
@@ -21,6 +22,7 @@ app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/dist/views');
 app.use(express.static(__dirname + '/dist'));
+app.use(favicon(__dirname + '/dist/style/static/favicon.ico'));
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // save a cookie 
