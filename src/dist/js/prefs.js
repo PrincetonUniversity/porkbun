@@ -76,6 +76,7 @@ $(document).on('click', '.dish-item + .remove', function() {
 // Location preferences -------------------------------------------------------
 const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const meals = ['breakfast', 'lunch', 'dinner'];
+const dhalls = { roma:"RoMa", wucox:"Wu/Wilcox", whitman:"Whitman", forbes:"Forbes", cjl:"CJL" };
 
 // create locationPrefs object for frontend
 let locationPrefs = {};
@@ -84,7 +85,7 @@ for (day of days) {
   for (meal of meals) {
     locationPrefs[day][meal] = new Set();
     $(`#${day}-${meal} li .dhall-item`).each(function() {
-      locationPrefs[day][meal].add($(this).text());
+      locationPrefs[day][meal].add($(this).attr('data-dhall'));
     });
   }
 }
@@ -106,7 +107,7 @@ function addPref(day, meal, dhall) {
   else if (!locationPrefs[day][meal].has(dhall)) {
     $(`#${day}-${meal}`).append(
       `<li class="list-group-item" style="padding-top:4px;padding-bottom:4px">
-        <span class="dhall-item">${dhall}</span>
+        <span class="dhall-item" data-dhall="${dhall}">${dhalls[dhall]}</span>
         <span class="remove"><i class="fas fa-times"></i></span>
       </li>`);
     locationPrefs[day][meal].add(dhall);
@@ -133,7 +134,7 @@ $(function() {
     stop: function () {
       let ranked = [];
       $(this).children().children('.dhall-item').each(function() {
-        ranked.push($(this).text());
+        ranked.push($(this).attr('data-dhall'));
       });
 
       let id = $(this).attr('id'); // id format: '[day]-[meal]'
@@ -150,7 +151,7 @@ $(function() {
 $(document).on('click', '.dhall-item + .remove', function() {
   let id = $(this).parent().parent().attr('id');
   $.post(`/prefs/remove`, {
-    dhall: $(this).prev().text(),
+    dhall: $(this).prev().attr('data-dhall'),
     day: id.substr(0, id.indexOf('-')),
     meal: id.substr(id.indexOf('-')+1)
   }, res => {
