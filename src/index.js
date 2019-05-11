@@ -82,14 +82,13 @@ app.get('/week', async function(req, res) {
 
 app.get('/landing', function(req, res) {
   res.render('landing', {
-    // Landing page - should basically look pretty and lead to our website
     netid: req.session.netid
   });
 });
 
 // Default
 app.get(/\/.+/, function(req, res) {
-  res.send("Page not found");
+  res.render('whoops');
 });
 
 // Start server
