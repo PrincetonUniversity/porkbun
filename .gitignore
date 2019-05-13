@@ -10,3 +10,6 @@ sample_response
 
 # Environment variables 
 .env
+
+# Peer reviews
+peer.txt

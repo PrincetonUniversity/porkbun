@@ -1,6 +1,6 @@
 body {
     background-image: url("/style/static/dumplings.jpg");
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.8);
     background-blend-mode: lighten;
     background-size: cover;
     background-position-x: center;
