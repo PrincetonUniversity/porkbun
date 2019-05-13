@@ -7,7 +7,7 @@ module.exports.port = port;
 module.exports.host = host;
 
 // mongoDB configs
-const uri = "mongodb+srv://khatna:porkbun@porkbun-qae7b.mongodb.net/test?retryWrites=true"; // will need to hide this
+const uri = process.env.DB_URI;
 const dbName = "porkbun";
 module.exports.dbUri  = uri; 
 module.exports.dbName = dbName; 

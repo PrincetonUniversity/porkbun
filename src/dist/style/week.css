@@ -61,4 +61,6 @@ h1 {
 .card {
     margin-top: 0.7em;
     margin-bottom: 0.7em;
+    border-radius: 10px;
+    background-color: #f7f7f7;
 }
