@@ -1,6 +1,8 @@
 // Load modules --------------------------------------------------------
-// CAUTION: uncomment this when pushing to heroku
-//require('newrelic');
+// Only for development purposes (dotenv)
+// const dotenv = require('dotenv');
+// dotenv.config();
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
