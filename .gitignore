@@ -13,3 +13,6 @@ sample_response
 
 # Peer reviews
 peer.txt
+
+# Logs
+newrelic_agent.log
