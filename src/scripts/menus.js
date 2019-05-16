@@ -10,6 +10,16 @@ const locations = [
   'cjl',
 ];
 
+const days = [
+  'sun',
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat'
+];
+
 var breakfast = [];
 var lunch = [];
 var dinner = [];
@@ -158,7 +168,9 @@ const getRankedMenus = async (dishPrefs, locPrefs, meal) => {
           else meal = 'lunch';
         }
         const day = dates[i].getDay();
-        const locPrefDay = locPrefs[Object.keys(locPrefs)[day]][meal];
+        let locPrefDay = null;
+        if (locPrefs[days[day]])
+          locPrefDay = locPrefs[days[day]][meal];
         if (locPrefDay) locPrefIndex = locPrefDay.indexOf(loc);
       }
       ranked[i].push([loc, dishPrefMatches, locPrefIndex]);
@@ -232,20 +244,6 @@ const getPrefMatches = async (prefs, meal) => {
   }
   return matches;
 }
-
-// Get entrees of a given meal
-// const getEntrees = async (meal) => {
-//   const reqMeal = getMenus(meal);
-
-//   let entrees = [];
-//   for (var i = 0; i < 7; i++) {
-//     entrees[i] = {};
-//     for (const loc of locations) {
-//       matches[i][loc] = [];
-
-//     }
-//   }
-// }
 
 // Export modules --------------------------------------------------------------
 module.exports.init = init;
